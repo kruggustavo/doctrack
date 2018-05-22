@@ -1,3 +1,5 @@
+use doctrack;
+
 CREATE TABLE roles (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
   Descripcion varchar(50) NOT NULL DEFAULT '',
