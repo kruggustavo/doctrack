@@ -1,0 +1,17 @@
+/* 
+    Created on : 22-may-2018, 11:36:39
+    Author     : usuario
+*/
+
+.ui-layout-pane {
+    border: 0;
+}
+
+.ui-widget .ui-widget {
+    font-size: 0.9em !important; 
+}
+
+.ui-layout-unit {
+    visibility: hidden;
+    padding: .05em !important;
+}

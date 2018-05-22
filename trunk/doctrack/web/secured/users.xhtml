@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+	<ui:composition template="../index.xhtml">
+            <ui:define name="content">
+                
+                <div class="ui-fluid" style="width: 100%; text-align: center">
+                    <h2>Usuarios del sistema</h2>
+                    <h:form>
+                        <p:dataTable var="usuarios" value="#{usersCrudBean.usersList}" selection="#{usersCrudBean.selectedUser}" selectionMode="single" rowKey="#{usuarios.id}" reflow="true" rows="10" paginator="true" style="width: 75%; display: inline-block">
+                            <!--p:ajax event="rowEdit" listener="" update=":form:msgs" /-->
+                            <p:column headerText="Usuario">
+                                <h:outputText value="#{usuarios.nombrecompleto}" />
+                            </p:column>
+
+                            <p:column headerText="Alias">
+                                <h:outputText value="#{usuarios.alias}" />
+                            </p:column>
+
+                            <p:column headerText="Clave">
+                                <h:outputText value="#{usuarios.clave}" />
+                            </p:column>
+
+                            <p:column style="width:32px">
+                                <p:rowEditor />
+                            </p:column>
+                            <f:facet name="footer">  
+                                <p:commandButton id="addUser" style="width: 15%" value="Nuevo" icon="ui-icon-new"/>  
+                                <p:commandButton id="deleteUser" style="width: 15%" value="Eliminar" icon="ui-icon-trash"/>  
+                           </f:facet> 
+                        </p:dataTable>
+                    </h:form>
+                </div>
+            </ui:define>
+	</ui:composition>
+    </h:body>
+</html>
