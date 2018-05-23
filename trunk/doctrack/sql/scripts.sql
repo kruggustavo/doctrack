@@ -6,6 +6,7 @@ CREATE TABLE roles (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+insert into roles (Descripcion) values ('Administrador');
 
 CREATE TABLE usuarios (
      id MEDIUMINT NOT NULL AUTO_INCREMENT primary key,
@@ -15,3 +16,5 @@ CREATE TABLE usuarios (
      idRol MEDIUMINT NOT NULL,
      FOREIGN KEY (idRol) REFERENCES roles(id)
 );
+
+insert into usuarios (Nombre_completo, Alias, Clave, idRol) values ('Administrador1', 'admin', 'admin', (select id from roles where Descripcion = 'Administrador' limit 1));

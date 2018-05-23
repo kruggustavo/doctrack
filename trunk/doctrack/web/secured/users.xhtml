@@ -7,34 +7,57 @@
       xmlns:p="http://primefaces.org/ui">
     <h:body>
 	<ui:composition template="../index.xhtml">
-            <ui:define name="content">
-                
+            <ui:define name="content">                
                 <div class="ui-fluid" style="width: 100%; text-align: center">
                     <h2>Usuarios del sistema</h2>
+                  
+                    <p:dataTable id="usuariosdt" var="usuarios" value="#{usersBean.usersList}" selection="#{usersBean.selectedUser}" selectionMode="single" rowKey="#{usuarios.id}" reflow="true" rows="10" paginator="true" style="width: 80%; display: inline-block">
+                        <!--p:ajax event="rowEdit" listener="" update=":form:msgs" /-->
+                        <p:column headerText="Usuario">
+                            <h:outputText value="#{usuarios.nombrecompleto}" />
+                        </p:column>
+
+                        <p:column headerText="Alias">
+                            <h:outputText value="#{usuarios.alias}" />
+                        </p:column>
+
+                        <p:column headerText="Clave">
+                            <p:password value="#{usuarios.clave}" redisplay="true" disabled="true" readonly="true"/>  
+                        </p:column>
+
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>                         
+                    </p:dataTable>
+
+                    <p:commandButton id="addUser" style="width: 15%" value="Nuevo" icon="ui-icon-new" oncomplete="PF('newdialog').show();" />  
+                    <p:commandButton id="deleteUser" style="width: 15%" value="Eliminar" icon="ui-icon-trash"/>  
+
                     <h:form>
-                        <p:dataTable var="usuarios" value="#{usersCrudBean.usersList}" selection="#{usersCrudBean.selectedUser}" selectionMode="single" rowKey="#{usuarios.id}" reflow="true" rows="10" paginator="true" style="width: 80%; display: inline-block">
-                            <!--p:ajax event="rowEdit" listener="" update=":form:msgs" /-->
-                            <p:column headerText="Usuario">
-                                <h:outputText value="#{usuarios.nombrecompleto}" />
-                            </p:column>
+                        <p:dialog id="newdialogid" header="Nuevo usuario del sistema" widgetVar="newdialog" modal="true" appendTo="@(body)" height="160" width="500">                        
+                            
+                            <p:panelGrid columns="2" layout="grid">            
+                                <h:outputText value="Nombre completo" /> 
+                                <p:inputText id="inputnc" value="#{usersBean.nombreCompleto}" />
 
-                            <p:column headerText="Alias">
-                                <h:outputText value="#{usuarios.alias}" />
-                            </p:column>
+                                <h:outputText value="Alias de usuario" /> 
+                                <p:inputText id="inputalias" value="#{usersBean.alias}"/>
 
-                            <p:column headerText="Clave">
-                                <h:outputText value="#{usuarios.clave}" />
-                            </p:column>
+                                <h:outputText value="Clave" /> 
+                                <p:password id="inputpass" redisplay="true" value="#{usersBean.clave}"/>
 
-                            <p:column style="width:32px">
-                                <p:rowEditor />
-                            </p:column>
-                            <f:facet name="footer">  
-                                <p:commandButton id="addUser" style="width: 15%" value="Nuevo" icon="ui-icon-new"/>  
-                                <p:commandButton id="deleteUser" style="width: 15%" value="Eliminar" icon="ui-icon-trash"/>  
-                           </f:facet> 
-                        </p:dataTable>
+                                <h:outputText value="Rol" /> 
+                                <p:selectOneMenu id="rol" editable="false" value="#{usersBean.selectedRole}">
+                                     <f:selectItems id="sl1" value="#{usersBean.rolesList}" var="roles" itemLabel="#{roles.descripcion}" itemValue="#{roles}"/>
+                                 </p:selectOneMenu>                                                
+                            </p:panelGrid>    
+                            
+                            <p:commandButton id="addUserdlg" style="width: 30%" value="Guardar" icon="ui-icon-check" actionListener="#{usersBean.guardarUsuario}" oncomplete="PF('newdialog').hide();"  />  
+                            <p:commandButton id="deleteUserdlg" style="width: 30%" value="Cancelar" icon="ui-icon-close" onclick="PF('newdialog').hide();" />                              
+                   
+                        </p:dialog>      
                     </h:form>
+                            
                 </div>
             </ui:define>
 	</ui:composition>

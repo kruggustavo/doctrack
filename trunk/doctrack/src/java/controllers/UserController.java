@@ -22,13 +22,13 @@ public class UserController {
     
     public List getUsersList(){
         List l = t.getList("from Usuarios");
-        
-        Usuarios u = new Usuarios();
-        u.setId(1);
-        u.setAlias("hola");
-        u.setNombrecompleto("hola chau");
-        
-        l.add(u);
         return l;
     }
+    
+    public List getRolesList(){
+        List l = t.getList("from Roles");
+        return l;
+    }
+    
+    
 }
