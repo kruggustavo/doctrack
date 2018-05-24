@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import entities.users.Roles;
 import entities.users.Usuarios;
 import java.util.List;
 import util.Transactions;
@@ -30,5 +31,13 @@ public class UserController {
         return l;
     }
     
+    public Roles getRolEntity(String descripcion){
+        Roles l = (Roles) t.getEntity("from Roles where descripcion ='" + descripcion + "'");
+        return l;
+    }
+    
+    public void deleteUser(Usuarios u){
+        t.deleteEntity(u);
+    }
     
 }

@@ -41,9 +41,16 @@ public class Transactions {
     public Object getEntity(String hql){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();        
         s.beginTransaction();       
-        Object object = s.createSQLQuery(hql).list().get(0);
+        Object object = s.createQuery(hql).list().get(0);
         s.getTransaction().commit(); 
         
         return object;
     }    
+    
+    public void deleteEntity(Object o){
+        Session s = HibernateUtil.getSessionFactory().getCurrentSession();        
+        s.beginTransaction();       
+        s.delete(o);
+        s.getTransaction().commit(); 
+    }
 }

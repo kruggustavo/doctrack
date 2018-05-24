@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import controllers.UserController;
@@ -11,7 +6,6 @@ import entities.users.Usuarios;
 import java.io.Serializable;
 import java.util.List;;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -32,36 +26,36 @@ public class UsersBean implements Serializable{
     private List rolesList;
     
     private Usuarios selectedUser;
-    //private Usuarios newUser;
-    private Roles selectedRole;
+    private String selectedRole;
     
     private UserController controller = new UserController();
 
+    //Métodos usados como actionListeners del CRUD de Usuarios & Roles
     public void nuevoUsuario(){
-        System.out.println("Nuevo");
-        selectedUser = null;
-        alias = "";
-        clave = "";
-        nombreCompleto = ""; 
+        selectedUser = new Usuarios();
     }
     
-    public void guardarUsuario(){
+    public void guardarUsuario(){          
+        //Buscamos Rol a partir de la descripcion elegida en pantalla
+        Roles r = null;
         if (selectedRole == null){
-            selectedRole = (Roles) controller.getRolesList().get(0);
+            r = (Roles) controller.getRolesList().get(0);
+            selectedRole = r.getDescripcion();
+        }else{
+            r = controller.getRolEntity(selectedRole);
         }
-        if (selectedUser == null) selectedUser = new Usuarios();
+        selectedUser.setIdRol(r);
         
-        selectedUser.setAlias(alias);
-        selectedUser.setClave(clave);
-        selectedUser.setNombrecompleto(nombreCompleto);
-        selectedUser.setIdRol(selectedRole);
-       
-        System.out.println("alias=");
-        System.out.println(alias);
-        
-        //controller.saveUser(selectedUser);                
+        controller.saveUser(selectedUser);
+        selectedUser = null;
     }
     
+    public void eliminarUsuario(){
+        controller.deleteUser(selectedUser);
+        selectedUser = null;
+    }
+    
+    // Getters y Setters
     public List getUsersList() {
         usersList = controller.getUsersList();
         return usersList;
@@ -88,22 +82,14 @@ public class UsersBean implements Serializable{
         this.rolesList = rolesList;
     }
 
-    public Roles getSelectedRole() {
+    public String getSelectedRole() {
         return selectedRole;
     }
 
-    public void setSelectedRole(Roles selectedRole) {
+    public void setSelectedRole(String selectedRole) {
         this.selectedRole = selectedRole;
     }
-/*
-    public Usuarios getNewUser() {
-        return newUser;
-    }
 
-    public void setNewUser(Usuarios newUser) {
-        this.newUser = newUser;
-    }
-*/
     public String getNombreCompleto() {
         return nombreCompleto;
     }
@@ -127,6 +113,4 @@ public class UsersBean implements Serializable{
     public void setClave(String clave) {
         this.clave = clave;
     }
-    
-    
 }
