@@ -1,7 +1,7 @@
 package beans;
 
 import controllers.DistrictController;
-import entities.institution.Distritos;
+import entities.institucion.Distritos;
 import java.io.Serializable;
 import java.util.List;;
 import javax.faces.bean.ManagedBean;
@@ -9,7 +9,7 @@ import javax.faces.bean.SessionScoped;
 
 /**
  *
- * @author usuario
+ * @author Javier Arza
  */
 
 @ManagedBean
@@ -17,7 +17,7 @@ import javax.faces.bean.SessionScoped;
 public class DistrictBean implements Serializable{
     private static final long serialVersionUID = -6680733133634363295L;
 
-    private Integer id;
+    private Long id;
     private String nombre;
     
     
@@ -63,11 +63,11 @@ public class DistrictBean implements Serializable{
     }
     
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

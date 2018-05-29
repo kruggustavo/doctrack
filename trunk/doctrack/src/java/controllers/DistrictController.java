@@ -5,19 +5,19 @@
  */
 package controllers;
 
-import entities.institution.Distritos;
+import entities.institucion.Distritos;
 import java.util.List;
 import util.Transactions;
 
 /**
  *
- * @author usuario
+ * @author Javier Arza
  */
 public class DistrictController {
     Transactions t = Transactions.getInstance();
     
-    public void saveDistrict(Distritos u){
-        t.saveEntity(u);
+    public void saveDistrict(Distritos d){
+        t.saveEntity(d);
     }
     
     public List getDistrictList(){
@@ -25,8 +25,8 @@ public class DistrictController {
         return l;
     }
     
-    public void deleteDistrict(Distritos u){
-        t.deleteEntity(u);
+    public void deleteDistrict(Distritos d){
+        t.deleteEntity(d);
     }
     
 }

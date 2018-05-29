@@ -48,7 +48,10 @@ Contributor(s):
     <property name="hibernate.connection.password"></property>
   
     <property name="hibernate.current_session_context_class">thread</property>
-
+    
+    <mapping class="entities.institucion.Superviciones"/>
+    <mapping class="entities.institucion.Dependencias"/>
+    <mapping class="entities.institucion.Distritos"/>
     <mapping class="entities.users.Usuarios"/>
     <mapping class="entities.users.Roles"/>
   

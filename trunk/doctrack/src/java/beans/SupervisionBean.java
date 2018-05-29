@@ -1,8 +1,8 @@
 package beans;
 
 import controllers.SupervisionController;
-import entities.institution.Distritos;
-import entities.institution.Supervisiones;
+import entities.institucion.Distritos;
+import entities.institucion.Superviciones;
 import java.io.Serializable;
 import java.util.List;;
 import javax.faces.bean.ManagedBean;
@@ -25,14 +25,14 @@ public class SupervisionBean implements Serializable{
     private List usersList;
     private List distritosList;
     
-    private Supervisiones selectedSupervision;
+    private Superviciones selectedSupervision;
     private String selectedDistrict;
     
     private SupervisionController controller = new SupervisionController();
 
     //Métodos usados como actionListeners del CRUD de Supervisions & Distritos
     public void nuevoSupervision(){
-        selectedSupervision = new Supervisiones();
+        selectedSupervision = new Superviciones();
     }
     
     public void guardarSupervision(){          
@@ -65,11 +65,11 @@ public class SupervisionBean implements Serializable{
         this.usersList = usersList;
     }
 
-    public Supervisiones getSelectedSupervision() {
+    public Superviciones getSelectedSupervision() {
         return selectedSupervision;
     }
 
-    public void setSelectedSupervision(Supervisiones selectedSupervision) {
+    public void setSelectedSupervision(Superviciones selectedSupervision) {
         this.selectedSupervision = selectedSupervision;
     }
     

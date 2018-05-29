@@ -5,8 +5,8 @@
  */
 package controllers;
 
-import entities.institution.Distritos;
-import entities.institution.Supervisiones;
+import entities.institucion.Distritos;
+import entities.institucion.Superviciones;
 import java.util.List;
 import util.Transactions;
 
@@ -17,7 +17,7 @@ import util.Transactions;
 public class SupervisionController {
     Transactions t = Transactions.getInstance();
     
-    public void saveSupervision(Supervisiones u){
+    public void saveSupervision(Superviciones u){
         t.saveEntity(u);
     }
     
@@ -36,7 +36,7 @@ public class SupervisionController {
         return l;
     }
     
-    public void deleteSupervision(Supervisiones u){
+    public void deleteSupervision(Superviciones u){
         t.deleteEntity(u);
     }
     
