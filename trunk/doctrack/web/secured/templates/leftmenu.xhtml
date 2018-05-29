@@ -9,10 +9,11 @@
             <h:form>
                 <p:panelMenu style="width:100%">
                     <p:submenu label="Seguimientos" expanded="true">
-                        <p:menuitem value="Documentos" icon="ui-icon-document" />
+                        <p:menuitem value="Documentos" icon="ui-icon-document" outcome="/secured/seguimiento/documentos.xhtml" />
                         <p:menuitem value="Tramites" icon="ui-icon-document" />
                         <p:menuitem value="Resoluciones" icon="ui-icon-pencil" />
-                        <p:menuitem value="Tipo de Documentos" icon="ui-icon-disk" />
+                        <p:menuitem value="Tipo de Documentos" icon="ui-icon-disk" outcome="/secured/seguimiento/tipodocu.xhtml" />
+                         <p:menuitem value="Tramitantes" icon="ui-icon-document" outcome="/secured/seguimiento/tramitantes.xhtml" />
                     </p:submenu>
                     <p:submenu label="Personas" expanded="true">
                         <p:menuitem value="Usuarios del sistema" icon="ui-icon-person" outcome="/secured/users/index.xhtml" />                      
