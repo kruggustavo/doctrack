@@ -1,0 +1,48 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25/05/2018, 01:49:19 AM
+    Author     : NBook
+*/
+@media screen and(max-width: 600px){
+	
+        container{
+            width: 100%;
+            height:auto;
+            margin-left:0px;
+        }
+}	
+a.menu {
+	display:inline-block;
+	padding:0px 12px;
+	margin:0px 8px;
+}
+@media all and (max-width: 1200px) {
+	a.menu {
+		display: inline-block;
+		padding:0px 6px;
+		margin:0px 4px;
+	}
+}
+@media all and (max-width: 840px) {
+	a.menu{
+		margin:0px;
+		padding:0px;
+		padding-left:5%;
+		display:block;
+		float:none;
+		text-align:left;
+	}
+}
+@media all and (max-width: 520px) {
+	a.menu{
+		padding-left:20%;
+	}
+}
+
+
+
+
