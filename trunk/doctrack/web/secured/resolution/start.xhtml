@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="../../dashboard.xhtml">
+                <ui:define name="content"> 
+                <!--list -->
+                <h:form id="ResolucionesListForm">
+                    <p:panel header="Resoluciones" style="width: 90%">
+                        <p:dataTable id="datalist" value="#{resolutionBean.resolutionList}" lazy="false" rowKey="#{resolucion.id}" var="resolucion" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{resolutionBean.selectedResolution}" >
+
+                            <p:ajax event="rowSelect"   update="createButton,editButton,deleteButton"/>
+                            <p:ajax event="rowUnselect" update="createButton,editButton,deleteButton"/>
+
+                            <p:column headerText="Fecha"><h:outputText value="#{resolucion.fecha}"/></p:column>
+                            <p:column headerText="Numero"><h:outputText value="#{resolucion.numero}"/></p:column>
+                            <p:column headerText="Resuelve"><h:outputText value="#{resolucion.resuelve}"/></p:column>
+                            <p:column headerText="Visto"><h:outputText value="#{resolucion.visto}"/></p:column>
+                            <p:column headerText="Funcionario"><h:outputText value="#{resolucion.idFuncionario.nombre_completo}"/></p:column>
+                           <p:column headerText="Seguimiento"><h:outputText value="#{resolucion.idSeguimiento.descripcion}"/></p:column>
+                            <f:facet name="footer">
+                                <div>
+                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{ResolutionBean.nuevaResolucion}" update=":ResolucionesEditNewForm" oncomplete="PF('ResolucionesEditNewDialog').show()"/>                                    
+                                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":ResolucionesEditNewForm" oncomplete="PF('ResolucionesEditNewDialog').show()" disabled="#{empty ResolutionBean.selectedResolution}"/>
+                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{ResolutionBean.eliminarResolucion}" update="datalist" disabled="#{empty ResolutionBean.selectedResolution}">
+                                        <p:confirm header="Confirmar acción" message="¿Eliminar resolucion del sistema? Esta acción no podrá deshacerse" icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                    <ui:include src="../templates/confirmation.xhtml"/>
+                </h:form>
+
+                <!--create and edit-->
+                <p:dialog header="Editar Resolucion" id="ResolutionEditNewDlg" widgetVar="ResolucionesEditNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                    <h:form id="ResolucionesEditNewForm">
+                        <h:panelGroup id="display" rendered="true">
+                            <p:panelGrid columns="2">
+
+                                <p:outputLabel value="Fecha" />
+                                <p:inputText id="fecha" value="#{ResolutionBean.selectedResolution.fecha}" required="true" size="50" maxlength="50"/>
+
+                                <p:outputLabel value="Numero" />
+                                <p:inputText id="numero" value="#{ResolutionBean.selectedResolution.numero}" required="true" size="30" maxlength="30" />
+
+                                <p:outputLabel value="Resuelve" />
+                                <p:password id="resuelve" value="#{ResolutionBean.selectedResolution.resuelve}" required="true" size="30" maxlength="30" redisplay="true"/>
+
+                                <p:outputLabel value="Funcionario" />
+                                <h:selectOneMenu  value="#{ResolutionBean.selectedFuncionario}"> 
+                                    <f:selectItems value="#{ResolutionBean.funcionariosList}" var="funcionario" itemLabel="#{funcionario.nombre_completo}" itemValue="#{funcionario.nombre_completo}" />
+                               </h:selectOneMenu>
+              
+                            </p:panelGrid>
+                            <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
+                                <p:commandButton value="Guardar" action="#{ResolutionBean.guardarResolucion}" update="display,:ResolucionesListForm:datalist" oncomplete="PF('ResolucionesEditNewDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('ResolucionesEditNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </p:dialog>                  
+                </ui:define>
+         </ui:composition>
+    </h:body>
+</html>
+
