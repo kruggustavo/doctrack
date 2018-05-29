@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+	<ui:composition template="../../dashboard.xhtml">
+            <ui:define name="content">  
+                
+                <!--list -->
+                <h:form id="DistritosListForm">
+                    <p:panel header="Distritos del sistema" style="width: 90%">
+                        <p:dataTable id="datalist" value="#{districtBean.districtList}" lazy="false" rowKey="#{distritos.id}" var="distritos" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{districtBean.selectedDistrict}" >
+
+                            <p:ajax event="rowSelect"   update="createButton,editButton,deleteButton"/>
+                            <p:ajax event="rowUnselect" update="createButton,editButton,deleteButton"/>
+
+                            <p:column headerText="ID"><h:outputText value="#{distritos.id}"/></p:column>
+                            <p:column headerText="Nombre de distrito"><h:outputText value="#{distritos.nombre}"/></p:column>
+                            
+
+                            <f:facet name="footer">
+                                <div>
+                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{districtBean.nuevoDistrito}" update=":DistritosEditNewForm" oncomplete="PF('DistritosEditNewDialog').show()"/>                                    
+                                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":DistritosEditNewForm" oncomplete="PF('DistritosEditNewDialog').show()" disabled="#{empty districtBean.selectedDistrict}"/>
+                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{districtBean.eliminarDistrito}" update="datalist" disabled="#{empty districtBean.selectedDistrict}">
+                                        <p:confirm header="Confirmar acción" message="¿Eliminar distrito del sistema? Esta acción no podrá deshacerse" icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                    <ui:include src="../templates/confirmation.xhtml"/>
+                </h:form>
+
+                <!--create and edit-->
+                <p:dialog header="Editar distrito" id="DistritosEditNewDlg" widgetVar="DistritosEditNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                    <h:form id="DistritosEditNewForm">
+                        <h:panelGroup id="display" rendered="true">
+                            <p:panelGrid columns="2">
+
+                                <p:outputLabel value="Id" />
+                                <p:inputText id="nombrecompleto" value="#{districtBean.selectedDistrict.id}" required="true" size="50" maxlength="50"/>
+
+                                <p:outputLabel value="Nombre del Distrito" />
+                                <p:inputText id="alias" value="#{districtBean.selectedDistrict.nombre}" required="true" size="30" maxlength="30" />
+              
+                            </p:panelGrid>
+                            <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
+                                <p:commandButton value="Guardar" action="#{districtBean.guardarDistrito}" update="display,:DistritosListForm:datalist" oncomplete="PF('DistritosEditNewDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('DistritosEditNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </p:dialog>                  
+
+            </ui:define>
+	</ui:composition>
+    </h:body>
+</html>
