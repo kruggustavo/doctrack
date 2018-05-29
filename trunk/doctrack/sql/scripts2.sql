@@ -1,11 +1,4 @@
-﻿# Host: localhost  (Version 5.5.21)
-# Date: 2018-05-29 05:39:59
-# Generator: MySQL-Front 6.0  (Build 2.20)
-
-
-#
-# Structure for table "areas"
-#
+use doctrack;
 
 DROP TABLE IF EXISTS `areas`;
 CREATE TABLE `areas` (
@@ -17,15 +10,6 @@ CREATE TABLE `areas` (
   CONSTRAINT `areas_ibfk_1` FOREIGN KEY (`idDependencia`) REFERENCES `dependencias` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "areas"
-#
-
-
-#
-# Structure for table "dependencias"
-#
-
 DROP TABLE IF EXISTS `dependencias`;
 CREATE TABLE `dependencias` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -35,14 +19,6 @@ CREATE TABLE `dependencias` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "dependencias"
-#
-
-
-#
-# Structure for table "distritos"
-#
 
 DROP TABLE IF EXISTS `distritos`;
 CREATE TABLE `distritos` (
@@ -51,15 +27,7 @@ CREATE TABLE `distritos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-#
-# Data for table "distritos"
-#
-
 INSERT INTO `distritos` VALUES (1,'Encarnacion');
-
-#
-# Structure for table "funcionarios"
-#
 
 DROP TABLE IF EXISTS `funcionarios`;
 CREATE TABLE `funcionarios` (
@@ -72,15 +40,7 @@ CREATE TABLE `funcionarios` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "funcionarios"
-#
-
 INSERT INTO `funcionarios` VALUES (1,'Celso Ramirez','centro encarnacion','44452','00005','celso@gmail.com');
-
-#
-# Structure for table "gestiondocumentos"
-#
 
 DROP TABLE IF EXISTS `gestiondocumentos`;
 CREATE TABLE `gestiondocumentos` (
@@ -98,32 +58,6 @@ CREATE TABLE `gestiondocumentos` (
   CONSTRAINT `gestiondocumentos_ibfk_2` FOREIGN KEY (`idArea`) REFERENCES `areas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "gestiondocumentos"
-#
-
-
-#
-# Structure for table "roles"
-#
-
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE `roles` (
-  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `Descripcion` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
-#
-# Data for table "roles"
-#
-
-INSERT INTO `roles` VALUES (1,'ADMINISTRADOR');
-
-#
-# Structure for table "superviciones"
-#
-
 DROP TABLE IF EXISTS `superviciones`;
 CREATE TABLE `superviciones` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -140,15 +74,7 @@ CREATE TABLE `superviciones` (
   CONSTRAINT `superviciones_ibfk_2` FOREIGN KEY (`idDistrito`) REFERENCES `distritos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "superviciones"
-#
-
 INSERT INTO `superviciones` VALUES (1,'5','carlos antonio lopez','5552','suemail@gmail.com',1,1);
-
-#
-# Structure for table "tipodocumento"
-#
 
 DROP TABLE IF EXISTS `tipodocumento`;
 CREATE TABLE `tipodocumento` (
@@ -157,15 +83,7 @@ CREATE TABLE `tipodocumento` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-#
-# Data for table "tipodocumento"
-#
-
 INSERT INTO `tipodocumento` VALUES (1,'nota ac'),(2,'nueva nota');
-
-#
-# Structure for table "tramitantes"
-#
 
 DROP TABLE IF EXISTS `tramitantes`;
 CREATE TABLE `tramitantes` (
@@ -178,15 +96,7 @@ CREATE TABLE `tramitantes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "tramitantes"
-#
-
 INSERT INTO `tramitantes` VALUES (1,'Juan Perez','su casa','000','0005','juan@gmail.com'),(2,'nuevo tramitantes','su casa','552','545','suemail@gmail.com');
-
-#
-# Structure for table "documentos"
-#
 
 DROP TABLE IF EXISTS `documentos`;
 CREATE TABLE `documentos` (
@@ -204,15 +114,7 @@ CREATE TABLE `documentos` (
   CONSTRAINT `fk_idTramitante` FOREIGN KEY (`idTramitante`) REFERENCES `tramitantes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "documentos"
-#
-
 INSERT INTO `documentos` VALUES (1,'documento prueba','2018-05-29 01:30:00','sin obs',1,1,'00025/18');
-
-#
-# Structure for table "adjuntos"
-#
 
 DROP TABLE IF EXISTS `adjuntos`;
 CREATE TABLE `adjuntos` (
@@ -225,14 +127,6 @@ CREATE TABLE `adjuntos` (
   CONSTRAINT `adjuntos_ibfk_2` FOREIGN KEY (`idDocumento`) REFERENCES `documentos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "adjuntos"
-#
-
-
-#
-# Structure for table "seguimiento"
-#
 
 DROP TABLE IF EXISTS `seguimiento`;
 CREATE TABLE `seguimiento` (
@@ -247,14 +141,6 @@ CREATE TABLE `seguimiento` (
   CONSTRAINT `seguimiento_ibfk_1` FOREIGN KEY (`idDocumento`) REFERENCES `documentos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "seguimiento"
-#
-
-
-#
-# Structure for table "resolucion"
-#
 
 DROP TABLE IF EXISTS `resolucion`;
 CREATE TABLE `resolucion` (
@@ -272,16 +158,22 @@ CREATE TABLE `resolucion` (
   CONSTRAINT `resolucion_ibfk_2` FOREIGN KEY (`idSeguimiento`) REFERENCES `seguimiento` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Data for table "resolucion"
-#
-
-
-#
-# Structure for table "usuarios"
-#
-
 DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `roles`;
+
+CREATE TABLE `roles` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `Descripcion` varchar(50) NOT NULL DEFAULT '',
+  `Ingresa_documentos` enum('Si','No') not null DEFAULT 'No',
+  `Transferir_documentos` enum('Si','No') not null DEFAULT 'No',
+  `Cambiar_estado` enum('Si','No') not null DEFAULT 'No',
+  `Cerrar_estado` enum('Si','No') not null DEFAULT 'No',
+  `Generar_resoluciones` enum('Si','No') not null DEFAULT 'No',
+  `Visualizar_informes` enum('Si','No') not null DEFAULT 'No',
+  `Administra_configuraciones` enum('Si','No') not null DEFAULT 'No',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `usuarios` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `Nombre_completo` varchar(50) NOT NULL DEFAULT '',
@@ -291,10 +183,4 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`),
   KEY `idRol` (`idRol`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`idRol`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
-#
-# Data for table "usuarios"
-#
-
-INSERT INTO `usuarios` VALUES (1,'Gustavo Escobar','admin','12345',1),(2,'alberto caceres','albert','12345',1),(3,'nuevo user act','nv','nv',1),(4,'prueba','prueba','12345',1);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
