@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+	<ui:composition template="../../dashboard.xhtml">
+            <ui:define name="content">  
+                
+                <!--list -->
+                <h:form id="DocLisFormListForm">
+                    <p:panel header="Documentos" style="width: 90%">
+                        <p:dataTable id="datalist" var="doc" value="#{documentosBean.listaDoc}" lazy="false" rowKey="#{doc.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{documentosBean.documentos}" >
+
+                            <p:column headerText="Nª Doc."><h:outputText value="#{doc.numeroDoc}"/></p:column>
+                            <p:column headerText="Descripción"><h:outputText value="#{doc.descripcion}"/></p:column>
+                            <p:column headerText="Fecha de Entrada"><h:outputText value="#{doc.fechaentrada}"/></p:column>
+                            <p:column headerText="Supervisión"><h:outputText value="#{doc.idSupervicion.numeroSupervision}"/></p:column>
+                            <p:column headerText="Tramitante"><h:outputText value="#{doc.idTramitante.nombreCompleto}"/></p:column>
+                            <p:column headerText="C.I."><h:outputText value="#{doc.idTramitante.ci}"/></p:column>
+                           
+          
+                        </p:dataTable>
+                    </p:panel>
+                    <ui:include src="../templates/confirmation.xhtml"/>
+                </h:form>
+               
+            </ui:define>
+	</ui:composition>
+    </h:body>
+</html>

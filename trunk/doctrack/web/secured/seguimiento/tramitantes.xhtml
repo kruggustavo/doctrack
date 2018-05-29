@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="../../dashboard.xhtml">
+            <ui:define name="content">
+                <h:form id="TramitantesLisForm"><!--siempre utilizo un from principal -->
+                    <p:panel header="Tramitantes de Documentos" style="width: 90%"> <!--utilizo un panel que me sirva como contenedor -->
+                        <p:dataTable id="datalist" var="tram" value="#{tramitantesBean.tramitantesList}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" lazy="false" rowKey="#{tram.id}" selectionMode="single" selection="#{tramitantesBean.tramitantes}">
+                        <!--en el dataTable se cargan los datos y los demas son sus propiedades, paginator=paginacion rows=las filas 
+                        rowsPerPageTemplate= las opciones de cantidad de filas x paginas selectionMode single= para que pueda seleccionar una fila -->    
+                            <p:ajax event="rowSelect"   update="createButton,editButton"/>
+                            <p:ajax event="rowUnselect" update="createButton,editButton"/>
+                            <!-- crea eventos ajax en las acciones del boton crear, editar y delete, es decir aqui las declaro para luego utilizar en los botonones con update que hacer actualizar contenedores -->
+                            <!-- estas acciones son las de seleccionar y deseleccionar una fila. update siempre hace referencia a los id -->
+                            <p:column headerText="Nombre Completo"><h:outputText value="#{tram.nombreCompleto}"/></p:column>
+                            <p:column headerText="C.I"><h:outputText value="#{tram.ci}"/></p:column>
+                            <p:column headerText="Dirección"><h:outputText value="#{tram.direccion}"/></p:column>
+                            <p:column headerText="Teléfono"><h:outputText value="#{tram.telefono}"/></p:column>
+                            <p:column headerText="E-mail"><h:outputText value="#{tram.email}"/></p:column>
+                            <!-- este footer es para el boton -->
+                            <f:facet name="footer">
+                                <div>
+                                    <p:commandButton value="Nuevo" id="createButton" actionListener="#{tramitantesBean.nuevoTramitante}" icon="ui-icon-plus" oncomplete="PF('TramitanteNewDialog').show()" update="TramitanteNewForm" />
+                                    <p:commandButton value="Editar" id="editButton"  icon="ui-icon-pencil" update=":TramitanteEditNewForm" oncomplete="PF('TramitanteEditNewDialog').show()" disabled="#{empty tramitantesBean.tramitantes}"/>
+                                <!--oncomplete hace realiza un funcion javascript al terminar una peticion, en este caso le decimos que abra un dialog al terminar el evento button y update al id del form-->
+                                <!--actionListener es para metodos void, action para metodos que retornan valor o redireccion -->
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                    <ui:include src="../templates/confirmation.xhtml"/>
+                </h:form>
+                
+                <!--dialog para crear-->
+                <p:dialog header="Registrar Tramitante" id="TramitanteNewDg" widgetVar="TramitanteNewDialog" minHeight="40" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)">
+                    <!--el modal es para que se comporte como un modal el dialog, resizable false para que no se modifiquen las dimensiones, closeOnEscape para que se pueda cerrar con el escape
+                    appendTo @body para que se visualize enfrente-->
+                    <h:form id="TramitanteNewForm">
+                        <h:panelGroup id="display" rendered="true">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Nombre Completo" />
+                                <p:inputText id="nombrecompleto" value="#{tramitantesBean.tramitantes.nombreCompleto}" required="true" size="50" maxlength="50"/>
+                                <p:outputLabel value="C.I" />
+                                <p:inputText id="ci" value="#{tramitantesBean.tramitantes.ci}" required="true" size="30" maxlength="30" />
+                                <p:outputLabel value="Dirección" />
+                                <p:inputText id="direccion" value="#{tramitantesBean.tramitantes.direccion}" required="true" size="30" maxlength="30" />
+                                <p:outputLabel value="Teléfono" />
+                                <p:inputText id="telefono" value="#{tramitantesBean.tramitantes.telefono}" required="true" size="30" maxlength="30" />
+                                <p:outputLabel value="E-mail" />
+                                <p:inputText id="email" value="#{tramitantesBean.tramitantes.email}" required="true" size="30" maxlength="30" />
+                                <!--anteriormente cree el objeto y aqui le asigno los valores como un set -->
+                            </p:panelGrid>
+                            <!--botones de guardar y cancelar -->
+                            <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
+                                <p:commandButton value="Guardar" action="#{tramitantesBean.guardarTramitante}" update="display,:TramitantesLisForm:datalist" oncomplete="PF('TramitanteNewDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" update="display" oncomplete="PF('TramitanteNewDialog').hide()"/>
+                                <!--hide() dice que el dialog se esconda y con update me redirijo a la direccion especificada-->
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </p:dialog>
+                
+               <!--dialog para editar/actualizar-->
+                <p:dialog header="Editar Tramitante" id="TramitanteEditNewDg" widgetVar="TramitanteEditNewDialog" minHeight="40" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)">
+                    <!--el modal es para que se comporte como un modal el dialog, resizable false para que no se modifiquen las dimensiones, closeOnEscape para que se pueda cerrar con el escape
+                    appendTo @body para que se visualize enfrente-->
+                    <h:form id="TramitanteEditNewForm">
+                        <h:panelGroup id="display" rendered="true">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Nombre Completo" />
+                                <p:inputText id="nombrecompleto" value="#{tramitantesBean.tramitantes.nombreCompleto}" required="true" size="50" maxlength="50"/>
+                                <p:outputLabel value="C.I" />
+                                <p:inputText id="ci" value="#{tramitantesBean.tramitantes.ci}" required="true" size="30" maxlength="30" />
+                                <p:outputLabel value="Dirección" />
+                                <p:inputText id="direccion" value="#{tramitantesBean.tramitantes.direccion}" required="true" size="30" maxlength="30" />
+                                <p:outputLabel value="Teléfono" />
+                                <p:inputText id="telefono" value="#{tramitantesBean.tramitantes.telefono}" required="true" size="30" maxlength="30" />
+                                <p:outputLabel value="E-mail" />
+                                <p:inputText id="email" value="#{tramitantesBean.tramitantes.email}" required="true" size="30" maxlength="30" />
+                                <!--anteriormente cree el objeto y aqui le asigno los valores como un set -->
+                            </p:panelGrid>
+                            <!--botones de guardar y cancelar -->
+                            <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
+                                <p:commandButton value="Guardar" action="#{tramitantesBean.guardarTramitante}" update="display,:TramitantesLisForm:datalist" oncomplete="PF('TramitanteEditNewDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" update="display" oncomplete="PF('TramitanteEditNewDialog').hide()"/>
+                                <!--hide() dice que el dialog se esconda y con update me redirijo a la direccion especificada-->
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
