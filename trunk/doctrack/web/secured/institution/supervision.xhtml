@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+	<ui:composition template="../../dashboard.xhtml">
+            <ui:define name="content">  
+                
+                <!--list -->
+                <h:form id="SuoervicionesListForm">
+                    <p:panel header="Suoerviciones del sistema" style="width: 90%">
+                        <p:dataTable id="datalist" value="#{supervisionBean.supervisionList}" lazy="false" rowKey="#{superviciones.id}" var="superviciones" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{supervisionBean.selectedSupervision}" >
+
+                            <p:ajax event="rowSelect"   update="createButton,editButton,deleteButton"/>
+                            <p:ajax event="rowUnselect" update="createButton,editButton,deleteButton"/>
+
+                            <p:column headerText="ID"><h:outputText value="#{superviciones.id}"/></p:column>
+                            <p:column headerText="Numero de la suoervicion"><h:outputText value="#{superviciones.numeroSupervision}"/></p:column>
+                            <p:column headerText="Direccion"><h:outputText value="#{superviciones.direccion}"/></p:column>
+                            <p:column headerText="Telefono"><h:outputText value="#{superviciones.telefono}"/></p:column>
+                            <p:column headerText="Email"><h:outputText value="#{superviciones.email}"/></p:column>
+                            
+                            
+                            <f:facet name="footer">
+                                <div>
+                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{supervisionBean.nuevoSupervision}" update=":SuoervicionesEditNewForm" oncomplete="PF('SuoervicionesEditNewDialog').show()"/>                                    
+                                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":SuoervicionesEditNewForm" oncomplete="PF('SuoervicionesEditNewDialog').show()" disabled="#{empty supervisionBean.selectedSupervision}"/>
+                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{supervisionBean.eliminarSupervision}" update="datalist" disabled="#{empty supervisionBean.selectedSupervision}">
+                                        <p:confirm header="Confirmar acción" message="¿Eliminar suoervicion del sistema? Esta acción no podrá deshacerse" icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                    <ui:include src="../templates/confirmation.xhtml"/>
+                </h:form>
+
+                <!--create and edit-->
+                <p:dialog header="Editar suoervicion" id="SuoervicionesEditNewDlg" widgetVar="SuoervicionesEditNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                    <h:form id="SuoervicionesEditNewForm">
+                        <h:panelGroup id="display" rendered="true">
+                            <p:panelGrid columns="2">
+
+                                <p:outputLabel value="Id" />
+                                <p:inputText id="nombrecompleto" value="#{supervisionBean.selectedSupervision.id}" required="true" size="50" maxlength="50"/>
+
+                                <p:outputLabel value="Numero de la suoervicion" />
+                                <p:inputText id="alias" value="#{supervisionBean.selectedSupervision.numeroSupervision}" required="true" size="30" maxlength="30" />
+                                
+                                <p:outputLabel value="Direccion" />
+                                <p:inputText id="alias" value="#{supervisionBean.selectedSupervision.direccion}" required="true" size="30" maxlength="30" />
+                                
+                                <p:outputLabel value="Telefono" />
+                                <p:inputText id="alias" value="#{supervisionBean.selectedSupervision.telefono}" required="true" size="30" maxlength="30" />
+                                
+                                <p:outputLabel value="Email" />
+                                <p:inputText id="alias" value="#{supervisionBean.selectedSupervision.email}" required="true" size="30" maxlength="30" />
+                                
+                            </p:panelGrid>
+                            <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
+                                <p:commandButton value="Guardar" action="#{supervisionBean.guardarSupervision}" update="display,:SuoervicionesListForm:datalist" oncomplete="PF('SuoervicionesEditNewDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('SuoervicionesEditNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </p:dialog>                  
+
+            </ui:define>
+	</ui:composition>
+    </h:body>
+</html>
