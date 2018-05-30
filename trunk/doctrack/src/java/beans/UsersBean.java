@@ -4,9 +4,11 @@ import controllers.UserController;
 import entities.users.Roles;
 import entities.users.Usuarios;
 import java.io.Serializable;
-import java.util.List;;
+import java.util.List;import javax.faces.application.FacesMessage;
+;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -33,6 +35,11 @@ public class UsersBean implements Serializable{
     //Métodos usados como actionListeners del CRUD de Usuarios & Roles
     public void nuevoUsuario(){
         selectedUser = new Usuarios();
+        selectedUser.setAlias("");
+    }
+    
+    public void editarUsuario(){
+        selectedRole = selectedUser.getIdRol().getDescripcion();
     }
     
     public void guardarUsuario(){          
@@ -51,8 +58,25 @@ public class UsersBean implements Serializable{
     }
     
     public void eliminarUsuario(){
-        controller.deleteUser(selectedUser);
-        selectedUser = null;
+        if (usersList.size() > 1){
+            //Obtener cantidad de administradores
+            int cantidadAdministradores = controller.getAdminUsers().size();
+            
+            //Solo eliminamos roles si administradores > 1 y si actual no es administrador
+            if (cantidadAdministradores > 1 || selectedUser.getIdRol().getAdministraconfiguraciones().equals("No")){
+                controller.deleteUser(selectedUser);
+                selectedUser = null;                           
+            }else{
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "No se puede eliminar único administrador"));    
+            }
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "No se puede eliminar único usuario"));    
+        }        
+        
+        
+        
+        
+
     }
     
     // Getters y Setters

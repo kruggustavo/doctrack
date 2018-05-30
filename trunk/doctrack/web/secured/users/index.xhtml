@@ -8,7 +8,7 @@
     <h:body>
 	<ui:composition template="../../dashboard.xhtml">
             <ui:define name="content">  
-                
+                <p:growl id="growl" showDetail="true" life="10000"/> 
                 <!--list -->
                 <h:form id="UsuariosListForm">
                     <p:panel header="Usuarios del sistema" style="width: 90%; margin: 0 auto; vertical-align: middle">
@@ -25,8 +25,8 @@
                             <f:facet name="footer">
                                 <div>
                                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{usersBean.nuevoUsuario}" update=":UsuariosEditNewForm" oncomplete="PF('UsuariosEditNewDialog').show()"/>                                    
-                                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":UsuariosEditNewForm" oncomplete="PF('UsuariosEditNewDialog').show()" disabled="#{empty usersBean.selectedUser}"/>
-                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{usersBean.eliminarUsuario}" update="datalist" disabled="#{empty usersBean.selectedUser}">
+                                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" actionListener="#{usersBean.editarUsuario}" update=":UsuariosEditNewForm" oncomplete="PF('UsuariosEditNewDialog').show()" disabled="#{empty usersBean.selectedUser}"/>
+                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{usersBean.eliminarUsuario}" update="datalist,growl" disabled="#{empty usersBean.selectedUser}">
                                         <p:confirm header="Confirmar acción" message="¿Eliminar usuario del sistema? Esta acción no podrá deshacerse" icon="ui-icon-alert"/>
                                     </p:commandButton>
                                 </div>
@@ -45,7 +45,9 @@
                                 <p:inputText id="nombrecompleto" value="#{usersBean.selectedUser.nombrecompleto}" required="true" size="50" maxlength="50"/>
 
                                 <p:outputLabel value="Alias" />
-                                <p:inputText id="alias" value="#{usersBean.selectedUser.alias}" required="true" size="30" maxlength="30" />
+                                <p:inputText id="alias" value="#{usersBean.selectedUser.alias}" required="true" size="30" maxlength="30" >
+                                    <p:ajax event="keyup" update="saveButton" />
+                                </p:inputText>
 
                                 <p:outputLabel value="Clave" />
                                 <p:password id="clave" value="#{usersBean.selectedUser.clave}" required="true" size="30" maxlength="30" redisplay="true"/>
@@ -61,7 +63,7 @@
                             </p:panelGrid>
                             
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{usersBean.guardarUsuario}" update="display,:UsuariosListForm:datalist" oncomplete="PF('UsuariosEditNewDialog').hide();" disabled="#{empty usersBean.rolesList}" />                              
+                                <p:commandButton value="Guardar" id="saveButton" action="#{usersBean.guardarUsuario}" update="display,:UsuariosListForm:datalist" oncomplete="PF('UsuariosEditNewDialog').hide();" disabled="#{usersBean.selectedUser.alias.length() lt 1}" />                              
                                 <p:commandButton value="Cerrar" oncomplete="PF('UsuariosEditNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:panelGroup>

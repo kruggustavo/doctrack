@@ -40,4 +40,23 @@ public class UserController {
         t.deleteEntity(u);
     }
     
+    public void saveRol(Roles r){
+        t.saveEntity(r);
+    }
+    
+    public void deleteRol(Roles r){
+        t.deleteEntity(r);
+    }
+    
+    public List getRolAdmins(){
+        List l = t.getList("from Roles where administraconfiguraciones ='Si'");
+        return l;
+    }
+    
+    public List getAdminUsers(){
+        List l = t.getList("from Usuarios where idRol.administraconfiguraciones ='Si'");
+        return l;
+    }
+    
+    
 }

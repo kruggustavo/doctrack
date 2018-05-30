@@ -1,10 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package entities.institucion;
 
-import entities.institucion.Superviciones;
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,16 +14,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Arza
+ * @author usuario
  */
 @Entity
 @Table(name = "dependencias")
@@ -29,7 +29,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Dependencias.findAll", query = "SELECT d FROM Dependencias d")
     , @NamedQuery(name = "Dependencias.findById", query = "SELECT d FROM Dependencias d WHERE d.id = :id")
-    , @NamedQuery(name = "Dependencias.findByNombre", query = "SELECT d FROM Dependencias d WHERE d.nombre = :nombre")})
+    , @NamedQuery(name = "Dependencias.findByNombre", query = "SELECT d FROM Dependencias d WHERE d.nombre = :nombre")
+    , @NamedQuery(name = "Dependencias.findByEmail", query = "SELECT d FROM Dependencias d WHERE d.email = :email")
+    , @NamedQuery(name = "Dependencias.findByInterno", query = "SELECT d FROM Dependencias d WHERE d.interno = :interno")})
 public class Dependencias implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,45 +39,43 @@ public class Dependencias implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "Nombre")
+    @Size(min = 1, max = 80)
+    @Column(name = "nombre")
     private String nombre;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "Interno")
+    @Column(name = "interno")
     private String interno;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDependencias")
-    private List<Superviciones> supervicionesList;
 
     public Dependencias() {
     }
 
-    public Dependencias(Integer id) {
+    public Dependencias(Long id) {
         this.id = id;
     }
 
-    public Dependencias(Integer id, String nombre, String email, String interno) {
+    public Dependencias(Long id, String nombre, String email, String interno) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.interno = interno;
-        
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -87,30 +87,20 @@ public class Dependencias implements Serializable {
         this.nombre = nombre;
     }
 
-     public String getEmail() {
+    public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
-    
-     public String getInterno() {
+
+    public String getInterno() {
         return interno;
     }
 
     public void setInterno(String interno) {
         this.interno = interno;
-    }
-    
-    
-    @XmlTransient
-    public List<Superviciones> getSupervicionesList() {
-        return supervicionesList;
-    }
-
-    public void setSupervicionesList(List<Superviciones> supervicionesList) {
-        this.supervicionesList = supervicionesList;
     }
 
     @Override
@@ -135,7 +125,7 @@ public class Dependencias implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Dependencias[ id=" + id + " ]";
+        return "entities.institucion.Dependencias[ id=" + id + " ]";
     }
     
 }

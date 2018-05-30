@@ -8,22 +8,30 @@
     <h:body>
 	<ui:composition template="../../dashboard.xhtml">
             <ui:define name="content">  
-                
+                <p:growl id="growl" showDetail="true" life="10000"/> 
+            
                 <!--list -->
                 <h:form id="RolesListForm">
-                    <p:panel header="Roles de usuario" style="width: 50%; margin: 0 auto" >
-                        <p:dataTable id="datalist" value="#{rolesBean.rolesList}" lazy="false" rowKey="#{roles.id}" var="usuarios" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{rolesBean.selectedRol}" >
+                    <p:panel header="Roles de usuario y permisos" style="width: 95%; margin: 0 auto" >
+                        <p:dataTable id="datalist" value="#{rolesBean.rolesList}" lazy="false" rowKey="#{roles.id}" var="roles" selectionMode="single" selection="#{rolesBean.selectedRol}" >
 
                             <p:ajax event="rowSelect"   update="createButton,editButton,deleteButton"/>
                             <p:ajax event="rowUnselect" update="createButton,editButton,deleteButton"/>
 
                             <p:column headerText="Descripcion"><h:outputText value="#{roles.descripcion}"/></p:column>
+                            <p:column headerText="Ingresa documentos"><h:outputText value="#{roles.ingresadocumentos}"/></p:column>
+                            <p:column headerText="Transferir documentos"><h:outputText value="#{roles.transferirdocumentos}"/></p:column>
+                            <p:column headerText="Cambia estado documentos"><h:outputText value="#{roles.cambiarestado}"/></p:column>
+                            <p:column headerText="Cierra documento"><h:outputText value="#{roles.cerrarestado}"/></p:column>
+                            <p:column headerText="Resoluciones"><h:outputText value="#{roles.generarresoluciones}"/></p:column>
+                            <p:column headerText="Ver informes"><h:outputText value="#{roles.visualizarinformes}"/></p:column>
+                            <p:column headerText="Administrador de sistema"><h:outputText value="#{roles.administraconfiguraciones}"/></p:column>                       
             
                             <f:facet name="footer">
                                 <div>
                                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{rolesBean.nuevoRol}" update=":RolesEditNewForm" oncomplete="PF('RolesEditNewDialog').show()"/>                                    
                                     <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":RolesEditNewForm" oncomplete="PF('RolesEditNewDialog').show()" disabled="#{empty rolesBean.selectedRol}"/>
-                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{rolesBean.eliminarRol}" update="datalist" disabled="#{empty rolesBean.selectedRol}">
+                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{rolesBean.eliminarRol}" update="datalist,growl" disabled="#{empty rolesBean.selectedRol}">
                                         <p:confirm header="Confirmar acción" message="¿Eliminar rol de usuario del sistema? Esta acción no podrá deshacerse" icon="ui-icon-alert"/>
                                     </p:commandButton>
                                 </div>
@@ -34,16 +42,53 @@
                 </h:form>
 
                 <!--create and edit-->
-                <p:dialog header="Editar usuario" id="RolesEditNewDlg" widgetVar="RolesEditNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                <p:dialog header="Editar rol de sistema" id="RolesEditNewDlg" widgetVar="RolesEditNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
                     <h:form id="RolesEditNewForm">
                         <h:panelGroup id="display" rendered="true">
                             <p:panelGrid columns="2">
-                                <p:outputLabel value="Descripcion" />
-                                <p:inputText id="nombrecompleto" value="#{rolesBean.selectedRol.descripcion}" required="true" size="50" maxlength="50"/>
+                                <p:outputLabel value="Descripcion del rol" />
+                                <p:inputText id="nombrecompleto" value="#{rolesBean.selectedRol.descripcion}" required="true" size="50" maxlength="50">
+                                    <p:ajax event="keyup" update="saveButton" />
+                                </p:inputText>
             
+                                <p:outputLabel value="Puede ingresar documentos al sistema" />
+                                <p:selectOneMenu id="docinput1" value="#{rolesBean.selectedRol.ingresadocumentos}">                                    
+                                    <f:selectItems value="#{rolesBean.yesNoOptions}" />
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel value="Puede transferir documentos entre dependencias" />
+                                <p:selectOneMenu id="docinput2" value="#{rolesBean.selectedRol.transferirdocumentos}">                                    
+                                    <f:selectItems value="#{rolesBean.yesNoOptions}" />
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Puede cambiar el estado de documentos" />
+                                <p:selectOneMenu id="docinput3" value="#{rolesBean.selectedRol.cambiarestado}">                                    
+                                    <f:selectItems value="#{rolesBean.yesNoOptions}" />
+                                </p:selectOneMenu>                                
+
+                                <p:outputLabel value="Puede dar de baja documentos" />
+                                <p:selectOneMenu id="docinput4" value="#{rolesBean.selectedRol.cerrarestado}">                                    
+                                    <f:selectItems value="#{rolesBean.yesNoOptions}" />
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel value="Puede generar resoluciones de documentos" />
+                                <p:selectOneMenu id="docinput5" value="#{rolesBean.selectedRol.generarresoluciones}">                                    
+                                    <f:selectItems value="#{rolesBean.yesNoOptions}" />
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel value="Puede visualizar informes del sistema" />
+                                <p:selectOneMenu id="docinput6" value="#{rolesBean.selectedRol.visualizarinformes}">                                    
+                                    <f:selectItems value="#{rolesBean.yesNoOptions}" />
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel value="Puede modificar parametros del sistema" />
+                                <p:selectOneMenu id="docinput7" value="#{rolesBean.selectedRol.administraconfiguraciones}">                                    
+                                    <f:selectItems value="#{rolesBean.yesNoOptions}" />
+                                </p:selectOneMenu>
+                                                                
                             </p:panelGrid>                            
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{rolesBean.guardarRol}" update="display,:RolesListForm:datalist" oncomplete="PF('RolesEditNewDialog').hide();" disabled="#{empty rolesBean.rolesList}" />                              
+                                <p:commandButton value="Guardar" id="saveButton" action="#{rolesBean.guardarRol}" update="display,:RolesListForm:datalist" oncomplete="PF('RolesEditNewDialog').hide();" disabled="#{rolesBean.selectedRol.descripcion.length() lt 1}" />                              
                                 <p:commandButton value="Cerrar" oncomplete="PF('RolesEditNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:panelGroup>
