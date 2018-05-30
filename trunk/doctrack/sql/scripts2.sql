@@ -1,15 +1,5 @@
 use doctrack;
 
-DROP TABLE IF EXISTS `areas`;
-CREATE TABLE `areas` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(80) NOT NULL DEFAULT '',
-  `idDependencia` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idDependencia` (`idDependencia`),
-  CONSTRAINT `areas_ibfk_1` FOREIGN KEY (`idDependencia`) REFERENCES `dependencias` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `dependencias`;
 CREATE TABLE `dependencias` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -19,6 +9,15 @@ CREATE TABLE `dependencias` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `areas`;
+CREATE TABLE `areas` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(80) NOT NULL DEFAULT '',
+  `idDependencia` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idDependencia` (`idDependencia`),
+  CONSTRAINT `areas_ibfk_1` FOREIGN KEY (`idDependencia`) REFERENCES `dependencias` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `distritos`;
 CREATE TABLE `distritos` (
@@ -184,3 +183,11 @@ CREATE TABLE `usuarios` (
   KEY `idRol` (`idRol`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`idRol`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO roles (descripcion, administra_configuraciones)
+SELECT * FROM (SELECT 'Administrador', 'Si') AS tmp
+WHERE NOT EXISTS (SELECT descripcion FROM roles) LIMIT 1;
+
+INSERT INTO usuarios (alias, clave, idRol)
+SELECT * FROM (SELECT 'admin', '123', id from Roles limit 1) AS tmp
+WHERE NOT EXISTS (SELECT alias FROM usuarios) LIMIT 1;
