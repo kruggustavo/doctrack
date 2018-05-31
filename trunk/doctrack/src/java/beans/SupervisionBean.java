@@ -18,11 +18,13 @@ import javax.faces.bean.SessionScoped;
 public class SupervisionBean implements Serializable{
     private static final long serialVersionUID = -6680733133634363295L;
 
-    private String nombreCompleto;
-    private String alias;
-    private String clave;
+    private Long id;
+    private String numeroSupervision;
+    private String direccion;
+    private String telefono;
+    private String email;
     
-    private List usersList;
+    private List supervisionList;
     private List distritosList;
     
     private Superviciones selectedSupervision;
@@ -57,12 +59,12 @@ public class SupervisionBean implements Serializable{
     
     // Getters y Setters
     public List getSupervisionList() {
-        usersList = controller.getSupervisionList();
-        return usersList;
+        supervisionList = controller.getSupervisionList();
+        return supervisionList;
     }
 
-    public void setSupervisionList(List usersList) {
-        this.usersList = usersList;
+    public void setSupervisionList(List supervisionList) {
+        this.supervisionList = supervisionList;
     }
 
     public Superviciones getSelectedSupervision() {
@@ -90,27 +92,43 @@ public class SupervisionBean implements Serializable{
         this.selectedDistrict = selectedDistrict;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public Long getId() {
+        return id;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getAlias() {
-        return alias;
+    public String getnumeroSupervision() {
+        return numeroSupervision;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
+    public void setnumeroSupervision(String numeroSupervision) {
+        this.numeroSupervision = numeroSupervision;
     }
 
-    public String getClave() {
-        return clave;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+    
+     public String getTelefono() {
+        return telefono;
+    }
+
+    public void setClave(String telefono) {
+        this.telefono = telefono;
+    }
+    
+     public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -22,7 +22,7 @@ public class SupervisionController {
     }
     
     public List getSupervisionList(){
-        List l = t.getList("from Supervisiones");
+        List l = t.getList("from Superviciones");
         return l;
     }
     
