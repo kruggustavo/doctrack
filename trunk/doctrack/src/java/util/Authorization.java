@@ -5,8 +5,8 @@
  */
 package util;
 import beans.LoginBean;
+import entities.users.Usuarios;
 import java.io.IOException; 
-import javax.faces.application.ResourceHandler;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +17,7 @@ public class Authorization implements Filter{
     public static final String LOGIN_URL = "/login.xhtml?faces-redirect=true";
     public static final String HOME_URL = "/secured/home.xhtml?faces-redirect=true";
     public static final String USERNAME = "username";
+    public static Usuarios currentUser;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

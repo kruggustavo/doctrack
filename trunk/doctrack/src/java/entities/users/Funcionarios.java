@@ -5,11 +5,8 @@
  */
 package entities.users;
 
-import entities.institucion.Superviciones;
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,16 +14,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Lucas Fleitas
+ * @author usuario
  */
 @Entity
 @Table(name = "funcionarios")
@@ -41,9 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Funcionarios.findByEmail", query = "SELECT f FROM Funcionarios f WHERE f.email = :email")})
 public class Funcionarios implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncionario")
-    private Collection<Superviciones> supervicionesCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,25 +47,17 @@ public class Funcionarios implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "nombre_completo")
     private String nombreCompleto;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "direccion")
     private String direccion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "ci")
     private String ci;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "telefono")
     private String telefono;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Correo electrónico no válido")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 50)
     @Column(name = "email")
     private String email;
 
@@ -84,13 +68,9 @@ public class Funcionarios implements Serializable {
         this.id = id;
     }
 
-    public Funcionarios(Long id, String nombreCompleto, String direccion, String ci, String telefono, String email) {
+    public Funcionarios(Long id, String nombreCompleto) {
         this.id = id;
         this.nombreCompleto = nombreCompleto;
-        this.direccion = direccion;
-        this.ci = ci;
-        this.telefono = telefono;
-        this.email = email;
     }
 
     public Long getId() {
@@ -164,15 +144,6 @@ public class Funcionarios implements Serializable {
     @Override
     public String toString() {
         return "entities.users.Funcionarios[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Superviciones> getSupervicionesCollection() {
-        return supervicionesCollection;
-    }
-
-    public void setSupervicionesCollection(Collection<Superviciones> supervicionesCollection) {
-        this.supervicionesCollection = supervicionesCollection;
     }
     
 }

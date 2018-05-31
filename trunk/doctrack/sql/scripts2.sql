@@ -32,10 +32,10 @@ DROP TABLE IF EXISTS `funcionarios`;
 CREATE TABLE `funcionarios` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `nombre_completo` varchar(50) NOT NULL DEFAULT '',
-  `direccion` varchar(50) NOT NULL DEFAULT '',
-  `ci` varchar(50) NOT NULL DEFAULT '',
-  `telefono` varchar(50) NOT NULL DEFAULT '',
-  `email` varchar(50) NOT NULL DEFAULT '',
+  `direccion` varchar(50) DEFAULT '',
+  `ci` varchar(50) DEFAULT '',
+  `telefono` varchar(50) DEFAULT '',
+  `email` varchar(50) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

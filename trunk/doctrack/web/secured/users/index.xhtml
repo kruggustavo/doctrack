@@ -42,7 +42,9 @@
                         <h:panelGroup id="display" rendered="true">
                             <p:panelGrid columns="2" rendered="#{!empty usersBean.rolesList}">
                                 <p:outputLabel value="Nombre Completo" />
-                                <p:inputText id="nombrecompleto" value="#{usersBean.selectedUser.nombrecompleto}" required="true" size="50" maxlength="50"/>
+                                <p:inputText id="nombrecompleto" value="#{usersBean.selectedUser.nombrecompleto}" required="true" size="50" maxlength="50">
+                                    <p:ajax event="keyup" update="saveButton" />
+                                </p:inputText>
 
                                 <p:outputLabel value="Alias" />
                                 <p:inputText id="alias" value="#{usersBean.selectedUser.alias}" required="true" size="30" maxlength="30" >

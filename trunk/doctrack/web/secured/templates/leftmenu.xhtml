@@ -13,19 +13,18 @@
                         <p:menuitem value="Tramites" icon="ui-icon-document" />
                         <p:menuitem value="Resoluciones" icon="ui-icon-pencil" outcome="/secured/resolution/start.xhtml"/>
                         <p:menuitem value="Tipo de Documentos" icon="ui-icon-disk" outcome="/secured/seguimiento/tipodocu.xhtml" />
-                         <p:menuitem value="Tramitantes" icon="ui-icon-document" outcome="/secured/seguimiento/tramitantes.xhtml" />
+                        <p:menuitem value="Tramitantes" icon="ui-icon-document" outcome="/secured/seguimiento/tramitantes.xhtml" />
                     </p:submenu>
                     <p:submenu label="Personas" expanded="true">
-                        <p:menuitem value="Usuarios del sistema" icon="ui-icon-person" outcome="/secured/users/index.xhtml" />                      
-                        <p:menuitem value="Roles de usuarios" icon="ui-icon-person" outcome="/secured/users/roles.xhtml"  />                      
-                        <p:menuitem value="Funcionarios" icon="ui-icon-person" />
+                        <p:menuitem value="Usuarios del sistema" icon="ui-icon-person" outcome="/secured/users/index.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}" />                      
+                        <p:menuitem value="Roles de usuarios" icon="ui-icon-person" outcome="/secured/users/roles.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>                      
+                        <p:menuitem value="Funcionarios" icon="ui-icon-person" outcome="/secured/users/employees.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                         <p:menuitem value="Auditoría" icon="ui-icon-note" />
                     </p:submenu>   
                     <p:submenu label="Institución" expanded="true">
-                        <p:menuitem value="Supervisiones" icon="ui-icon-document-b" outcome="/secured/institution/supervision.xhtml"/>
-                        <p:menuitem value="Dependencias" icon="ui-icon-caret-1-w" outcome="/secured/institution/dependency.xhtml" />
-                        <p:menuitem value="Distritos" icon="ui-icon-home" outcome="/secured/institution/district.xhtml"/>
-                        <p:menuitem value="Configuración" icon="ui-icon-disk" />
+                        <p:menuitem value="Supervisiones" icon="ui-icon-document-b" outcome="/secured/institution/supervision.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
+                        <p:menuitem value="Dependencias" icon="ui-icon-caret-1-w" outcome="/secured/institution/dependency.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
+                        <p:menuitem value="Distritos" icon="ui-icon-home" outcome="/secured/institution/district.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>
                     <p:submenu label="Informes" expanded="true">
                         <p:menuitem value="Documentos" icon="ui-icon-document" />

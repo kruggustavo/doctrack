@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import entities.users.Funcionarios;
 import entities.users.Roles;
 import entities.users.Usuarios;
 import java.util.List;
@@ -68,5 +69,20 @@ public class UserController {
         return l;
     }
     
+    public void saveEmployee(Funcionarios r){
+        t.saveEntity(r);
+    }
     
+    public void deleteEmployee(Funcionarios r){
+        t.deleteEntity(r);
+    }
+    
+    public List getEmployeesList(){
+        List l = t.getList("from Funcionarios");
+        return l;
+    }
+    
+    public void executeSqlQuery(String sql){
+        t.executeSqlQuery(sql);
+    }
 }

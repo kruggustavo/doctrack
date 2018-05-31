@@ -25,9 +25,10 @@ public class LoginBean implements Serializable {
     private UserController controller = new UserController();
     
     private static final long serialVersionUID = -411392021898485L;
-
+    
     public static boolean isLogged = false;
     
+    private Usuarios currentUser = null;
     private String user;
     private String pwd;
     
@@ -36,12 +37,18 @@ public class LoginBean implements Serializable {
         
         if (u != null) {
             LoginBean.isLogged = true;
+            
+            currentUser = u;
+            
             HttpSession session = SessionUtil.getSession();
             session.setAttribute(Authorization.USERNAME, user);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Éxito",  "Bienvenido " + u.getNombrecompleto()) );
+            
             return Authorization.HOME_URL;
         } else {
             LoginBean.isLogged = false;
+            
+            currentUser = null;
+            
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error",  "Usuario y/o contraseña incorrecta") );
             return null;
         }
@@ -71,6 +78,14 @@ public class LoginBean implements Serializable {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public Usuarios getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(Usuarios currentUser) {
+        this.currentUser = currentUser;
     }
     
     

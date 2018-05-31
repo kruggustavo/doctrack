@@ -72,11 +72,6 @@ public class UsersBean implements Serializable{
         }else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "No se puede eliminar único usuario"));    
         }        
-        
-        
-        
-        
-
     }
     
     // Getters y Setters

@@ -6,6 +6,7 @@
 package util;
 
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
@@ -24,14 +25,14 @@ public class Transactions {
     
     public void saveEntity(Object o){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();        
-        s.beginTransaction();       
+        s.getTransaction().begin();       
         s.saveOrUpdate(o);    
-        s.getTransaction().commit(); 
+        s.getTransaction().commit();        
     }
     
     public List getList(String hql){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();        
-        s.beginTransaction();        
+        s.getTransaction().begin();      
         List objects = s.createQuery(hql).list();
         s.getTransaction().commit(); 
         
@@ -40,7 +41,7 @@ public class Transactions {
     
     public Object getEntity(String hql){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();        
-        s.beginTransaction();       
+        s.getTransaction().begin();     
         Object object = s.createQuery(hql).list().get(0);
         s.getTransaction().commit(); 
         
@@ -49,8 +50,22 @@ public class Transactions {
     
     public void deleteEntity(Object o){
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();        
-        s.beginTransaction();       
+        s.getTransaction().begin();       
         s.delete(o);
-        s.getTransaction().commit(); 
+        s.getTransaction().commit();         
+    }
+    
+    public void executeSqlQuery(String sql){
+        Session s = HibernateUtil.getSessionFactory().getCurrentSession();    
+        try {
+            s.getTransaction().begin();
+            s.createSQLQuery(sql).executeUpdate();
+            s.getTransaction().commit();
+        }
+        catch (HibernateException err){
+            s.getTransaction().rollback();
+        }finally{
+            
+        }         
     }
 }

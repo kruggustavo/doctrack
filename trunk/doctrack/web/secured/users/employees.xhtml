@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+	<ui:composition template="../../dashboard.xhtml">
+            <ui:define name="content">  
+                <p:growl id="growl" showDetail="true" life="10000"/> 
+                <!--list -->
+                <h:form id="FuncionariosListForm">
+                    <p:panel header="Funcionarios registrados en la institución" style="width: 90%; margin: 0 auto; vertical-align: middle">
+                        <p:dataTable id="datalist" value="#{employeesBean.employeesList}" lazy="false" rowKey="#{funcionarios.id}" var="funcionarios" paginator="true"  selectionMode="single" selection="#{employeesBean.selectedEmployee}" >
+
+                            <p:ajax event="rowSelect"   update="createButton,editButton,deleteButton"/>
+                            <p:ajax event="rowUnselect" update="createButton,editButton,deleteButton"/>
+
+                            <p:column headerText="Documento Número"><h:outputText value="#{funcionarios.ci}"/></p:column>
+                            <p:column headerText="Nombre completo"><h:outputText value="#{funcionarios.nombreCompleto}"/></p:column>
+                            <p:column headerText="Dirección domicilio"><h:outputText value="#{funcionarios.direccion}"/></p:column>
+                            <p:column headerText="Teléfono contacto"><h:outputText value="#{funcionarios.telefono}"/></p:column>
+                            <p:column headerText="Correo electrónico"><h:outputText value="#{funcionarios.email}"/></p:column>
+
+                            <f:facet name="footer">
+                                <div>
+                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{employeesBean.nuevoFuncionario}" update=":FuncionariosEditNewForm" oncomplete="PF('FuncionariosEditNewDialog').show()"/>                                    
+                                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":FuncionariosEditNewForm" oncomplete="PF('FuncionariosEditNewDialog').show()" disabled="#{empty employeesBean.selectedEmployee}"/>
+                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{employeesBean.eliminarFuncionario}" update="datalist growl" disabled="#{empty employeesBean.selectedEmployee}">
+                                        <p:confirm header="Confirmar acción" message="¿Eliminar funcionario del sistema? Esta acción no podrá deshacerse" icon="ui-icon-alert"/>
+                                    </p:commandButton>
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                    <ui:include src="../templates/confirmation.xhtml"/>
+                </h:form>
+
+                <!--create and edit-->
+                <p:dialog header="Editar funcionario" id="FuncionariosEditNewDlg" widgetVar="FuncionariosEditNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                    <h:form id="FuncionariosEditNewForm">
+                        <h:panelGroup id="display" rendered="true">
+                            <p:panelGrid columns="2" >
+                                <p:outputLabel value="Nombre Completo" />
+                                <p:inputText id="nombreCompleto" value="#{employeesBean.selectedEmployee.nombreCompleto}" required="true" size="50" maxlength="30">
+                                    <p:ajax event="keyup" update="saveButton" />
+                                </p:inputText>
+
+                                <p:outputLabel value="Dirección domicilio" />
+                                <p:inputText id="dire" value="#{employeesBean.selectedEmployee.direccion}" size="50" maxlength="30"/>
+
+                                <p:outputLabel value="Cédula de identidad Nº" />
+                                <p:inputText id="ci" value="#{employeesBean.selectedEmployee.ci}" size="30" maxlength="30"/>
+
+                                <p:outputLabel value="Teléfono particular" />
+                                <p:inputText id="tel" value="#{employeesBean.selectedEmployee.telefono}" size="30" maxlength="30"/>
+
+                                <p:outputLabel value="Correo electrónico" />
+                                <p:inputText id="email" value="#{employeesBean.selectedEmployee.email}" size="40" maxlength="30"/>
+                                
+                            </p:panelGrid>
+                            
+                            <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
+                                <p:commandButton value="Guardar" id="saveButton" action="#{employeesBean.guardarFuncionario}" update="display,:FuncionariosListForm:datalist" oncomplete="PF('FuncionariosEditNewDialog').hide();" disabled="#{employeesBean.selectedEmployee.nombreCompleto.length() lt 1}" />                              
+                                <p:commandButton value="Cerrar" oncomplete="PF('FuncionariosEditNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </p:dialog>                  
+
+            </ui:define>
+	</ui:composition>
+    </h:body>
+</html>
