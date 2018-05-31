@@ -10,23 +10,23 @@
 <h:body>
     <p:layout fullPage="true">
         <p:layoutUnit position="center">
+            <p:growl id="growl" showDetail="true" sticky="false" />
             <div style="width: 100%; height: 80%; position: relative; top: 20%">
-                <div style="width: 25%; background: #eee; margin: 0 auto; text-align: center; padding-bottom: 15px; padding-top: 5px">
+                <div style="width: 30%; background: #eee; margin: 0 auto; text-align: center; padding-bottom: 15px; padding-top: 10px">
                     <h:form>
                         <h:outputText value="Inicie sesión" />
-                        <h:panelGrid columns="2" style="margin: 30px; text-align: right">
-                            <p:outputLabel value="Usuario" style="padding-right: 15px;"/>
-                            <p:inputText id="username" value="#{login.user}" style="width: 96%" placeholder="Ingrese alias usuario"/>
+                        <p:focus for="username" />
+                        <h:panelGrid columns="2" style="margin: 0 auto; padding: 30px; text-align: right">
+                            <p:outputLabel value="Usuario" style="padding-right: 15px; width: 100%"/>
+                            <p:inputText id="username" value="#{loginBean.user}" style="width: 96%" placeholder="Ingrese alias usuario"/>
                             
                             <p:outputLabel value="Clave" style="padding-right: 15px;"/>
-                            <p:password id="password" value="#{login.pwd}" style="width: 96%" placeholder="Ingrese contraseña"/>                                     
+                            <p:password id="password" value="#{loginBean.pwd}" style="width: 96%" placeholder="Ingrese contraseña"/>                                     
                         </h:panelGrid>
-                        <p:commandButton action="#{login.validateUsernamePassword}" value="Iniciar sesión" style="text-shadow: none !important; width: 80%; background: #2965A8; color: white;"/>
+                        <p:commandButton action="#{loginBean.login}" value="Iniciar sesión" style="text-shadow: none !important; width: 70%; background: #2965A8; color: white;" update="growl"/>
                     </h:form>        
-                    
                 </div>
             </div>
-
         </p:layoutUnit>
     </p:layout>
     

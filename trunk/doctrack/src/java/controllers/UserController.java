@@ -21,6 +21,16 @@ public class UserController {
         t.saveEntity(u);
     }
     
+    public Usuarios getLoginUser(String user, String pass){
+        Usuarios u;
+        try{
+            u = (Usuarios) t.getList("from Usuarios where alias = '" + user + "' and clave = '" + pass + "'").get(0);
+        }catch (java.lang.IndexOutOfBoundsException n){
+            u = null;
+        }
+        return u;
+    }
+    
     public List getUsersList(){
         List l = t.getList("from Usuarios");
         return l;
