@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
 import util.Authorization;
 import util.SessionUtil;
 /**
@@ -28,30 +29,40 @@ public class LoginBean implements Serializable {
     
     public static boolean isLogged = false;
     
+    private boolean isLogin = false;
     private Usuarios currentUser = null;
-    private String user;
-    private String pwd;
+    private String user = "";
+    private String pwd = "";
+ 
+    public void loginListener(){
+        isLogin = true;
+    }
     
     public String login() {
-        Usuarios u = controller.getLoginUser(user, pwd);
-        
-        if (u != null) {
-            LoginBean.isLogged = true;
-            
-            currentUser = u;
-            
-            HttpSession session = SessionUtil.getSession();
-            session.setAttribute(Authorization.USERNAME, user);
-            
-            return Authorization.HOME_URL;
-        } else {
-            LoginBean.isLogged = false;
-            
-            currentUser = null;
-            
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error",  "Usuario y/o contraseña incorrecta") );
-            return null;
+        if (user.length() > 0){
+            Usuarios u = controller.getLoginUser(user, pwd);
+            user = pwd = "";            
+            isLogin = false;
+                
+            if (u != null) {
+                LoginBean.isLogged = true;
+
+                currentUser = u;
+
+                HttpSession session = SessionUtil.getSession();
+                session.setAttribute(Authorization.USERNAME, user);
+
+                return Authorization.HOME_URL;
+            } else {
+                LoginBean.isLogged = false;
+
+                currentUser = null;
+
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error",  "Usuario y/o contraseña incorrecta") );
+                return Authorization.LOGIN_PAGE;
+            }            
         }
+        return null;
     }
     
     //logout event, invalidate session
@@ -87,6 +98,13 @@ public class LoginBean implements Serializable {
     public void setCurrentUser(Usuarios currentUser) {
         this.currentUser = currentUser;
     }
-    
+
+    public boolean isIsLogin() {
+        return isLogin;
+    }
+
+    public void setIsLogin(boolean isLogin) {
+        this.isLogin = isLogin;
+    }
     
 }

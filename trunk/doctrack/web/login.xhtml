@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:p="http://primefaces.org/ui">
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
 	<title>Iniciar - Tracking de documentos</title>
         <h:outputStylesheet name="style/override.css" />
@@ -10,7 +11,7 @@
 <h:body>
     <p:layout fullPage="true">
         <p:layoutUnit position="center">
-            <p:growl id="growl" showDetail="true" sticky="false" />
+            <p:growl id="growl" showDetail="true" sticky="false" ></p:growl>
             <div style="width: 100%; height: 80%; position: relative; top: 20%">
                 <div style="border: 1px solid lightgray; width: 30%; background: #eee; margin: 0 auto; text-align: center; padding-bottom: 15px; padding-top: 10px">
                     <h:form>
@@ -18,13 +19,25 @@
                         <p:focus for="username" />
                         <h:panelGrid columns="2" style="margin: 0 auto; padding: 30px; text-align: right">
                             <p:outputLabel value="Usuario" style="padding-right: 15px; width: 100%"/>
-                            <p:inputText id="username" value="#{loginBean.user}" style="width: 96%" placeholder="Ingrese alias usuario"/>
+                            <p:inputText id="username" value="#{loginBean.user}" style="width: 96%" placeholder="Ingrese alias usuario">
+                                <p:ajax event="keyup" update="loginButton" />
+                            </p:inputText>
                             
                             <p:outputLabel value="Clave" style="padding-right: 15px;"/>
                             <p:password id="password" value="#{loginBean.pwd}" style="width: 96%" placeholder="Ingrese contraseña"/>                                     
                         </h:panelGrid>
-                        <p:commandButton action="#{loginBean.login}" value="Iniciar sesión" style="text-shadow: none !important; width: 70%; background: #2965A8; color: white;" update="growl"/>
+                        <p:commandButton action="#{loginBean.login}" id="loginButton" value="Iniciar sesión" style="text-shadow: none !important; width: 70%; background: #2965A8; color: white;" update="growl,output" disabled="#{loginBean.user.length() lt 1}">
+                            <f:ajax render=":output-wrapper" listener="#{loginBean.loginListener}" />
+                        </p:commandButton>
                     </h:form>        
+                </div>
+                
+                <div style="width: 20%; margin: 0 auto; text-align: center; padding-top: 25px;">
+                    <p:outputPanel id="output-wrapper" autoUpdate="true">
+                        <h:panelGroup rendered="#{loginBean.isLogin}" id="output" >
+                            <img src="resources/images/wait.gif" alt="" style="width: 30%; height: 30%"/>
+                        </h:panelGroup>
+                    </p:outputPanel> 
                 </div>
             </div>
         </p:layoutUnit>
