@@ -5,6 +5,7 @@
  */
 package entities.institucion;
 
+import entities.seguimiento.Gestiondocumentos;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -14,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,13 +31,16 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Lucas Fleitas
  */
 @Entity
-@Table(name = "distritos")
+@Table(name = "areas")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Distritos.findAll", query = "SELECT d FROM Distritos d")
-    , @NamedQuery(name = "Distritos.findById", query = "SELECT d FROM Distritos d WHERE d.id = :id")
-    , @NamedQuery(name = "Distritos.findByNombre", query = "SELECT d FROM Distritos d WHERE d.nombre = :nombre")})
-public class Distritos implements Serializable {
+    @NamedQuery(name = "Areas.findAll", query = "SELECT a FROM Areas a")
+    , @NamedQuery(name = "Areas.findById", query = "SELECT a FROM Areas a WHERE a.id = :id")
+    , @NamedQuery(name = "Areas.findByNombre", query = "SELECT a FROM Areas a WHERE a.nombre = :nombre")})
+public class Areas implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArea")
+    private Collection<Gestiondocumentos> gestiondocumentosCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,20 +50,21 @@ public class Distritos implements Serializable {
     private Long id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 80)
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDistrito")
-    private Collection<Superviciones> supervicionesCollection;
+    @JoinColumn(name = "idDependencia", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Dependencias idDependencia;
 
-    public Distritos() {
+    public Areas() {
     }
 
-    public Distritos(Long id) {
+    public Areas(Long id) {
         this.id = id;
     }
 
-    public Distritos(Long id, String nombre) {
+    public Areas(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -78,13 +85,12 @@ public class Distritos implements Serializable {
         this.nombre = nombre;
     }
 
-    @XmlTransient
-    public Collection<Superviciones> getSupervicionesCollection() {
-        return supervicionesCollection;
+    public Dependencias getIdDependencia() {
+        return idDependencia;
     }
 
-    public void setSupervicionesCollection(Collection<Superviciones> supervicionesCollection) {
-        this.supervicionesCollection = supervicionesCollection;
+    public void setIdDependencia(Dependencias idDependencia) {
+        this.idDependencia = idDependencia;
     }
 
     @Override
@@ -97,10 +103,10 @@ public class Distritos implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Distritos)) {
+        if (!(object instanceof Areas)) {
             return false;
         }
-        Distritos other = (Distritos) object;
+        Areas other = (Areas) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -109,7 +115,16 @@ public class Distritos implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.institucion.Distritos[ id=" + id + " ]";
+        return "entities.institucion.Areas[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Gestiondocumentos> getGestiondocumentosCollection() {
+        return gestiondocumentosCollection;
+    }
+
+    public void setGestiondocumentosCollection(Collection<Gestiondocumentos> gestiondocumentosCollection) {
+        this.gestiondocumentosCollection = gestiondocumentosCollection;
     }
     
 }

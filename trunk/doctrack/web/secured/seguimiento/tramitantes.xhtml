@@ -49,8 +49,8 @@
                                 <p:inputText id="ci" value="#{tramitantesBean.tramitantes.ci}" required="true" size="30" maxlength="30" />
                                 <p:outputLabel value="Dirección" />
                                 <p:inputText id="direccion" value="#{tramitantesBean.tramitantes.direccion}" required="true" size="30" maxlength="30" />
-                                <p:outputLabel value="Teléfono" />
-                                <p:inputText id="telefono" value="#{tramitantesBean.tramitantes.telefono}" required="true" size="30" maxlength="30" />
+                                <p:outputLabel for="telefono" value="Phone:" />
+                                <p:inputMask id="telefono" value="#{tramitantesBean.tramitantes.telefono}" mask="(999) 999-9999"/>
                                 <p:outputLabel value="E-mail" />
                                 <p:inputText id="email" value="#{tramitantesBean.tramitantes.email}" required="true" size="30" maxlength="30" />
                                 <!--anteriormente cree el objeto y aqui le asigno los valores como un set -->

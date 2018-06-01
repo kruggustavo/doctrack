@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
+        <h:body>
+            <ui:composition template="../../dashboard.xhtml">
+                <ui:define name="content">  
+                    <p:growl id="growl" showDetail="true" life="10000"/> 
+                    <!--list -->
+                    <h:form id="SegLisFormListForm">
+                        <p:panel header="Seguimientos" style="width: 90%">
+                            <p:dataTable id="datalist" var="seguimientos" value="#{gestionDocBean.listaSeguimiento}" lazy="false" rowKey="#{seguimientos.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{gestionDocBean.seguimiento}" >
+                                <p:ajax event="rowSelect"   update="createButton,editButton"/>
+                                <p:ajax event="rowUnselect" update="createButton,editButton"/>
+
+                                <p:column headerText="Nª Seg."><h:outputText value="#{seguimientos.id}"/></p:column>
+                                <p:column headerText="Nª Doc."><h:outputText value="#{seguimientos.idDocumento.numeroDoc}"/></p:column>
+                                <p:column headerText="Fecha de Entrada"><h:outputText value="#{seguimientos.fechaentrada}"/></p:column>
+                                <p:column headerText="Fecha Salida"><h:outputText value="#{seguimientos.fechasalido}"/></p:column>
+                                <p:column headerText="Estado General"><h:outputText value="#{seguimientos.estadogeneral}"/></p:column>
+                            </p:dataTable>
+                        </p:panel>
+                        <ui:include src="../templates/confirmation.xhtml"/>
+                    </h:form>
+                </ui:define>
+            </ui:composition>
+        </h:body>
+</html>

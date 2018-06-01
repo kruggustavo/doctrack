@@ -30,21 +30,6 @@ public class TramitantesBean implements Serializable {
     private Tramitantes tramitantes;
     private final TramitantesController controller = new TramitantesController();
 
-    public Tramitantes getTramitantes() {
-        return tramitantes;
-    }
-
-    public void setTramitantes(Tramitantes tramitantes) {
-        this.tramitantes = tramitantes;
-    }
-
-    
-    public void nuevoTramitante()
-    {
-        tramitantes = new Tramitantes();
-       
-    }
-    
     public void guardarTramitante()
     {
         try
@@ -107,7 +92,20 @@ public class TramitantesBean implements Serializable {
         this.tramitantesList = tramitantesList;
     }
     
+    public Tramitantes getTramitantes() {
+        return tramitantes;
+    }
+
+    public void setTramitantes(Tramitantes tramitantes) {
+        this.tramitantes = tramitantes;
+    }
+
     
+    public void nuevoTramitante()
+    {
+        tramitantes = new Tramitantes();
+       
+    }
 
     
 }

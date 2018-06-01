@@ -5,8 +5,11 @@
  */
 package entities.institucion;
 
+import entities.seguimiento.Gestiondocumentos;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,14 +17,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
+<<<<<<< HEAD
  * @author usuario
+=======
+ * @author Lucas Fleitas
+>>>>>>> correccion de error al ejecutar
  */
 @Entity
 @Table(name = "dependencias")
@@ -34,6 +43,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Dependencias.findByInterno", query = "SELECT d FROM Dependencias d WHERE d.interno = :interno")})
 public class Dependencias implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDependencia")
+    private Collection<Gestiondocumentos> gestiondocumentosCollection;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDependencia")
+    private Collection<Areas> areasCollection;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +60,6 @@ public class Dependencias implements Serializable {
     @Size(min = 1, max = 80)
     @Column(name = "nombre")
     private String nombre;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -126,6 +140,27 @@ public class Dependencias implements Serializable {
     @Override
     public String toString() {
         return "entities.institucion.Dependencias[ id=" + id + " ]";
+
+        
+    }
+
+    @XmlTransient
+    public Collection<Areas> getAreasCollection() {
+        return areasCollection;
+    }
+
+    public void setAreasCollection(Collection<Areas> areasCollection) {
+        this.areasCollection = areasCollection;
+        
+    }
+
+    @XmlTransient
+    public Collection<Gestiondocumentos> getGestiondocumentosCollection() {
+        return gestiondocumentosCollection;
+    }
+
+    public void setGestiondocumentosCollection(Collection<Gestiondocumentos> gestiondocumentosCollection) {
+        this.gestiondocumentosCollection = gestiondocumentosCollection;
     }
     
 }

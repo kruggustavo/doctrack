@@ -50,9 +50,12 @@ CREATE TABLE `gestiondocumentos` (
   `estadogestion` varchar(255) NOT NULL DEFAULT '',
   `idDependencia` bigint(20) NOT NULL,
   `idArea` bigint(20) NOT NULL,
+  `idSeguimiento` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idDependencia` (`idDependencia`),
   KEY `idArea` (`idArea`),
+  KEY `idSeguimiento` (`idSeguimiento`),
+  CONSTRAINT `gestiondocumentos_ibfk_3` FOREIGN KEY (`idSeguimiento`) REFERENCES `seguimiento` (`id`),
   CONSTRAINT `gestiondocumentos_ibfk_1` FOREIGN KEY (`idDependencia`) REFERENCES `dependencias` (`id`),
   CONSTRAINT `gestiondocumentos_ibfk_2` FOREIGN KEY (`idArea`) REFERENCES `areas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -117,11 +120,13 @@ INSERT INTO `documentos` VALUES (1,'documento prueba','2018-05-29 01:30:00','sin
 
 DROP TABLE IF EXISTS `adjuntos`;
 CREATE TABLE `adjuntos` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `nombredoc_adj` varchar(255) NOT NULL DEFAULT '',
   `idTipodoc` bigint(20) NOT NULL,
   `idDocumento` bigint(20) NOT NULL,
   KEY `idTipodoc` (`idTipodoc`),
   KEY `idDocumento` (`idDocumento`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `adjuntos_ibfk_1` FOREIGN KEY (`idTipodoc`) REFERENCES `tipodocumento` (`id`),
   CONSTRAINT `adjuntos_ibfk_2` FOREIGN KEY (`idDocumento`) REFERENCES `documentos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

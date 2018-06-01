@@ -7,6 +7,7 @@ package controllers;
 
 import entities.institucion.Superviciones;
 import entities.seguimiento.Documentos;
+import entities.seguimiento.Seguimiento;
 import entities.seguimiento.Tramitantes;
 import java.util.List;
 import util.Transactions;
@@ -21,6 +22,12 @@ public class DocumentosController {
     //metodo para insertar y actualizar
     public void saveDocumentos(Documentos dc){
         t.saveEntity(dc);
+    }
+    
+    //metodo para insertar y actualizar de seguimiento
+    public void saveSeguimiento(Seguimiento sg)
+    {
+        t.saveEntity(sg);
     }
     
     public List getDocumentosList(){
@@ -47,6 +54,12 @@ public class DocumentosController {
     
     public Superviciones getSupervicionEntity(String numeroSupervision){
         Superviciones l = (Superviciones) t.getEntity("from Superviciones where numeroSupervision ='" + numeroSupervision + "'");
+        return l;
+    }
+    
+    public Documentos getDocumentoEntity(String numeroDoc)
+    {
+        Documentos l = (Documentos) t.getEntity("from Documentos where numeroDoc = '"+ numeroDoc +"' ");
         return l;
     }
 }

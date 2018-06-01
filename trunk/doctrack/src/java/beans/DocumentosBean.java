@@ -8,11 +8,15 @@ package beans;
 import controllers.DocumentosController;
 import entities.institucion.Superviciones;
 import entities.seguimiento.Documentos;
+import entities.seguimiento.Seguimiento;
 import entities.seguimiento.Tramitantes;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 /**
  *
  * @author Lucas Fleitas
@@ -28,12 +32,19 @@ public class DocumentosBean implements Serializable {
     private String fechaentrada;
     private String observacion;
     //para las claves foraneas
-    private String superviciones;
     private String tramitantes;
+    private String superviciones;
+
+
     //el siguiente List es para la lista de Documentos
     private List<Documentos> listaDoc;
-    //creo un objeto documento
+    //creo una lista de superviciones y tramitantes que van servir como fk
+    private List<Superviciones> listaSup;
+    private List<Tramitantes> listaTram;
+
+    //creo variable de tipo documento y seguimiento
     private Documentos documentos;
+    private Seguimiento seguimiento;
     //instancio el controlador
     private DocumentosController controller = new DocumentosController();
 
@@ -41,12 +52,70 @@ public class DocumentosBean implements Serializable {
     public void nuevoDocumento()
     {
         documentos = new Documentos();
+        seguimiento = new Seguimiento();
+    }
+
+    public void editarDocumento()
+    {
+       tramitantes = documentos.getIdTramitante().getCi(); //aqui solo tengo el idFk por eso consulto para que me traiga el objeto en si
+       superviciones = documentos.getIdSupervicion().getNumeroSupervision();
+       numeroDoc = documentos.getNumeroDoc();
     }
     
-    //metodo para guardar/actualizar el documento
+    public void anularDocumento()
+    {
+        //en esta caso no hago nada con Documento, dejo asi como esta
+        //como documento tiene el valor que se selecciono solo se pasa ese objeto, si necesidad de consultar
+        if (documentos != null){
+            seguimiento.setEstadogeneral("Anulado");
+            seguimiento.setIdDocumento(documentos);
+            controller.saveSeguimiento(seguimiento);
+            seguimiento = null;
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "Ha ocurrido un error, verifique con su proveedor"));    
+        } 
+    }
+    
+    //metodo para actulizar lo editado del documento
+    public void actualizarDocumento()
+    {
+        //solo verifico que el tramitante y la supervicion fueron seleccionados        
+        if(tramitantes != null && superviciones != null) //no crep objeto solo el seleccionado
+        {
+            Tramitantes tr = null;
+            Superviciones sp = null;
+            tr = controller.getTramitanteEntity(tramitantes);
+            sp = controller.getSupervicionEntity(superviciones);
+            documentos.setIdTramitante(tr);
+            documentos.setIdSupervicion(sp);
+            controller.saveDocumentos(documentos); //la fecha no se cargara en esta parte, quedara con la que esta
+            //luego de guardar el documento le creo un primer seguimiento con estado de recibido
+            //el objeto seguimiento creo porque no se selecciona en la interfaz, solo el documento
+            if (numeroDoc != null)
+            {
+                Documentos docFk = null;
+                docFk = controller.getDocumentoEntity(numeroDoc);
+                seguimiento.setDescripcion(descripcion); //la misma descripcion que el del documento
+                seguimiento.setIdDocumento(docFk);
+                controller.saveSeguimiento(seguimiento);
+                seguimiento = null;
+            }
+            else
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "Ha ocurrido un error, verifique que todos los campos enten correctos")); 
+            }
+            documentos = null;
+        }
+        else 
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "Algún campo importante se encuentra vacio")); 
+        }
+    }
+    
+    //metodo para guardar
     public void guardarDocumento()
     {
-        //Buscamos el tramitante apartir de la c.i seleccionada
+        //Buscamos el tramitante apartir de la c.i seleccionada, en el caso de no ser seleccionado busca de la lista y agrega el primer valor de la lista
         Tramitantes tr = null;
         if (tramitantes == null){
             tr = (Tramitantes) controller.getTramitantesList().get(0);
@@ -54,18 +123,39 @@ public class DocumentosBean implements Serializable {
         }else{
             tr = controller.getTramitanteEntity(tramitantes);
         }
-        //Buscamos la supervicion apartir del nombre de la supervicion seleccionada
+        //buscamos la supervision apartir del numero de supervision
         Superviciones sp = null;
         if (superviciones == null){
             sp = (Superviciones) controller.getSupervicionList().get(0);
             superviciones = sp.getNumeroSupervision();
         }else{
-            tr = controller.getTramitanteEntity(superviciones);
+            sp = controller.getSupervicionEntity(superviciones);
         }
+        //tambien obtengo la fecha y hora actual
+        Date date = new Date();
+        //DateFormat hourdateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd"); //dejo en esta forma porque es la acepta mysql
+        //String fechaHoraActual = hourdateFormat.format(date);
         //agrego los datos faltantes que son las foraneas
         documentos.setIdTramitante(tr);
         documentos.setIdSupervicion(sp);
+        documentos.setFechaentrada(date);
         controller.saveDocumentos(documentos);
+        //luego de guardar el documento le creo un primer seguimiento con estado de recibido
+        if (numeroDoc != null)
+        {
+            Documentos docFk = null;
+            docFk = controller.getDocumentoEntity(numeroDoc);
+            seguimiento.setFechaentrada(date); //fecha entrada es el mismo que el del documento y fecha de salida queda inicalmente en null
+            seguimiento.setDescripcion(descripcion); //la misma descripcion que el del documento
+            seguimiento.setEstadogeneral("Recibido");
+            seguimiento.setIdDocumento(docFk);
+            controller.saveSeguimiento(seguimiento);
+            seguimiento = null;
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "Ha ocurrido un error, verifique que todos los campos enten correctos")); 
+        }
         documentos = null;
     }
     
@@ -86,14 +176,6 @@ public class DocumentosBean implements Serializable {
     public void setDocumentos(Documentos documentos) {
         this.documentos = documentos;
     }
-    
-    public String getSuperviciones() {
-        return superviciones;
-    }
-
-    public void setSuperviciones(String superviciones) {
-        this.superviciones = superviciones;
-    }
 
     public String getTramitantes() {
         return tramitantes;
@@ -101,6 +183,14 @@ public class DocumentosBean implements Serializable {
 
     public void setTramitantes(String tramitantes) {
         this.tramitantes = tramitantes;
+    }
+    
+    public String getSuperviciones() {
+        return superviciones;
+    }
+
+    public void setSuperviciones(String superviciones) {
+        this.superviciones = superviciones;
     }
     
     public String getNumeroDoc() {
@@ -134,5 +224,30 @@ public class DocumentosBean implements Serializable {
     public void setObservacion(String observacion) {
         this.observacion = observacion;
     }
+    
+    public List<Superviciones> getListaSup() {
+        listaSup = controller.getSupervicionList();
+        return listaSup;
+    }
 
+    public void setListaSup(List<Superviciones> listaSup) {
+        this.listaSup = listaSup;
+    }
+
+    public List<Tramitantes> getListaTram() {
+        listaTram = controller.getTramitantesList();
+        return listaTram;
+    }
+
+    public void setListaTram(List<Tramitantes> listaTram) {
+        this.listaTram = listaTram;
+    }
+    
+    public Seguimiento getSeguimiento() {
+        return seguimiento;
+    }
+
+    public void setSeguimiento(Seguimiento seguimiento) {
+        this.seguimiento = seguimiento;
+    }
 }
