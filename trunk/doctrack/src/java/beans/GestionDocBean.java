@@ -87,7 +87,7 @@ public class GestionDocBean implements Serializable {
     }
 
     public List<Seguimiento> getListaSeguimiento() {
-        listaSeguimiento = controller.getGestiondocumentosList();
+        listaSeguimiento = controller.getSeguimientoList();
         return listaSeguimiento;
     }
 

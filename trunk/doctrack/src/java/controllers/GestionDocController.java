@@ -16,8 +16,8 @@ public class GestionDocController {
         t.saveEntity(gdoc);
     }
     
-    public List getGestiondocumentosList(){
-        List l = t.getList("from Gestiondocumentos");
+    public List getSeguimientoList(){
+        List l = t.getList("from Seguimiento");
         return l;
     }
 }

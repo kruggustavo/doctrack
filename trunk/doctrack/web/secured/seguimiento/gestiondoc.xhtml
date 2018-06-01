@@ -13,14 +13,28 @@
                     <h:form id="SegLisFormListForm">
                         <p:panel header="Seguimientos" style="width: 90%">
                             <p:dataTable id="datalist" var="seguimientos" value="#{gestionDocBean.listaSeguimiento}" lazy="false" rowKey="#{seguimientos.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{gestionDocBean.seguimiento}" >
-                                <p:ajax event="rowSelect"   update="createButton,editButton"/>
-                                <p:ajax event="rowUnselect" update="createButton,editButton"/>
+                                <p:ajax event="rowSelect"   update="verButton,moverButton,procesarButton,concluirButton"/>
+                                <p:ajax event="rowUnselect" update="verButton,moverButton,procesarButton,concluirButton"/>
 
                                 <p:column headerText="Nª Seg."><h:outputText value="#{seguimientos.id}"/></p:column>
                                 <p:column headerText="Nª Doc."><h:outputText value="#{seguimientos.idDocumento.numeroDoc}"/></p:column>
                                 <p:column headerText="Fecha de Entrada"><h:outputText value="#{seguimientos.fechaentrada}"/></p:column>
                                 <p:column headerText="Fecha Salida"><h:outputText value="#{seguimientos.fechasalido}"/></p:column>
                                 <p:column headerText="Estado General"><h:outputText value="#{seguimientos.estadogeneral}"/></p:column>
+                                
+                                <f:facet name="footer">
+                                    <div>
+                                        <p:commandButton value="Ver" id="verButton" icon="ui-icon-plus" />
+                                        <p:commandButton value="Mover" id="moverButton" icon="fa-repeat" />
+                                        <p:commandButton value="Procesar" id="procesarButton" icon="fa-spinner" >
+                                            <p:confirm header="Confirmar acción" message="¿Esta Seguro de cambiar a estado PROCESADO el Documento seleccionado?" icon="ui-icon-alert"/><!--disabled bloquea si la seleccion es vacia-->
+                                        </p:commandButton>
+                                        <p:commandButton value="Concluir" id="concluirButton" icon="fa-check-square-o" >
+                                            <p:confirm header="Confirmar acción" message="¿Esta Seguro de cambiar a estado CONCLUIDO el Documento seleccionado?" icon="ui-icon-alert"/><!--disabled bloquea si la seleccion es vacia-->
+                                        </p:commandButton>
+                                    </div>
+                                </f:facet>
+                                
                             </p:dataTable>
                         </p:panel>
                         <ui:include src="../templates/confirmation.xhtml"/>
