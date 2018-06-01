@@ -31,7 +31,7 @@ public class DocumentosController {
     }
     
     public List getDocumentosList(){
-        List l = t.getList("from Documentos");
+        List l = t.getList("from Documentos dc order by dc.id desc");
         return l;
     }
     
@@ -57,9 +57,15 @@ public class DocumentosController {
         return l;
     }
     
-    public Documentos getDocumentoEntity(String numeroDoc)
+    public Seguimiento getSeguimientoEntity(Long idDocumento)
     {
-        Documentos l = (Documentos) t.getEntity("from Documentos where numeroDoc = '"+ numeroDoc +"' ");
+        Seguimiento l = (Seguimiento) t.getEntity("from Seguimiento where idDocumento = '"+ idDocumento +"' ");
+        return l;
+    }
+    
+    public List getNumdocList(String numeroDoc)
+    {
+        List l = t.getList("from Documentos where numeroDoc = '"+ numeroDoc +"' ");
         return l;
     }
 }

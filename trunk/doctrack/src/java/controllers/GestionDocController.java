@@ -17,7 +17,7 @@ public class GestionDocController {
     }
     
     public List getSeguimientoList(){
-        List l = t.getList("from Seguimiento");
+        List l = t.getList("from Seguimiento sg where sg.estadogeneral = '"+"Recibido"+"' or sg.estadogeneral = '"+"Procesado"+"' order by sg.id desc");
         return l;
     }
 }

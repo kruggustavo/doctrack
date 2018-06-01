@@ -79,8 +79,6 @@ public class Documentos implements Serializable {
     private Tramitantes idTramitante;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDocumento")
     private Collection<Seguimiento> seguimientoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDocumento")
-    private Collection<Adjuntos> adjuntosCollection;
 
     public Documentos() {
     }
@@ -160,15 +158,6 @@ public class Documentos implements Serializable {
 
     public void setSeguimientoCollection(Collection<Seguimiento> seguimientoCollection) {
         this.seguimientoCollection = seguimientoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Adjuntos> getAdjuntosCollection() {
-        return adjuntosCollection;
-    }
-
-    public void setAdjuntosCollection(Collection<Adjuntos> adjuntosCollection) {
-        this.adjuntosCollection = adjuntosCollection;
     }
 
     @Override

@@ -53,34 +53,45 @@ public class DocumentosBean implements Serializable {
     {
         documentos = new Documentos();
         seguimiento = new Seguimiento();
+        //aquie estos dos objetos y como las variables estan vacias por eso no pongo lo siguiente porque estara vacio numeroDoc = documentos.getNumeroDoc();
     }
 
     public void editarDocumento()
     {
        tramitantes = documentos.getIdTramitante().getCi(); //aqui solo tengo el idFk por eso consulto para que me traiga el objeto en si
        superviciones = documentos.getIdSupervicion().getNumeroSupervision();
-       numeroDoc = documentos.getNumeroDoc();
     }
     
     public void anularDocumento()
     {
+        boolean mensResp = true;
         //en esta caso no hago nada con Documento, dejo asi como esta
-        //como documento tiene el valor que se selecciono solo se pasa ese objeto, si necesidad de consultar
-        if (documentos != null){
+        //documento tiene un objeto seleccionado pero seguimiento no se selecciona, entonces consuulto por objeto seguimiento con el Fk que esta en documentos
+        if (documentos.getId() != null && seguimiento == null){
+            System.out.println("el id del docuemento en anular "+documentos.getId());
+            seguimiento = controller.getSeguimientoEntity(documentos.getId());
             seguimiento.setEstadogeneral("Anulado");
-            seguimiento.setIdDocumento(documentos);
             controller.saveSeguimiento(seguimiento);
             seguimiento = null;
         }else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "Ha ocurrido un error, verifique con su proveedor"));    
+            mensResp= false;
         } 
+        if(mensResp == true)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Anulación de Documento con exito"));
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
+        }
     }
     
     //metodo para actulizar lo editado del documento
     public void actualizarDocumento()
     {
-        //solo verifico que el tramitante y la supervicion fueron seleccionados        
-        if(tramitantes != null && superviciones != null) //no crep objeto solo el seleccionado
+        //solo verifico que el tramitante y la supervicion fueron seleccionados       
+        boolean mensResp = true;
+        if(tramitantes != null && superviciones != null && seguimiento == null) //no crep objeto solo el seleccionado
         {
             Tramitantes tr = null;
             Superviciones sp = null;
@@ -91,72 +102,100 @@ public class DocumentosBean implements Serializable {
             controller.saveDocumentos(documentos); //la fecha no se cargara en esta parte, quedara con la que esta
             //luego de guardar el documento le creo un primer seguimiento con estado de recibido
             //el objeto seguimiento creo porque no se selecciona en la interfaz, solo el documento
-            if (numeroDoc != null)
+            if (documentos.getId() != null)
             {
-                Documentos docFk = null;
-                docFk = controller.getDocumentoEntity(numeroDoc);
-                seguimiento.setDescripcion(descripcion); //la misma descripcion que el del documento
-                seguimiento.setIdDocumento(docFk);
+                System.out.println("id del documento en actualizar "+documentos.getId());
+                seguimiento = controller.getSeguimientoEntity(documentos.getId());
+                seguimiento.setDescripcion(documentos.getDescripcion()); //la misma descripcion que el del documento
                 controller.saveSeguimiento(seguimiento);
                 seguimiento = null;
             }
             else
             {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "Ha ocurrido un error, verifique que todos los campos enten correctos")); 
+                mensResp = false;
             }
             documentos = null;
         }
         else 
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "Algún campo importante se encuentra vacio")); 
+            mensResp = false;
+        }
+        if(mensResp == true)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Actualización de Registro con exito"));
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
         }
     }
     
     //metodo para guardar
     public void guardarDocumento()
     {
-        //Buscamos el tramitante apartir de la c.i seleccionada, en el caso de no ser seleccionado busca de la lista y agrega el primer valor de la lista
-        Tramitantes tr = null;
-        if (tramitantes == null){
-            tr = (Tramitantes) controller.getTramitantesList().get(0);
-            tramitantes = tr.getCi();
-        }else{
-            tr = controller.getTramitanteEntity(tramitantes);
-        }
-        //buscamos la supervision apartir del numero de supervision
-        Superviciones sp = null;
-        if (superviciones == null){
-            sp = (Superviciones) controller.getSupervicionList().get(0);
-            superviciones = sp.getNumeroSupervision();
-        }else{
-            sp = controller.getSupervicionEntity(superviciones);
-        }
-        //tambien obtengo la fecha y hora actual
-        Date date = new Date();
-        //DateFormat hourdateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd"); //dejo en esta forma porque es la acepta mysql
-        //String fechaHoraActual = hourdateFormat.format(date);
-        //agrego los datos faltantes que son las foraneas
-        documentos.setIdTramitante(tr);
-        documentos.setIdSupervicion(sp);
-        documentos.setFechaentrada(date);
-        controller.saveDocumentos(documentos);
-        //luego de guardar el documento le creo un primer seguimiento con estado de recibido
-        if (numeroDoc != null)
+        //antes que nada verifico que el numero de documento no se encuentre repetido
+        int resultadoEnc = controller.getNumdocList(documentos.getNumeroDoc()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
         {
-            Documentos docFk = null;
-            docFk = controller.getDocumentoEntity(numeroDoc);
-            seguimiento.setFechaentrada(date); //fecha entrada es el mismo que el del documento y fecha de salida queda inicalmente en null
-            seguimiento.setDescripcion(descripcion); //la misma descripcion que el del documento
-            seguimiento.setEstadogeneral("Recibido");
-            seguimiento.setIdDocumento(docFk);
-            controller.saveSeguimiento(seguimiento);
-            seguimiento = null;
+            //Buscamos el tramitante apartir de la c.i seleccionada, en el caso de no ser seleccionado busca de la lista y agrega el primer valor de la lista
+            Tramitantes tr = null;
+            if (tramitantes == null){
+                tr = (Tramitantes) controller.getTramitantesList().get(0);
+                tramitantes = tr.getCi();
+            }else{
+                tr = controller.getTramitanteEntity(tramitantes);
+            }
+            //buscamos la supervision apartir del numero de supervision
+            Superviciones sp = null;
+            if (superviciones == null){
+                sp = (Superviciones) controller.getSupervicionList().get(0);
+                superviciones = sp.getNumeroSupervision();
+            }else{
+                sp = controller.getSupervicionEntity(superviciones);
+            }
+            //tambien obtengo la fecha y hora actual
+            Date date = new Date();
+            //DateFormat hourdateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd"); //dejo en esta forma porque es la acepta mysql
+            //String fechaHoraActual = hourdateFormat.format(date);
+            //agrego los datos faltantes que son las foraneas
+            documentos.setIdTramitante(tr);
+            documentos.setIdSupervicion(sp);
+            documentos.setFechaentrada(date);
+
+            controller.saveDocumentos(documentos);
+            //luego de guardar el documento le creo un primer seguimiento con estado de recibido
+            boolean mensResp = true;
+            if (documentos.getNumeroDoc() != null)
+            {
+                System.out.println("el documento no es nulo, tiene el valor "+documentos.getNumeroDoc());
+                seguimiento.setFechaentrada(date); //fecha entrada es el mismo que el del documento y fecha de salida queda inicalmente en null
+                seguimiento.setFechasalido(date);
+                seguimiento.setDescripcion(documentos.getDescripcion()); //la misma descripcion que el del documento
+                seguimiento.setEstadogeneral("Recibido");
+                seguimiento.setIdDocumento(documentos);
+                controller.saveSeguimiento(seguimiento);
+                seguimiento = null;
+            }
+            else
+            {
+                mensResp = false;
+            }
+            documentos = null;
+            //mensaje de modificaciones
+            if(mensResp == true)
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro de Documento con exito"));
+            }
+            else
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
+            }//SEVERITY_WARN
         }
         else
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "Ha ocurrido un error, verifique que todos los campos enten correctos")); 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "El Número de Documento especificado ya existe, intente con otro número"));
         }
-        documentos = null;
     }
     
     //metodo para listar los Documentos
