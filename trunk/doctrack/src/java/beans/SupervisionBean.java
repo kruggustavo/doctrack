@@ -2,6 +2,7 @@ package beans;
 
 import controllers.SupervisionController;
 import entities.institucion.Distritos;
+import entities.users.Funcionarios;
 import entities.institucion.Superviciones;
 import java.io.Serializable;
 import java.util.List;;
@@ -26,9 +27,11 @@ public class SupervisionBean implements Serializable{
     
     private List supervisionList;
     private List distritosList;
+    private List funcionariosList;
     
     private Superviciones selectedSupervision;
     private String selectedDistrict;
+    private String selectedServant;
     
     private SupervisionController controller = new SupervisionController();
 
@@ -39,14 +42,23 @@ public class SupervisionBean implements Serializable{
     
     public void guardarSupervision(){          
         //Buscamos Distrito a partir de la descripcion elegida en pantalla
-        Distritos r = null;
+        Distritos d = null;
         if (selectedDistrict == null){
-            r = (Distritos) controller.getDistritosList().get(0);
-            selectedDistrict = r.getNombre();
+            d = (Distritos) controller.getDistritosList().get(0);
+            selectedDistrict = d.getNombre();
         }else{
-            r = controller.getDistrictEntity(selectedDistrict);
+            d = controller.getDistrictEntity(selectedDistrict);
         }
-        //selectedSupervision.getIdDistrito(r);
+        selectedSupervision.setIdDistrito(d);
+        
+        Funcionarios f = null;
+        if (selectedServant == null){
+            f = (Funcionarios) controller.getFuncionariosList().get(0);
+            selectedServant = f.getNombreCompleto();
+        }else{
+            f = controller.getFuncionariosEntity(selectedServant);
+        }
+        selectedSupervision.setIdFuncionario(f);
         
         controller.saveSupervision(selectedSupervision);
         selectedSupervision = null;
@@ -91,7 +103,25 @@ public class SupervisionBean implements Serializable{
     public void setSelectedDistrict(String selectedDistrict) {
         this.selectedDistrict = selectedDistrict;
     }
+    
+        
+    public List getFuncionariosList() {
+        funcionariosList = controller.getFuncionariosList();
+        return distritosList;
+    }
 
+    public void setFuncionariosList(List funcionariosList) {
+        this.funcionariosList = funcionariosList;
+    }
+
+      public String getSelectedServant() {
+        return selectedServant;
+    }
+
+    public void setSelectedServant(String selectedServant) {
+        this.selectedServant = selectedServant;
+    }
+    
     public Long getId() {
         return id;
     }

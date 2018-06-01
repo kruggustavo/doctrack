@@ -6,6 +6,7 @@
 package controllers;
 
 import entities.institucion.Distritos;
+import entities.users.Funcionarios;
 import entities.institucion.Superviciones;
 import java.util.List;
 import util.Transactions;
@@ -17,8 +18,8 @@ import util.Transactions;
 public class SupervisionController {
     Transactions t = Transactions.getInstance();
     
-    public void saveSupervision(Superviciones u){
-        t.saveEntity(u);
+    public void saveSupervision(Superviciones s){
+        t.saveEntity(s);
     }
     
     public List getSupervisionList(){
@@ -34,6 +35,16 @@ public class SupervisionController {
     public Distritos getDistrictEntity(String nombre){
         Distritos l = (Distritos) t.getEntity("from Distritos where nombre  ='" + nombre + "'");
         return l;
+    }
+    
+     public List getFuncionariosList(){
+        List lf = t.getList("from Funcionarios");
+        return lf;
+    }
+    
+    public Funcionarios getFuncionariosEntity(String nombreCompleto){
+        Funcionarios lf = (Funcionarios) t.getEntity("from Funcionarios where nombreCompleto  ='" + nombreCompleto + "'");
+        return lf;
     }
     
     public void deleteSupervision(Superviciones u){
