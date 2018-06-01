@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import util.Authorization;
+import util.HibernateUtil;
 import util.SessionUtil;
 /**
  *
@@ -33,7 +34,12 @@ public class LoginBean implements Serializable {
     private Usuarios currentUser = null;
     private String user = "";
     private String pwd = "";
- 
+
+    public String getInit(){
+        HibernateUtil.getSessionFactory();
+        return null;
+    }
+    
     public void loginListener(){
         isLogin = true;
     }
