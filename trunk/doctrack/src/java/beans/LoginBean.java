@@ -13,9 +13,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.primefaces.context.RequestContext;
 import util.Authorization;
 import util.HibernateUtil;
+import util.LoggerUtil;
 import util.SessionUtil;
 /**
  *
@@ -24,11 +24,10 @@ import util.SessionUtil;
 @ManagedBean
 @SessionScoped
 public class LoginBean implements Serializable {
-    private UserController controller = new UserController();
-    
     private static final long serialVersionUID = -411392021898485L;
-    
     public static boolean isLogged = false;
+    
+    private UserController controller = new UserController();
     
     private boolean isLogin = false;
     private Usuarios currentUser = null;
@@ -53,6 +52,9 @@ public class LoginBean implements Serializable {
             if (u != null) {
                 LoginBean.isLogged = true;
 
+                LoggerUtil.setMDCParams("userId", u.getId());
+                LoggerUtil.logInfo("Inicio de sesion");
+                
                 currentUser = u;
 
                 HttpSession session = SessionUtil.getSession();

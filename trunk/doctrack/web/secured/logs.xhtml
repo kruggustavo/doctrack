@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+	<ui:composition template="../dashboard.xhtml">
+            <ui:define name="content">  
+                <div style="width: 100%; height: 80%">
+                    <h:form> 
+                        <p:dataScroller value="#{logsBean.logsList}" var="logs" chunkSize="60">
+                            <f:facet name="header">
+                                Navegue hacia abajo para cargar mas resultados
+                            </f:facet>
+                           
+                            <h:panelGrid columns="3" cellpadding="2" >                                
+                                <h:outputText value="#{logs.fechaHora}" style="padding-right: 40px">
+                                    <f:convertDateTime pattern="dd MMM yyyy - HH:mm" />
+                                </h:outputText>
+                                <h:outputText value="#{logs.idUsuario}" style="padding-right: 40px"/>
+                                <h:outputText value="#{logs.mensaje}"/>                                
+                            </h:panelGrid>
+                        </p:dataScroller>
+                    </h:form>
+                </div>           
+            </ui:define>
+	</ui:composition>
+    </h:body>
+</html>

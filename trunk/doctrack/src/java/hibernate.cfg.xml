@@ -59,7 +59,6 @@ Contributor(s):
     <mapping class="entities.seguimiento.Tipodocumento"/>
     <mapping class="entities.seguimiento.Tramitantes"/>
     <mapping class="entities.institucion.Areas"/>
-    <mapping class="entities.seguimiento.Adjuntos"/>
     <mapping class="entities.seguimiento.Resolucion"/>
     <mapping class="entities.seguimiento.Seguimiento"/>
     <mapping class="entities.seguimiento.Gestiondocumentos"/>

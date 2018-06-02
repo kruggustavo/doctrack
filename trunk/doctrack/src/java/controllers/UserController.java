@@ -9,6 +9,7 @@ import entities.users.Funcionarios;
 import entities.users.Roles;
 import entities.users.Usuarios;
 import java.util.List;
+import util.LoggerUtil;
 import util.Transactions;
 
 /**
@@ -18,8 +19,9 @@ import util.Transactions;
 public class UserController {
     Transactions t = Transactions.getInstance();
     
-    public void saveUser(Usuarios u){
+    public void saveUser(Usuarios u){        
         t.saveEntity(u);
+        LoggerUtil.logInfo("Creacion usuario con alias `" + u.getAlias() + "`");
     }
     
     public Usuarios getLoginUser(String user, String pass){
@@ -47,16 +49,19 @@ public class UserController {
         return l;
     }
     
-    public void deleteUser(Usuarios u){
+    public void deleteUser(Usuarios u){        
         t.deleteEntity(u);
+        LoggerUtil.logInfo("Eliminacion usuario con alias `" + u.getAlias() + "`");
     }
     
     public void saveRol(Roles r){
         t.saveEntity(r);
+        LoggerUtil.logInfo("Creacion rol de usuario `" + r.getDescripcion() + "`");
     }
     
     public void deleteRol(Roles r){
         t.deleteEntity(r);
+        LoggerUtil.logInfo("Eliminacion rol de usuario `" + r.getDescripcion() + "`");
     }
     
     public List getRolAdmins(){
@@ -73,8 +78,9 @@ public class UserController {
         t.saveEntity(r);
     }
     
-    public void deleteEmployee(Funcionarios r){
+    public void deleteEmployee(Funcionarios r){        
         t.deleteEntity(r);
+        LoggerUtil.logInfo("Eliminacion funcionario ´" + r.getNombreCompleto() + "´");
     }
     
     public List getEmployeesList(){

@@ -19,7 +19,7 @@
                         <p:menuitem value="Usuarios del sistema" icon="ui-icon-person" outcome="/secured/users/index.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}" />                      
                         <p:menuitem value="Roles de usuarios" icon="ui-icon-person" outcome="/secured/users/roles.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>                      
                         <p:menuitem value="Funcionarios" icon="ui-icon-person" outcome="/secured/users/employees.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
-                        <p:menuitem value="Auditoría" icon="ui-icon-note" />
+                        <p:menuitem value="Auditoría" icon="ui-icon-note" outcome="/secured/logs.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>   
                     <p:submenu label="Institución" expanded="true">
                         <p:menuitem value="Supervisiones" icon="ui-icon-document-b" outcome="/secured/institution/supervision.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
