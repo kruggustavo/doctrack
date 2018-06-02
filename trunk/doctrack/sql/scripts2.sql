@@ -189,6 +189,17 @@ CREATE TABLE `usuarios` (
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`idRol`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `logs`;
+CREATE TABLE `logs` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `fecha_hora` datetime NOT NULL,
+  `idUsuario` mediumint(9) DEFAULT NULL,
+  `nivel` varchar(30) DEFAULT '',
+  `mensaje` varchar(150) DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8225 DEFAULT CHARSET=utf8;
+
+
 INSERT INTO roles (descripcion, administra_configuraciones)
 SELECT * FROM (SELECT 'Administrador', 'Si') AS tmp
 WHERE NOT EXISTS (SELECT descripcion FROM roles) LIMIT 1;
