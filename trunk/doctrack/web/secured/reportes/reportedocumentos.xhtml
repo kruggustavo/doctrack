@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"  
+      >
+       
+    <h:body>
+        <ui:composition template="../../dashboard.xhtml">
+            <ui:define name="content">  
+                
+                <p:panel header="Reporte de documentos" style="width: 90%">
+                 <p:panelGrid columns="1">
+                    <!--Calendario-->
+                    <p:outputLabel for="button" value="Seleccione la fecha de entrada: " />
+                    <p:calendar id="button" value="#{documentoBean.listaSup}" showOn="button" />
+                    <p:commandButton value="Submit" update="msgs" actionListener="#{ReporteDocBean.verReporteF()}" icon="ui-icon-check" />
+                    <!--input superviciones-->
+                    <p:outputLabel value="Seleccione la Supervición tramitante " />
+                    <h:selectOneMenu  value="#{ReporteDocBean.sup}"> 
+                        <f:selectItems value="#{documentosBean.listaSup}" var="superviciones" itemLabel="#{superviciones.idDistrito.nombre}" itemValue="#{superviciones.numeroSupervision}" />
+                    </h:selectOneMenu>
+                    <h:commandLink id="rdocsup" target="_blank" value="rdocsup" actionListener="#{ReporteDocBean.verReporte()}"/>
+        
+                 </p:panelGrid>
+                        <!--  <p:commandButton value="Submit" update="msgs" actionListener="#{calendarView.click}" icon="ui-icon-check" /> -->
+                </p:panel>
+            </ui:define>
+	</ui:composition>
+    </h:body>
+</html>
