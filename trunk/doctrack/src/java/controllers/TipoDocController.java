@@ -28,4 +28,14 @@ public class TipoDocController {
     public void deleteTipoDoc(Tipodocumento tp){
         t.deleteEntity(tp);
     }
+
+    public List getTipodocNombreList(String nombre) {
+        List l = t.getList("from Tipodocumento where nombre = '"+ nombre +"' ");
+        return l;
+    }
+
+    public List getTipodocActList(String nombre, Long id) {
+        List l = t.getList("FROM Tipodocumento WHERE nombre = '"+ nombre +"' and id != '"+ id +"' ");
+        return l;
+    }
 }

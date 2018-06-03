@@ -9,8 +9,10 @@ import controllers.TipoDocController;
 import entities.seguimiento.Tipodocumento;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -33,14 +35,36 @@ public class TipoDocBeans implements Serializable {
     
     public void guardarTipodocumento()
     {
-        controller.SaveTipoDoc(tipodocumento);
-        tipodocumento = null;
+        int resultadoEnc = controller.getTipodocNombreList(tipodocumento.getNombre()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
+        {
+            controller.SaveTipoDoc(tipodocumento);
+            tipodocumento = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Tipo de Documento Creado con éxito!"));
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe el Tipo de Documento especificado ya existe"));
+        }
     }
     
-    public void eliminarTipodocumento(){
-        controller.deleteTipoDoc(tipodocumento);
-        tipodocumento = null;
+    public void actualizarTipodocumento()
+    {
+        int resultadoEnc = controller.getTipodocActList(tipodocumento.getNombre(), tipodocumento.getId()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
+        {
+            controller.SaveTipoDoc(tipodocumento);
+            tipodocumento = null;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Tipo de Documento Actualizado con éxito!"));
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe el Tipo de Documento especificado ya existe"));
+        }
     }
+    
 
     public Tipodocumento getTipodocumento() {
         return tipodocumento;

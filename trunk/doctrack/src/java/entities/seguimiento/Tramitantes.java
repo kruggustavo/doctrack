@@ -40,9 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Tramitantes.findByEmail", query = "SELECT t FROM Tramitantes t WHERE t.email = :email")})
 public class Tramitantes implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTramitante")
-    private Collection<Documentos> documentosCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,6 +72,8 @@ public class Tramitantes implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "email")
     private String email;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTramitante")
+    private Collection<Documentos> documentosCollection;
 
     public Tramitantes() {
     }
@@ -140,6 +139,15 @@ public class Tramitantes implements Serializable {
         this.email = email;
     }
 
+    @XmlTransient
+    public Collection<Documentos> getDocumentosCollection() {
+        return documentosCollection;
+    }
+
+    public void setDocumentosCollection(Collection<Documentos> documentosCollection) {
+        this.documentosCollection = documentosCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -163,15 +171,6 @@ public class Tramitantes implements Serializable {
     @Override
     public String toString() {
         return "entities.seguimiento.Tramitantes[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Documentos> getDocumentosCollection() {
-        return documentosCollection;
-    }
-
-    public void setDocumentosCollection(Collection<Documentos> documentosCollection) {
-        this.documentosCollection = documentosCollection;
     }
     
 }

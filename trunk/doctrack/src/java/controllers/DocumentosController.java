@@ -8,6 +8,7 @@ package controllers;
 import entities.institucion.Superviciones;
 import entities.seguimiento.Documentos;
 import entities.seguimiento.Seguimiento;
+import entities.seguimiento.Tipodocumento;
 import entities.seguimiento.Tramitantes;
 import java.util.List;
 import util.Transactions;
@@ -68,4 +69,26 @@ public class DocumentosController {
         List l = t.getList("from Documentos where numeroDoc = '"+ numeroDoc +"' ");
         return l;
     }
+    
+    public List getTipodocumentoList()
+    {
+        List l = t.getList("from Tipodocumento");
+        return l;
+    }
+
+    public Tipodocumento getTipodocumentoEntity(String tipodocumento) {
+        Tipodocumento l = (Tipodocumento) t.getEntity("from Tipodocumento where nombre ='" + tipodocumento + "'");
+        return l;
+    }
+
+    public List getDocActList(String numeroDoc, Long id) {
+        List l = t.getList("FROM Documentos WHERE numeroDoc = '"+ numeroDoc +"' and id != '"+ id +"' ");
+        return l;
+    }
+
+    public List getSegEstadoList(String numeroDoc) {
+        List l = t.getList("FROM Seguimiento WHERE idDocumento = '"+ numeroDoc +"' and estadogeneral = '"+ "Anulado" +"' ");
+        return l;
+    }
+    
 }

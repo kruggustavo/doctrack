@@ -5,8 +5,12 @@
  */
 package entities.users;
 
+import entities.institucion.Superviciones;
+import entities.seguimiento.Respuesta;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +18,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,6 +41,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Funcionarios.findByTelefono", query = "SELECT f FROM Funcionarios f WHERE f.telefono = :telefono")
     , @NamedQuery(name = "Funcionarios.findByEmail", query = "SELECT f FROM Funcionarios f WHERE f.email = :email")})
 public class Funcionarios implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncionario")
+    private Collection<Superviciones> supervicionesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncionario")
+    private Collection<Respuesta> respuestaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -144,6 +155,24 @@ public class Funcionarios implements Serializable {
     @Override
     public String toString() {
         return "entities.users.Funcionarios[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Superviciones> getSupervicionesCollection() {
+        return supervicionesCollection;
+    }
+
+    public void setSupervicionesCollection(Collection<Superviciones> supervicionesCollection) {
+        this.supervicionesCollection = supervicionesCollection;
+    }
+
+    @XmlTransient
+    public Collection<Respuesta> getRespuestaCollection() {
+        return respuestaCollection;
+    }
+
+    public void setRespuestaCollection(Collection<Respuesta> respuestaCollection) {
+        this.respuestaCollection = respuestaCollection;
     }
     
 }

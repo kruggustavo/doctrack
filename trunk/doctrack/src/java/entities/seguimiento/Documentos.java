@@ -77,6 +77,9 @@ public class Documentos implements Serializable {
     @JoinColumn(name = "idTramitante", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Tramitantes idTramitante;
+    @JoinColumn(name = "idTipodoc", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Tipodocumento idTipodoc;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDocumento")
     private Collection<Seguimiento> seguimientoCollection;
 
@@ -149,6 +152,14 @@ public class Documentos implements Serializable {
 
     public void setIdTramitante(Tramitantes idTramitante) {
         this.idTramitante = idTramitante;
+    }
+
+    public Tipodocumento getIdTipodoc() {
+        return idTipodoc;
+    }
+
+    public void setIdTipodoc(Tipodocumento idTipodoc) {
+        this.idTipodoc = idTipodoc;
     }
 
     @XmlTransient

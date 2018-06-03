@@ -9,8 +9,10 @@ import controllers.TramitantesController;
 import entities.seguimiento.Tramitantes;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -32,14 +34,51 @@ public class TramitantesBean implements Serializable {
 
     public void guardarTramitante()
     {
-        try
+        int resultadoEnc = controller.getTramitantCiList(tramitantes.getCi()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
         {
-            controller.saveTramitantes(tramitantes);
-            tramitantes = null;//destruyo el objeto
+            try
+            {
+                controller.saveTramitantes(tramitantes);
+                tramitantes = null;//destruyo el objeto
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Tramitante Creado con éxito!"));
+    //            FacesContext context = FacesContext.getCurrentInstance();
+      //          context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro Alterado con éxito!"));
+            }
+            catch(Exception e)
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Ha ocurrido un error comuniquese con su proveedor de sistema"));
+                System.out.println("error save controller "+e);
+            }
         }
-        catch(Exception e)
+        else
         {
-            System.out.println("error save controller "+e);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe el Tramitante con Número de cédula "+tramitantes.getCi()));
+        }
+    }
+    
+    public void actualizarTramitante()
+    {
+        int resultadoEnc = controller.getTramitanteActList(tramitantes.getCi(), tramitantes.getId()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
+        {
+            try
+            {
+                controller.saveTramitantes(tramitantes);
+                tramitantes = null;//destruyo el objeto
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Tramitante Actualizado con éxito!"));
+            }
+            catch(Exception e)
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Ha ocurrido un error comuniquese con su proveedor de sistema"));
+                System.out.println("error save controller "+e);
+            }
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe el Tramitante con Número de cédula "+tramitantes.getCi()));
         }
     }
     

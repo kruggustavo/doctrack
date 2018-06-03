@@ -45,25 +45,21 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/doctrack?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">18850589</property>
-  
+    <property name="hibernate.connection.password">2017fleitas100</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    
     <mapping class="entities.institucion.Superviciones"/>
     <mapping class="entities.institucion.Dependencias"/>
     <mapping class="entities.institucion.Distritos"/>
     <mapping class="entities.users.Funcionarios"/>
     <mapping class="entities.users.Usuarios"/>
     <mapping class="entities.users.Roles"/>
-    <mapping class="entities.seguimiento.Documentos"/>
     <mapping class="entities.seguimiento.Tipodocumento"/>
     <mapping class="entities.seguimiento.Tramitantes"/>
     <mapping class="entities.institucion.Areas"/>
-    <mapping class="entities.seguimiento.Resolucion"/>
+    <mapping class="entities.seguimiento.Respuesta"/>
     <mapping class="entities.seguimiento.Seguimiento"/>
     <mapping class="entities.seguimiento.Gestiondocumentos"/>
-    
+    <mapping class="entities.seguimiento.Documentos"/>
+    <mapping class="entities.seguimiento.Seguimiento"/>
   </session-factory>
-  
-  
 </hibernate-configuration>

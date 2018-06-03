@@ -25,4 +25,14 @@ public class TramitantesController {
         List l = t.getList("from Tramitantes");
         return l;
     }
+    
+    public List getTramitantCiList(String ci){
+        List l = t.getList("from Tramitantes where ci = '"+ ci +"' ");
+        return l;
+    }
+
+    public List getTramitanteActList(String ci, Long id) {
+        List l = t.getList("FROM Tramitantes WHERE ci = '"+ ci +"' and id != '"+ id +"' ");
+        return l;
+    }
 }

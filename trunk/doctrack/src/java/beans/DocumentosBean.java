@@ -9,6 +9,7 @@ import controllers.DocumentosController;
 import entities.institucion.Superviciones;
 import entities.seguimiento.Documentos;
 import entities.seguimiento.Seguimiento;
+import entities.seguimiento.Tipodocumento;
 import entities.seguimiento.Tramitantes;
 import java.io.Serializable;
 import java.util.Date;
@@ -34,6 +35,7 @@ public class DocumentosBean implements Serializable {
     //para las claves foraneas
     private String tramitantes;
     private String superviciones;
+    private String tipodocumento;
 
 
     //el siguiente List es para la lista de Documentos
@@ -41,6 +43,7 @@ public class DocumentosBean implements Serializable {
     //creo una lista de superviciones y tramitantes que van servir como fk
     private List<Superviciones> listaSup;
     private List<Tramitantes> listaTram;
+    private List<Tipodocumento> listaTipodoc;
 
     //creo variable de tipo documento y seguimiento
     private Documentos documentos;
@@ -60,73 +63,95 @@ public class DocumentosBean implements Serializable {
     {
        tramitantes = documentos.getIdTramitante().getCi(); //aqui solo tengo el idFk por eso consulto para que me traiga el objeto en si
        superviciones = documentos.getIdSupervicion().getNumeroSupervision();
+       tipodocumento = documentos.getIdTipodoc().getNombre();
     }
     
     public void anularDocumento()
     {
-        boolean mensResp = true;
-        //en esta caso no hago nada con Documento, dejo asi como esta
-        //documento tiene un objeto seleccionado pero seguimiento no se selecciona, entonces consuulto por objeto seguimiento con el Fk que esta en documentos
-        if (documentos.getId() != null && seguimiento == null){
-            System.out.println("el id del docuemento en anular "+documentos.getId());
-            seguimiento = controller.getSeguimientoEntity(documentos.getId());
-            seguimiento.setEstadogeneral("Anulado");
-            controller.saveSeguimiento(seguimiento);
-            seguimiento = null;
-        }else{
-            mensResp= false;
-        } 
-        if(mensResp == true)
+        int resultadoEnc = controller.getSegEstadoList(documentos.getNumeroDoc()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Anulación de Documento con exito"));
+            boolean mensResp = true;
+            //en esta caso no hago nada con Documento, dejo asi como esta
+            //documento tiene un objeto seleccionado pero seguimiento no se selecciona, entonces consuulto por objeto seguimiento con el Fk que esta en documentos
+            if (documentos.getId() != null && seguimiento == null){
+                System.out.println("el id del docuemento en anular "+documentos.getId());
+                seguimiento = controller.getSeguimientoEntity(documentos.getId());
+                seguimiento.setEstadogeneral("Anulado");
+                controller.saveSeguimiento(seguimiento);
+                seguimiento = null;
+            }else{
+                mensResp= false;
+            } 
+            if(mensResp == true)
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Anulación de Documento con éxito"));
+            }
+            else
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
+            }
         }
         else
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "El Documento especificado ya se encuentra Anulado"));
         }
     }
     
     //metodo para actulizar lo editado del documento
     public void actualizarDocumento()
     {
-        //solo verifico que el tramitante y la supervicion fueron seleccionados       
-        boolean mensResp = true;
-        if(tramitantes != null && superviciones != null && seguimiento == null) //no crep objeto solo el seleccionado
+        int resultadoEnc = controller.getDocActList(documentos.getNumeroDoc(), documentos.getId()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
         {
-            Tramitantes tr = null;
-            Superviciones sp = null;
-            tr = controller.getTramitanteEntity(tramitantes);
-            sp = controller.getSupervicionEntity(superviciones);
-            documentos.setIdTramitante(tr);
-            documentos.setIdSupervicion(sp);
-            controller.saveDocumentos(documentos); //la fecha no se cargara en esta parte, quedara con la que esta
-            //luego de guardar el documento le creo un primer seguimiento con estado de recibido
-            //el objeto seguimiento creo porque no se selecciona en la interfaz, solo el documento
-            if (documentos.getId() != null)
+            //solo verifico que el tramitante y la supervicion fueron seleccionados       
+            boolean mensResp = true;
+            if(tramitantes != null && superviciones != null && tipodocumento != null && seguimiento == null) //no crep objeto solo el seleccionado
             {
-                System.out.println("id del documento en actualizar "+documentos.getId());
-                seguimiento = controller.getSeguimientoEntity(documentos.getId());
-                seguimiento.setDescripcion(documentos.getDescripcion()); //la misma descripcion que el del documento
-                controller.saveSeguimiento(seguimiento);
-                seguimiento = null;
+                Tramitantes tr = null;
+                Superviciones sp = null;
+                Tipodocumento td = null;
+                tr = controller.getTramitanteEntity(tramitantes);
+                sp = controller.getSupervicionEntity(superviciones);
+                td = controller.getTipodocumentoEntity(tipodocumento);
+                documentos.setIdTramitante(tr);
+                documentos.setIdSupervicion(sp);
+                documentos.setIdTipodoc(td);
+                controller.saveDocumentos(documentos); //la fecha no se cargara en esta parte, quedara con la que esta
+                //luego de guardar el documento le creo un primer seguimiento con estado de recibido
+                //el objeto seguimiento creo porque no se selecciona en la interfaz, solo el documento
+                if (documentos.getId() != null)
+                {
+                    System.out.println("id del documento en actualizar "+documentos.getId());
+                    seguimiento = controller.getSeguimientoEntity(documentos.getId());
+                    seguimiento.setDescripcion(documentos.getDescripcion()); //la misma descripcion que el del documento
+                    controller.saveSeguimiento(seguimiento);
+                    seguimiento = null;
+                }
+                else
+                {
+                    mensResp = false;
+                }
+                documentos = null;
             }
-            else
+            else 
             {
                 mensResp = false;
             }
-            documentos = null;
-        }
-        else 
-        {
-            mensResp = false;
-        }
-        if(mensResp == true)
-        {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Actualización de Registro con exito"));
+            if(mensResp == true)
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Actualización de Registro con exito"));
+            }
+            else
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
+            }
         }
         else
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "El Número de Documento especificado ya existe, intente con otro número"));
         }
     }
     
@@ -142,7 +167,8 @@ public class DocumentosBean implements Serializable {
             Tramitantes tr = null;
             if (tramitantes == null){
                 tr = (Tramitantes) controller.getTramitantesList().get(0);
-                tramitantes = tr.getCi();
+                tramitantes = tr.getCi();//este es para que tramites pueda tener el numero de ci, no es del todo necesario ya que con el codigo de arriba ya crea el objeto 
+                //y eso es todo lo necesario
             }else{
                 tr = controller.getTramitanteEntity(tramitantes);
             }
@@ -154,6 +180,14 @@ public class DocumentosBean implements Serializable {
             }else{
                 sp = controller.getSupervicionEntity(superviciones);
             }
+            //buscamos el tipodocumento apartir del nombre
+            Tipodocumento td = null;
+            if (tipodocumento == null){
+                td = (Tipodocumento) controller.getTipodocumentoList().get(0);
+                tipodocumento = td.getNombre();
+            }else{
+                td = controller.getTipodocumentoEntity(tipodocumento);
+            }
             //tambien obtengo la fecha y hora actual
             Date date = new Date();
             //DateFormat hourdateFormat = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd"); //dejo en esta forma porque es la acepta mysql
@@ -161,6 +195,7 @@ public class DocumentosBean implements Serializable {
             //agrego los datos faltantes que son las foraneas
             documentos.setIdTramitante(tr);
             documentos.setIdSupervicion(sp);
+            documentos.setIdTipodoc(td);
             documentos.setFechaentrada(date);
 
             controller.saveDocumentos(documentos);
@@ -185,11 +220,11 @@ public class DocumentosBean implements Serializable {
             //mensaje de modificaciones
             if(mensResp == true)
             {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Registro de Documento con exito"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Documento Nª"+documentos.getNumeroDoc()+" con éxito"));
             }
             else
             {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info!", "Ha ocurrido un error pongase en contacto con su proveedor"));
             }//SEVERITY_WARN
         }
         else
@@ -288,5 +323,22 @@ public class DocumentosBean implements Serializable {
 
     public void setSeguimiento(Seguimiento seguimiento) {
         this.seguimiento = seguimiento;
+    }
+    
+    public String getTipodocumento() {
+        return tipodocumento;
+    }
+
+    public void setTipodocumento(String tipodocumento) {
+        this.tipodocumento = tipodocumento;
+    }
+
+    public List<Tipodocumento> getListaTipodoc() {
+        listaTipodoc = controller.getTipodocumentoList();
+        return listaTipodoc;
+    }
+
+    public void setListaTipodoc(List<Tipodocumento> listaTipodoc) {
+        this.listaTipodoc = listaTipodoc;
     }
 }

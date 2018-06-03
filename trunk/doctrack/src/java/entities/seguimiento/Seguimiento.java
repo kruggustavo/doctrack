@@ -44,9 +44,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Seguimiento.findByDescripcion", query = "SELECT s FROM Seguimiento s WHERE s.descripcion = :descripcion")})
 public class Seguimiento implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSeguimiento")
-    private Collection<Gestiondocumentos> gestiondocumentosCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,10 +71,12 @@ public class Seguimiento implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSeguimiento")
-    private Collection<Resolucion> resolucionCollection;
+    private Collection<Gestiondocumentos> gestiondocumentosCollection;
     @JoinColumn(name = "idDocumento", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Documentos idDocumento;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSeguimiento")
+    private Collection<Respuesta> respuestaCollection;
 
     public Seguimiento() {
     }
@@ -135,12 +134,12 @@ public class Seguimiento implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Resolucion> getResolucionCollection() {
-        return resolucionCollection;
+    public Collection<Gestiondocumentos> getGestiondocumentosCollection() {
+        return gestiondocumentosCollection;
     }
 
-    public void setResolucionCollection(Collection<Resolucion> resolucionCollection) {
-        this.resolucionCollection = resolucionCollection;
+    public void setGestiondocumentosCollection(Collection<Gestiondocumentos> gestiondocumentosCollection) {
+        this.gestiondocumentosCollection = gestiondocumentosCollection;
     }
 
     public Documentos getIdDocumento() {
@@ -149,6 +148,15 @@ public class Seguimiento implements Serializable {
 
     public void setIdDocumento(Documentos idDocumento) {
         this.idDocumento = idDocumento;
+    }
+
+    @XmlTransient
+    public Collection<Respuesta> getRespuestaCollection() {
+        return respuestaCollection;
+    }
+
+    public void setRespuestaCollection(Collection<Respuesta> respuestaCollection) {
+        this.respuestaCollection = respuestaCollection;
     }
 
     @Override
@@ -174,15 +182,6 @@ public class Seguimiento implements Serializable {
     @Override
     public String toString() {
         return "entities.seguimiento.Seguimiento[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Gestiondocumentos> getGestiondocumentosCollection() {
-        return gestiondocumentosCollection;
-    }
-
-    public void setGestiondocumentosCollection(Collection<Gestiondocumentos> gestiondocumentosCollection) {
-        this.gestiondocumentosCollection = gestiondocumentosCollection;
     }
     
 }

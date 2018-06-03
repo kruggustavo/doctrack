@@ -73,6 +73,31 @@ public class GestionDocBean implements Serializable {
         }
     }
     
+    public void moverDocumento() //con este metodo logro cambiar el estado de seguimiento y insertar una una gesiondocumento
+    {
+        if(seguimiento != null && areas != null && asuntoGest != null && obsGest != null)
+        {
+            //en esta seccion no necesito cambiar el estado, ya que siempre se mantendran en procesado hasta llegar a concluirse
+            Gestiondocumentos gdoc = new Gestiondocumentos();
+            Areas ar = new Areas();
+            ar = controller.getAreaEntity(areas);
+            gdoc.setAsunto(asuntoGest);
+            gdoc.setFecha(new Date());
+            gdoc.setIdArea(ar);
+            gdoc.setObservacion(obsGest);
+            gdoc.setIdSeguimiento(seguimiento);
+            gdoc.setIdDependencia(ar.getIdDependencia());
+            controller.saveGestiondocumentos(gdoc);
+            seguimiento = null;
+            ar = null;
+            gdoc = null;
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
+        }
+    }
+    
     public String getFechaEntrada() {
         return fechaEntrada;
     }
