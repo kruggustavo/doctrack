@@ -45,7 +45,7 @@ public class ReporteDocBean {
     
      public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         
-        //Instancia hacia la clase reporteClientes        
+              
         ReporteDocumento repdocsup = new ReporteDocumento();
         
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -58,7 +58,7 @@ public class ReporteDocBean {
      
      public void verReporteF() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         
-        //Instancia hacia la clase reporteClientes        
+               
         ReporteDocumento repdocsup = new ReporteDocumento();
         
         FacesContext facesContext = FacesContext.getCurrentInstance();
