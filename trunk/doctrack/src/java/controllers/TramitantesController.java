@@ -13,6 +13,7 @@ import util.Transactions;
  *
  * @author Lucas Fleitas
  */
+
 public class TramitantesController {
     Transactions t = Transactions.getInstance();
     

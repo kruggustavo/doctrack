@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
  *
  * @author Lucas Fleitas
  */
+
 @ManagedBean
 @ViewScoped
 public class TipoDocBeans implements Serializable {

@@ -14,6 +14,7 @@ import util.Transactions;
  *
  * @author Lucas Fleitas
  */
+
 public class AreasController {
     
     Transactions t = Transactions.getInstance();

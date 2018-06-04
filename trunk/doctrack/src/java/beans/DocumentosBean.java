@@ -22,6 +22,7 @@ import javax.faces.context.FacesContext;
  *
  * @author Lucas Fleitas
  */
+
 @ManagedBean
 @SessionScoped
 public class DocumentosBean implements Serializable {

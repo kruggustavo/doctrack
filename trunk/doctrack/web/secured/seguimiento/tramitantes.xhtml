@@ -9,6 +9,7 @@
         <ui:composition template="../../dashboard.xhtml">
             <ui:define name="content">
                 
+                
                 <h:form id="TramitantesLisForm"><!--siempre utilizo un from principal -->
                     <p:panel header="Tramitantes de Documentos" style="width: auto; margin: 0 auto; vertical-align: middle"> <!--utilizo un panel que me sirva como contenedor -->
                         <p:dataTable id="datalist" var="tram" value="#{tramitantesBean.tramitantesList}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" lazy="false" rowKey="#{tram.id}" selectionMode="single" selection="#{tramitantesBean.tramitantes}">

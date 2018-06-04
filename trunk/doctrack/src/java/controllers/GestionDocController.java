@@ -10,6 +10,7 @@ import util.Transactions;
  *
  * @author Lucas Fleitas
  */
+
 public class GestionDocController {
     Transactions t = Transactions.getInstance();
     

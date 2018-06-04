@@ -15,6 +15,7 @@ import util.Transactions;
  *
  * @author usuario
  */
+
 public class SupervisionController {
     Transactions t = Transactions.getInstance();
     

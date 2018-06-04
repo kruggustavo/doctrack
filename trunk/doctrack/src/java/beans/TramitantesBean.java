@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
  *
  * @author Lucas Fleitas
  */
+
 @ManagedBean
 @SessionScoped
 public class TramitantesBean implements Serializable {

@@ -15,7 +15,6 @@ import javax.faces.context.FacesContext;
  *
  * @author usuario
  */
-
 @ManagedBean
 @SessionScoped
 public class SupervisionBean implements Serializable{

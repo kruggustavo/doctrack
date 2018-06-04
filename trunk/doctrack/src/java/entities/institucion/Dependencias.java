@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Lucas Fleitas
 >>>>>>> correccion de error al ejecutar
  */
+
 @Entity
 @Table(name = "dependencias")
 @XmlRootElement

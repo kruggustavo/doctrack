@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
  *
  * @author Lucas Fleitas
  */
+
 @ManagedBean
 @SessionScoped
 public class GestionDocBean implements Serializable {

@@ -9,7 +9,7 @@
 	<ui:composition template="../../dashboard.xhtml">
             <ui:define name="content">  
                 <p:growl id="growl" showDetail="true" life="5000" /> 
-                <!--list -->
+                
                 <h:form id="DocLisFormListForm">
                     <p:panel header="Documentos" style="width: auto; margin: 0 auto; vertical-align: middle">
                         <p:dataTable id="datalist" var="doc" value="#{documentosBean.listaDoc}" lazy="false" rowKey="#{doc.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{documentosBean.documentos}" >

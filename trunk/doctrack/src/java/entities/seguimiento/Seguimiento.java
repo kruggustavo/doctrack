@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author Lucas Fleitas
  */
+
 @Entity
 @Table(name = "seguimiento")
 @XmlRootElement

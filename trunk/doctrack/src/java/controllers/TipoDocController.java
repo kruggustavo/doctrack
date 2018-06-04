@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @author Lucas Fleitas
  */
+
 public class TipoDocController {
     Transactions t = Transactions.getInstance();
     

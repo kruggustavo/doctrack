@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
  *
  * @author usuario
  */
-
 @ManagedBean
 @SessionScoped
 public class DependencyBean implements Serializable{

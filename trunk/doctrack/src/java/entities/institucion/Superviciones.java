@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Lucas Fleitas
  */
+
 @Entity
 @Table(name = "superviciones")
 @XmlRootElement

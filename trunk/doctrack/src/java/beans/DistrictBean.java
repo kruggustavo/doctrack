@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
  *
  * @author Javier Arza
  */
-
 @ManagedBean
 @SessionScoped
 public class DistrictBean implements Serializable{
