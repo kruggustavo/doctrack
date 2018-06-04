@@ -41,4 +41,9 @@ public class GestionDocController {
         Areas l = (Areas) t.getEntity("from Areas where nombre = '"+ nombre +"' ");
         return l;
     }
+    
+    public List getUltimaGestionList(Long idSeguimiento){ //limit 1 no funciona en hibernate
+        List l = t.getList("from Gestiondocumentos gd where gd.idSeguimiento = '"+ idSeguimiento +"' order by gd.id desc");
+        return l;
+    }
 }

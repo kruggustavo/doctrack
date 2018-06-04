@@ -26,7 +26,7 @@
                                     <div>
                                         <p:commandButton value="Ver" id="verButton" icon="ui-icon-plus" oncomplete="PF('SegVerDialog').show()" update=":SegVerForm" disabled="#{empty gestionDocBean.seguimiento}" />
                                         <p:commandButton value="Procesar" id="procesarButton" icon="ui-icon-pencil" update=":DocProcesarForm" oncomplete="PF('DocProcesarDialog').show()" disabled="#{empty gestionDocBean.seguimiento}"/>
-                                        <p:commandButton value="Mover" id="moverButton" icon="ui-icon-pencil" update=":DocMoverForm" oncomplete="PF('DocMoverDialog').show()" disabled="#{empty gestionDocBean.seguimiento}"/>
+                                        <p:commandButton value="Mover" id="moverButton" actionListener="#{gestionDocBean.inicializarUltimaGestion}" icon="ui-icon-pencil" update=":DocMoverForm" oncomplete="PF('DocMoverDialog').show()" disabled="#{empty gestionDocBean.seguimiento}"/>
                                         <p:commandButton value="Concluir" id="concluirButton" icon="fa-check-square-o" >
                                             <p:confirm header="Confirmar acción" message="¿Esta Seguro de cambiar a estado CONCLUIDO el Documento seleccionado?" icon="ui-icon-alert"/><!--disabled bloquea si la seleccion es vacia-->
                                         </p:commandButton>
@@ -99,9 +99,10 @@
                     <!--dialog para el boton procesar -->
                     <p:dialog header="Procesar Documento" id="DocProcesarDg" widgetVar="DocProcesarDialog" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)">
                         <h:form id="DocProcesarForm">
+                            <p:growl id="growl" showDetail="true" life="5000" /> 
                             <h:panelGroup id="display" rendered="true">
                                 <p:messages id="msgs" />
-                                <p:panelGrid columns="2">
+                                <p:panelGrid columns="3">
                                     
                                     <p:outputLabel value="Número de Seguimiento" />
                                     <p:inputText id="numSeg" value="#{gestionDocBean.seguimiento.id}" disabled="true" required="true" size="50" maxlength="50" />
@@ -116,14 +117,14 @@
 
                                     <p:outputLabel for="asunto" value="Asunto a Tratar" /><!--le paso el asunto a la variable asuntoGest-->
                                     <p:inputTextarea id="asunto" rows="6" cols="33" value="#{gestionDocBean.asuntoGest}" required="true">
-                                                <f:validateLength minimum="1" />
+                                        <f:validateLength minimum="1" maximum="50" />
                                         <p:ajax update="msgAsunto" event="keyup" />
                                     </p:inputTextarea>
                                     <p:message for="asunto" id="msgAsunto" display="icon" />
                                     
                                     <p:outputLabel for="observacion" value="Observación" /><!--le paso el asunto a la variable asuntoGest-->
                                     <p:inputTextarea id="observacion" rows="6" cols="33" value="#{gestionDocBean.obsGest}" required="true">
-                                                <f:validateLength minimum="1" />
+                                        <f:validateLength minimum="1" maximum="200" />
                                         <p:ajax update="msgObservacion" event="keyup" />
                                     </p:inputTextarea>
                                     <p:message for="observacion" id="msgObservacion" display="icon" />
@@ -131,7 +132,7 @@
                                 </p:panelGrid>
                                 <!--botones de guardar y cancelar -->
                                 <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                    <p:commandButton value="Guardar" action="#{gestionDocBean.procesarDocumento}" update="display,:SegLisFormListForm:datalist" oncomplete="PF('DocProcesarDialog').hide();"/>                              
+                                    <p:commandButton value="Guardar" action="#{gestionDocBean.procesarDocumento}" update="growl,display,:SegLisFormListForm:datalist" oncomplete="PF('DocProcesarDialog').hide();"/>                              
                                     <p:commandButton value="Cancelar" update="display" oncomplete="PF('DocProcesarDialog').hide()"/>
                                 </div>
                             </h:panelGroup>
@@ -140,15 +141,19 @@
                     
                     <p:dialog header="Mover Documento a un Nuevo Sector" id="DocMoverDg" widgetVar="DocMoverDialog" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)">
                         <h:form id="DocMoverForm">
+                            <p:growl id="growl" showDetail="true" life="5000" /> 
                             <h:panelGroup id="display" rendered="true">
                                 <p:messages id="msgs" />
-                                <p:panelGrid columns="2">
+                                <p:panelGrid columns="3">
                                     
                                     <p:outputLabel value="Número de Seguimiento" />
-                                    <p:inputText id="numSeg" value="#{gestionDocBean.seguimiento.id}" disabled="true" required="true" size="50" maxlength="50" />
+                                    <p:outputLabel value="#{gestionDocBean.seguimiento.id}" />
                                     
                                     <p:outputLabel value="Número de Documento" />
-                                    <p:inputText id="numDoc" value="#{gestionDocBean.seguimiento.idDocumento.numeroDoc}" disabled="true" required="true" size="50" maxlength="50" />
+                                    <p:outputLabel value="#{gestionDocBean.seguimiento.idDocumento.numeroDoc}" />
+                                    
+                                    <p:outputLabel value="Sector donde se encuentra el Documento" />
+                                    <p:outputLabel value="#{gestionDocBean.ultimaGestion.idArea.nombre}" />
                                     
                                     <p:outputLabel value="Sector destinatario del Documento" />
                                     <h:selectOneMenu  value="#{gestionDocBean.areas}"> 
@@ -157,14 +162,14 @@
 
                                     <p:outputLabel for="asunto" value="Asunto a Tratar" /><!--le paso el asunto a la variable asuntoGest-->
                                     <p:inputTextarea id="asunto" rows="6" cols="33" value="#{gestionDocBean.asuntoGest}" required="true">
-                                                <f:validateLength minimum="1" />
+                                        <f:validateLength minimum="1" maximum="50" />
                                         <p:ajax update="msgAsunto" event="keyup" />
                                     </p:inputTextarea>
                                     <p:message for="asunto" id="msgAsunto" display="icon" />
                                     
                                     <p:outputLabel for="observacion" value="Observación" /><!--le paso el asunto a la variable asuntoGest-->
                                     <p:inputTextarea id="observacion" rows="6" cols="33" value="#{gestionDocBean.obsGest}" required="true">
-                                                <f:validateLength minimum="1" />
+                                        <f:validateLength minimum="1" maximum="200" />
                                         <p:ajax update="msgObservacion" event="keyup" />
                                     </p:inputTextarea>
                                     <p:message for="observacion" id="msgObservacion" display="icon" />
@@ -172,7 +177,7 @@
                                 </p:panelGrid>
                                 <!--botones de guardar y cancelar -->
                                 <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                    <p:commandButton value="Guardar" action="#{gestionDocBean.procesarDocumento}" update="display,:SegLisFormListForm:datalist" oncomplete="PF('DocMoverDialog').hide();"/>                              
+                                    <p:commandButton value="Guardar" action="#{gestionDocBean.moverDocumento}" update="growl,display,:SegLisFormListForm:datalist" oncomplete="PF('DocMoverDialog').hide();"/>                              
                                     <p:commandButton value="Cancelar" update="display" oncomplete="PF('DocMoverDialog').hide()"/>
                                 </div>
                             </h:panelGroup>
