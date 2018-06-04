@@ -10,7 +10,7 @@
                 <ui:define name="content"> 
                 <!--list -->
                 <h:form id="ResolucionesListForm">
-                    <p:panel header="Resoluciones" style="width: 90%">
+                    <p:panel header="Respuesta de Documentos Concluidos" style="width: auto; margin: 0 auto; vertical-align: middle">
                         <p:dataTable id="datalist" value="#{resolutionBean.resolutionList}" lazy="false" rowKey="#{resolucion.id}" var="resolucion" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{resolutionBean.selectedResolution}" >
 
                             <p:ajax event="rowSelect"   update="createButton,editButton,deleteButton"/>

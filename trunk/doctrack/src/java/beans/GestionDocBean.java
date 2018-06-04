@@ -149,6 +149,36 @@ public class GestionDocBean implements Serializable {
         }
     }
     
+        
+    public void concluirDocumento() 
+    {
+        ultimaGestion = (Gestiondocumentos) controller.getUltimaGestionList(seguimiento.getId()).get(0);
+        if(ultimaGestion != null || seguimiento != null || areas != null)
+        {
+            //consulto si ya no esta procesado, ya que solo una vez se puede procesar
+            if(!seguimiento.getEstadogeneral().equals("Procesado"))
+            {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "El Documento especificado debe ser primeramente Procesado para poder luego ser concluido"));
+            }
+            else
+            {
+                //doy por conculuido el seguimiento actualizando el estado
+                seguimiento.setEstadogeneral("Concluido");
+                controller.saveSeguimiento(seguimiento);
+                //la ultima gestion supone ser de la coordinacion, a la cual se le cambia el estado a concluido en esta parte ya no se inserta
+                ultimaGestion.setEstadogestion("Concluido");
+                controller.saveGestiondocumentos(ultimaGestion);
+                
+                seguimiento = null;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Seguimiento de Documento Concluido con éxito"));
+            }
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
+        }
+    }
+    
     public String getFechaEntrada() {
         return fechaEntrada;
     }
