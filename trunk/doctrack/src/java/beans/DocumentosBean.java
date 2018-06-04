@@ -134,7 +134,7 @@ public class DocumentosBean implements Serializable {
                 {
                     mensResp = false;
                 }
-                documentos = null;
+                
             }
             else 
             {
@@ -148,6 +148,7 @@ public class DocumentosBean implements Serializable {
             {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
             }
+            documentos = null;
         }
         else
         {
@@ -216,16 +217,17 @@ public class DocumentosBean implements Serializable {
             {
                 mensResp = false;
             }
-            documentos = null;
+            
             //mensaje de modificaciones
             if(mensResp == true)
             {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Documento Nª"+documentos.getNumeroDoc()+" con éxito"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Documento Nª"+documentos.getNumeroDoc()+" creado con éxito"));
             }
             else
             {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info!", "Ha ocurrido un error pongase en contacto con su proveedor"));
             }//SEVERITY_WARN
+            documentos = null;
         }
         else
         {

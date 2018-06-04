@@ -24,6 +24,7 @@
                     <p:submenu label="Institución" expanded="true">
                         <p:menuitem value="Supervisiones" icon="ui-icon-document-b" outcome="/secured/institution/supervision.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                         <p:menuitem value="Dependencias" icon="ui-icon-caret-1-w" outcome="/secured/institution/dependency.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
+                        <p:menuitem value="Sectores" icon="ui-icon-document" outcome="/secured/institution/areas.xhtml" />
                         <p:menuitem value="Distritos" icon="ui-icon-home" outcome="/secured/institution/district.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>
                     <p:submenu label="Informes" expanded="true">

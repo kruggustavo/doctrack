@@ -3,9 +3,11 @@ package beans;
 import controllers.DependencyController;
 import entities.institucion.Dependencias;
 import java.io.Serializable;
-import java.util.List;;
+import java.util.List;import javax.faces.application.FacesMessage;
+;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -15,20 +17,17 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class DependencyBean implements Serializable{
-    private static final long serialVersionUID = -6680733133634363295L;
 
-    private Integer id;
+    private static final long serialVersionUID = 2143118587002340795L;
+   
     private String nombre;
     private String email;
     private String interno;
-    
-    
+    //list de dependencia para la tabla
     private List districtList;
-    
-    
+    //objeto dependencia
     private Dependencias selectedDependency;
-    
-    
+    //instancia del controlador
     private DependencyController controller = new DependencyController();
 
     //Métodos usados como actionListeners del CRUD de Dependencias & Roles
@@ -37,10 +36,36 @@ public class DependencyBean implements Serializable{
     }
     
     public void guardarDependencia(){                  
-        controller.saveDependency(selectedDependency);
-        selectedDependency = null;
+        int resultadoEnc = controller.getDependenciaNombreList(selectedDependency.getNombre()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
+        { 
+            controller.saveDependency(selectedDependency);
+            selectedDependency = null; 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Dependencia Creada con éxito!"));
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe la Dependencia especificada"));
+        }
     }
     
+    public void actualizarDependencia(){                  
+        int resultadoEnc = controller.getDependenciaActList(selectedDependency.getNombre(), selectedDependency.getId()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
+        { 
+            controller.saveDependency(selectedDependency);
+            selectedDependency = null; 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Dependencia Actualizada con éxito!"));
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe la Dependencia especificada"));
+        }
+    }
+    
+    //por lo momento no utilizo este boton
     public void eliminarDependencia(){
         controller.deleteDependency(selectedDependency);
         selectedDependency = null;
@@ -62,15 +87,6 @@ public class DependencyBean implements Serializable{
 
     public void setSelectedDependency(Dependencias selectedDependency) {
         this.selectedDependency = selectedDependency;
-    }
-    
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNombre() {

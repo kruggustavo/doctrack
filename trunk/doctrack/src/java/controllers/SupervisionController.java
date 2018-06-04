@@ -50,5 +50,15 @@ public class SupervisionController {
     public void deleteSupervision(Superviciones u){
         t.deleteEntity(u);
     }
+
+    public List getNumsupList(String numeroSupervicion) {
+        List l = t.getList("from Superviciones where numeroSupervision = '"+ numeroSupervicion +"' ");
+        return l;
+    }
+
+    public List getActsupList(String numeroSupervicion, Long id) {
+        List l = t.getList("FROM Superviciones WHERE numeroSupervision = '"+ numeroSupervicion +"' and id != '"+ id +"' ");
+        return l;
+    }
     
 }

@@ -3,9 +3,11 @@ package beans;
 import controllers.DistrictController;
 import entities.institucion.Distritos;
 import java.io.Serializable;
-import java.util.List;;
+import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -15,18 +17,14 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class DistrictBean implements Serializable{
-    private static final long serialVersionUID = -6680733133634363295L;
 
-    private Long id;
+    private static final long serialVersionUID = 445916045977154381L;
+    
+
     private String nombre;
-    
-    
     private List districtList;
-    
-    
+    //objeto distrito que se usara al seleccionar
     private Distritos selectedDistrict;
-    
-    
     private DistrictController controller = new DistrictController();
 
     //Métodos usados como actionListeners del CRUD de Distritos & Roles
@@ -34,11 +32,38 @@ public class DistrictBean implements Serializable{
         selectedDistrict = new Distritos();
     }
     
-    public void guardarDistrito(){                  
-        controller.saveDistrict(selectedDistrict);
-        selectedDistrict = null;
+    public void guardarDistrito(){    
+        int resultadoEnc = controller.getDistritoNombreList(selectedDistrict.getNombre()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
+        {
+            controller.saveDistrict(selectedDistrict);
+            selectedDistrict = null; 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Distrito Creado con éxito!"));
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe el Distrito especificado"));
+        }
     }
     
+    public void actualizarDistrito()
+    {
+        int resultadoEnc = controller.getDistritoActList(selectedDistrict.getNombre(), selectedDistrict.getId()).size();
+        System.out.println("tamaño lista "+resultadoEnc);
+        if(resultadoEnc <= 0)
+        {
+            controller.saveDistrict(selectedDistrict);
+            selectedDistrict = null; 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Distrito Actualizado con éxito!"));
+        }
+        else
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe el Distrito especificado"));
+        }
+    }
+    
+    //por lo momento no estoy usando este metodo, porque causara error en los FK
     public void eliminarDistrito(){
         controller.deleteDistrict(selectedDistrict);
         selectedDistrict = null;
@@ -60,15 +85,6 @@ public class DistrictBean implements Serializable{
 
     public void setSelectedDistrict(Distritos selectedDistrict) {
         this.selectedDistrict = selectedDistrict;
-    }
-    
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {

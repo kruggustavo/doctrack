@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+	<ui:composition template="../../dashboard.xhtml">
+            <ui:define name="content">  
+                
+                <!--list -->
+                <h:form id="AreasListForm">
+                    <p:panel header="Sectores de Dependencias" style="width: auto; margin: 0 auto; vertical-align: middle">
+                        <p:dataTable id="datalist" value="#{areasBean.areasList}" lazy="false" rowKey="#{areas.id}" var="areas" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{areasBean.areas}" >
+
+                            <p:ajax event="rowSelect"   update="createButton,editButton"/>
+                            <p:ajax event="rowUnselect" update="createButton,editButton"/>
+
+                            <p:column headerText="Nombre de distrito"><h:outputText value="#{areas.nombre}"/></p:column>
+                            <p:column headerText="Nombre de distrito"><h:outputText value="#{areas.idDependencia.nombre}"/></p:column>
+                            
+
+                            <f:facet name="footer">
+                                <div>
+                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{areasBean.nuevaAreas}" update=":AreasNewForm" oncomplete="PF('AreasNewDialog').show()" />                                    
+                                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" actionListener="#{areasBean.editarAreas}" update=":AreasEditForm" oncomplete="PF('AreasEditDialog').show()" disabled="#{empty areasBean.areas}"/>
+                                    <!-- aqui no uso el actionListener porque no necesito inicializar ninguna variable, ya me sirve con que seleccione el objeto -->
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                    <ui:include src="../templates/confirmation.xhtml"/>
+                </h:form>
+
+                <!--create and edit-->
+                <p:dialog header="Registrar Sector de Dependencia" id="AreasNewDlg" widgetVar="AreasNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                    <h:form id="AreasNewForm">
+                        <p:growl id="growl" showDetail="true" life="5000" /> 
+                        <h:panelGroup id="display" rendered="true">
+                            <p:messages id="msgs" />
+                            <p:panelGrid columns="3">
+
+                                <p:outputLabel for="nombre" value="Nombre del Sector" />
+                                <p:inputText id="nombre" value="#{areasBean.areas.nombre}" required="true" size="50" >
+                                    <f:validateLength minimum="1" maximum="50" />
+                                    <p:ajax update="msgNombre" event="keyup" />
+                                </p:inputText>
+                                <p:message for="nombre" id="msgNombre" display="icon" />
+                                
+                                <p:outputLabel value="Dependencia de la Coordinación" />
+                                <h:selectOneMenu  value="#{areasBean.dependencias}"> 
+                                    <f:selectItems value="#{areasBean.dependenciasList}" var="dependencias" itemLabel="#{dependencias.nombre}" itemValue="#{dependencias.nombre}" />
+                               </h:selectOneMenu>
+              
+                            </p:panelGrid>
+                            <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
+                                <p:commandButton value="Guardar" action="#{areasBean.guardarAreas()}" update="growl,display,:AreasListForm:datalist" oncomplete="PF('AreasNewDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('AreasNewDialog').hide()" update="display" />
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </p:dialog>   
+                
+                <p:dialog header="Editar Sector de Dependencia" id="AreasEditDlg" widgetVar="AreasEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                    <h:form id="AreasEditForm">
+                        <p:growl id="growl" showDetail="true" life="5000" /> 
+                        <h:panelGroup id="display" rendered="true">
+                            <p:messages id="msgs" />
+                            <p:panelGrid columns="3">
+
+                                <p:outputLabel for="nombre" value="Nombre del Sector" />
+                                <p:inputText id="nombre" value="#{areasBean.areas.nombre}" required="true" size="50" >
+                                    <f:validateLength minimum="1" maximum="50" />
+                                    <p:ajax update="msgNombre" event="keyup" />
+                                </p:inputText>
+                                <p:message for="nombre" id="msgNombre" display="icon" />
+                                
+                                <p:outputLabel value="Dependencia de la Coordinación" />
+                                <h:selectOneMenu  value="#{areasBean.dependencias}"> 
+                                    <f:selectItems value="#{areasBean.dependenciasList}" var="dependencias" itemLabel="#{dependencias.nombre}" itemValue="#{dependencias.nombre}" />
+                               </h:selectOneMenu>
+              
+                            </p:panelGrid>
+                            <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
+                                <p:commandButton value="Guardar" action="#{areasBean.actualizarAreas()}" update="growl,display,:AreasListForm:datalist" oncomplete="PF('AreasEditDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('AreasEditDialog').hide()" update="display" />
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </p:dialog>  
+
+            </ui:define>
+	</ui:composition>
+    </h:body>
+</html>

@@ -8,9 +8,10 @@
     <h:body>
 	<ui:composition template="../../dashboard.xhtml">
             <ui:define name="content">  
+                <p:growl id="growl" showDetail="true" life="5000" /> 
                 <!--list -->
                 <h:form id="DocLisFormListForm">
-                    <p:panel header="Documentos" style="width: 90%">
+                    <p:panel header="Documentos" style="width: auto; margin: 0 auto; vertical-align: middle">
                         <p:dataTable id="datalist" var="doc" value="#{documentosBean.listaDoc}" lazy="false" rowKey="#{doc.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{documentosBean.documentos}" >
                             <p:ajax event="rowSelect"   update="createButton,editButton,anularButton"/>
                             <p:ajax event="rowUnselect" update="createButton,editButton,anularButton"/>
@@ -26,7 +27,7 @@
                                 <div>
                                     <p:commandButton value="Nuevo" id="createButton" actionListener="#{documentosBean.nuevoDocumento}" icon="ui-icon-plus" oncomplete="PF('DocNewDialog').show()" update=":DocNewForm" />
                                     <p:commandButton value="Editar" id="editButton" actionListener="#{documentosBean.editarDocumento}" icon="ui-icon-pencil" update=":DocEditForm" oncomplete="PF('DocEditDialog').show()" disabled="#{empty documentosBean.documentos}"/>
-                                    <p:commandButton value="Anular" id="anularButton" icon="ui-icon-trash" actionListener="#{documentosBean.anularDocumento()}" update="datalist,growl" disabled="#{empty documentosBean.documentos}">
+                                    <p:commandButton value="Anular" id="anularButton" icon="ui-icon-trash" actionListener="#{documentosBean.anularDocumento()}" update="datalist growl" disabled="#{empty documentosBean.documentos}">
                                         <p:confirm header="Confirmar acción" message="¿Esta Seguro de Anular el Documento seleccionado?" icon="ui-icon-alert"/><!--disabled bloquea si la seleccion es vacia-->
                                     </p:commandButton>
                                 </div>
@@ -49,7 +50,7 @@
 
                                 <p:outputLabel for="numeroDoc" value="Número de Documento" />
                                 <p:inputText id="numeroDoc" type="number" value="#{documentosBean.documentos.numeroDoc}" required="true" size="50" >
-                                    <f:validateLength minimum="1" maximum="50" />
+                                    <f:validateLength minimum="1" maximum="15" />
                                     <p:ajax update="msgNumdoc" event="keyup" />
                                 </p:inputText>
                                 <p:message for="numeroDoc" id="msgNumdoc" display="icon" />
@@ -141,7 +142,7 @@
                             </p:panelGrid>
                             <!--botones de guardar y cancelar -->
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{documentosBean.actualizarDocumento}" update="display,:DocLisFormListForm:datalist" oncomplete="PF('DocEditDialog').hide();" disabled="#{documentosBean.documentos.numeroDoc.length() lt 1}"/>                              
+                                <p:commandButton value="Guardar" action="#{documentosBean.actualizarDocumento}" update="growl,display,:DocLisFormListForm:datalist" oncomplete="PF('DocEditDialog').hide();" disabled="#{documentosBean.documentos.numeroDoc.length() lt 1}"/>                              
                                 <p:commandButton value="Cancelar" update="display" oncomplete="PF('DocEditDialog').hide()"/>
                             </div>
                         </h:panelGroup>

@@ -45,7 +45,7 @@ public class TipoDocBeans implements Serializable {
         }
         else
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe el Tipo de Documento especificado ya existe"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe el Tipo de Documento especificado"));
         }
     }
     
@@ -61,7 +61,7 @@ public class TipoDocBeans implements Serializable {
         }
         else
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe el Tipo de Documento especificado ya existe"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "Ya existe el Tipo de Documento especificado"));
         }
     }
     

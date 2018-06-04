@@ -28,5 +28,15 @@ public class DependencyController {
     public void deleteDependency(Dependencias u){
         t.deleteEntity(u);
     }
+
+    public List getDependenciaNombreList(String nombre) {
+        List l = t.getList("from Dependencias where nombre = '"+ nombre +"' ");
+        return l;
+    }
+
+    public List getDependenciaActList(String nombre, Long id) {
+        List l = t.getList("FROM Dependencias WHERE nombre = '"+ nombre +"' and id != '"+ id +"' ");
+        return l;
+    }
     
 }

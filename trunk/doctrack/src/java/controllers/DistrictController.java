@@ -28,5 +28,15 @@ public class DistrictController {
     public void deleteDistrict(Distritos d){
         t.deleteEntity(d);
     }
+
+    public List getDistritoNombreList(String nombre) {
+        List l = t.getList("from Distritos where nombre = '"+ nombre +"' ");
+        return l;
+    }
+
+    public List getDistritoActList(String nombre, Long id) {
+        List l = t.getList("FROM Distritos WHERE nombre = '"+ nombre +"' and id != '"+ id +"' ");
+        return l;
+    }
     
 }
