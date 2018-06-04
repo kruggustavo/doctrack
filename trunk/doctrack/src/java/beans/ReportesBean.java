@@ -41,8 +41,7 @@ public class ReportesBean {
         parameters.put("usuario", Authorization.currentUser.getAlias());
         parameters.put("fechaInicio", fechaInicio);
         parameters.put("fechaFin", fechaFin);
-        parameters.put("distrito", "%");
-        
+        parameters.put("distrito", "%"); 
         if (supervision != null){
             parameters.put("distrito", (supervision.length() > 0? supervision : "%"));
         }

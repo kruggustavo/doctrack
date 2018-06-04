@@ -56,7 +56,7 @@ public class LoginBean implements Serializable {
                 LoggerUtil.logInfo("Inicio de sesion");
                 
                 currentUser = u;
-                Authorization.currentUser = u;
+                Authorization.currentUser = u; 
 
                 HttpSession session = SessionUtil.getSession();
                 session.setAttribute(Authorization.USERNAME, user);

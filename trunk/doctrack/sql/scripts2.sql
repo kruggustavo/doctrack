@@ -211,6 +211,23 @@ CREATE TABLE `logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8225 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `respuesta`;
+CREATE TABLE `respuesta` (
+  `id` bigint(20) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `numero` varchar(50) NOT NULL DEFAULT '',
+  `dirigidoa` varchar(255) NOT NULL DEFAULT '',
+  `remitente` varchar(255) NOT NULL DEFAULT '',
+  `asunto` varchar(255) NOT NULL DEFAULT '',
+  `redaccion` varchar(255) NOT NULL DEFAULT '',
+  `idFuncionario` bigint(20) NOT NULL,
+  `idSeguimiento` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idFuncionario` (`idFuncionario`),
+  KEY `idSeguimiento` (`idSeguimiento`),
+  CONSTRAINT `respuesta_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionarios` (`id`),
+  CONSTRAINT `respuesta_ibfk_2` FOREIGN KEY (`idSeguimiento`) REFERENCES `seguimiento` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO roles (descripcion, administra_configuraciones)
 SELECT * FROM (SELECT 'Administrador', 'Si') AS tmp
