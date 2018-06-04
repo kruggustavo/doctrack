@@ -70,7 +70,10 @@ public class LoginBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error",  "Usuario y/o contraseña incorrecta") );
                 return Authorization.LOGIN_PAGE;
             }            
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error",  "Debe ingresar un usuario válido") );
         }
+        isLogin = false;
         return null;
     }
     

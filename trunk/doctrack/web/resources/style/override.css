@@ -19,3 +19,11 @@
 .ui-panel-title{
     font-size: 1.3em !important; 
 }
+
+.panelWithoutBorder .ui-panelgrid-content{
+    border-style: none !important
+}
+
+.panelWithoutBorder .ui-widget-content{
+    background: none !important;
+}
