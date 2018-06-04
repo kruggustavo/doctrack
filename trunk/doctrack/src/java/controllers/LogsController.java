@@ -33,7 +33,7 @@ public class LogsController {
         SQLQuery query = HibernateUtil.getSession().createSQLQuery("SELECT u.alias, log.fecha_hora, log.mensaje, log.nivel FROM (SELECT * FROM Logs l WHERE l.fecha_hora >= :start) AS log LEFT JOIN usuarios u ON log.idUsuario = u.id ORDER BY log.fecha_hora DESC");
         query.setParameter("start", c.getTime());
 
-        List<Object[]> rows = query.setMaxResults(60).list();
+        List<Object[]> rows = query.setMaxResults(200).list();
         
         if (rows.size() > 0){
             result = new ArrayList();

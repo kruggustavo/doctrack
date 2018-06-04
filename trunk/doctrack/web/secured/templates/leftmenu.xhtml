@@ -28,7 +28,7 @@
                         <p:menuitem value="Distritos" icon="ui-icon-home" outcome="/secured/institution/district.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>
                     <p:submenu label="Informes" expanded="true">
-                        <p:menuitem value="Documentos" icon="ui-icon-document" />
+                        <p:menuitem value="Documentos" icon="ui-icon-document" outcome="/secured/reportes/reportedocumentos.xhtml" />
                         <p:menuitem value="Resoluciones" icon="ui-icon-pencil" />
                         <p:menuitem value="Funcionarios" icon="ui-icon-person" />
                     </p:submenu>   

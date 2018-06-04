@@ -6,27 +6,31 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"  
       >
-       
     <h:body>
         <ui:composition template="../../dashboard.xhtml">
             <ui:define name="content">  
-                
-                <p:panel header="Reporte de documentos" style="width: 90%">
-                 <p:panelGrid columns="1">
-                    <!--Calendario-->
-                    <p:outputLabel for="button" value="Seleccione la fecha de entrada: " />
-                    <p:calendar id="button" value="#{documentoBean.listaSup}" showOn="button" />
-                    <p:commandButton value="Submit" update="msgs" actionListener="#{ReporteDocBean.verReporteF()}" icon="ui-icon-check" />
-                    <!--input superviciones-->
-                    <p:outputLabel value="Seleccione la Supervición tramitante " />
-                    <h:selectOneMenu  value="#{ReporteDocBean.sup}"> 
-                        <f:selectItems value="#{documentosBean.listaSup}" var="superviciones" itemLabel="#{superviciones.idDistrito.nombre}" itemValue="#{superviciones.numeroSupervision}" />
-                    </h:selectOneMenu>
-                    <h:commandLink id="rdocsup" target="_blank" value="rdocsup" actionListener="#{ReporteDocBean.verReporte()}"/>
-        
-                 </p:panelGrid>
-                        <!--  <p:commandButton value="Submit" update="msgs" actionListener="#{calendarView.click}" icon="ui-icon-check" /> -->
-                </p:panel>
+                <h:form>
+                    <p:panel header="Reporte de documentos ingresados filtrado por fecha de entrada y supervisión" style="width: 65%; margin: 0 auto; vertical-align: middle">                                                   
+                        <p:panelGrid columns="1" style="width: 100%">
+                            <p:outputLabel value="Seleccione la fecha de entrada: " />
+                            
+                            <p:outputLabel value="Desde " />
+                            <p:calendar id="button1" value="#{reportesBean.fechaInicio}" showOn="button" pattern="dd-MM-yyyy" mask="true"/>
+                            
+                            <p:outputLabel value="Hasta " />
+                            <p:calendar id="button2" value="#{reportesBean.fechaFin}" showOn="button" pattern="dd-MM-yyyy" mask="true"/>
+                            
+                            <p:outputLabel value="Seleccione la Supervición tramitante " />
+                            <h:selectOneMenu  value="#{reportesBean.supervision}" style="width: 30%"> 
+                                <f:selectItem itemLabel="Todas las supervisiones" itemValue=""/>
+                                <f:selectItems value="#{documentosBean.listaSup}" var="superviciones" itemLabel="#{superviciones.idDistrito.nombre}" itemValue="#{superviciones.idDistrito.nombre}" />
+                            </h:selectOneMenu>                                                        
+                        </p:panelGrid>                          
+                        <p:panelGrid columns="1" style="width: 100%; text-align: center">
+                            <h:commandLink type="button" target="_blank" style="margin-right:20px; text-align: center; width: 100%" value="Ver reporte" action="#{reportesBean.documentoPorFecha}" title="Display Report on New window/tab" />       
+                        </p:panelGrid>                                                                     
+                    </p:panel>
+                </h:form>                
             </ui:define>
 	</ui:composition>
     </h:body>
