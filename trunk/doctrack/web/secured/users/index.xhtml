@@ -45,21 +45,21 @@
                             <!--Mensaje de validacion-->
                             <p:messages id="msgs" style="max-width: 420px; width: 420px" />
                             
-                            <p:panelGrid columns="2" rendered="#{!empty usersBean.rolesList}">
+                            <p:panelGrid columns="2" rendered="#{!empty usersBean.rolesList}" layout="grid">
                                 <p:outputLabel value="Nombre completo" />
-                                <p:inputText id="Nombre_completo" value="#{usersBean.selectedUser.nombrecompleto}" required="true" size="40" maxlength="50">
+                                <p:inputText id="Nombre_completo" value="#{usersBean.selectedUser.nombrecompleto}" required="true" size="30" maxlength="50">
                                     <p:ajax event="keyup" update="saveButton" />
                                     <f:validateLength minimum="2" />
                                     <f:validateRequired for="Nombre_completo"/>
                                 </p:inputText>
 
                                 <p:outputLabel value="Alias" />
-                                <p:inputText id="alias" value="#{usersBean.selectedUser.alias}" required="true" size="40" maxlength="30" >
+                                <p:inputText id="alias" value="#{usersBean.selectedUser.alias}" required="true" size="30" maxlength="30" >
                                     <p:ajax event="keyup" update="saveButton" />
                                 </p:inputText>
 
                                 <p:outputLabel value="Clave" />
-                                <p:password id="clave" value="#{usersBean.selectedUser.clave}" required="true" size="40" maxlength="30" redisplay="true"/>
+                                <p:password id="clave" value="#{usersBean.selectedUser.clave}" required="true" size="30" maxlength="30" redisplay="true"/>
                               
                                 <p:outputLabel value="Rol" />
                                 <h:selectOneMenu  value="#{usersBean.selectedRole}" style="width: 100% !important"> 

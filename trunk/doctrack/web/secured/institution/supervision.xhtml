@@ -11,7 +11,7 @@
                 
                 <!--list -->
                 <h:form id="SupervicionesListForm">
-                    <p:panel header="Supervisiones de Itapúa" style="width: auto; margin: 0 auto; vertical-align: middle">
+                    <p:panel header="Supervisiones de Itapúa" style="width: 80%; margin: 0 auto; vertical-align: middle">
                         <p:dataTable id="datalist" value="#{supervisionBean.supervisionList}" lazy="false" rowKey="#{superviciones.id}" var="superviciones" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{supervisionBean.selectedSupervision}" >
 
                             <p:ajax event="rowSelect"   update="createButton,editButton"/>
@@ -23,8 +23,7 @@
                             <p:column headerText="Email"><h:outputText value="#{superviciones.email}"/></p:column>
                             <p:column headerText="Distrito"><h:outputText value="#{superviciones.idDistrito.nombre}"/></p:column>
                             <p:column headerText="Supervisor"><h:outputText value="#{superviciones.idFuncionario.nombreCompleto}"/></p:column>
-                            
-                            
+                                                        
                             <f:facet name="footer">
                                 <div>
                                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{supervisionBean.nuevoSupervision}" update=":SupervicionesNewForm" oncomplete="PF('SupervicionesNewDialog').show()"/>                                    
@@ -37,108 +36,100 @@
                 </h:form>
 
                 <!--create and edit-->
-                <p:dialog header="Registrar Supervisión" id="SupervicionesNewDlg" widgetVar="SupervicionesNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                <p:dialog header="Registrar Supervisión" width="600" id="SupervicionesNewDlg" widgetVar="SupervicionesNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="SupervicionesNewForm">
                         <p:growl id="growl" showDetail="true" life="5000" /> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
+                            <p:panelGrid columns="2" layout="grid">
 
                                 <p:outputLabel for="numero" value="Número de Supervisión" />
-                                <p:inputText id="numero" value="#{supervisionBean.selectedSupervision.numeroSupervision}" type="number" required="true" size="50" >
+                                <p:inputText id="numero" value="#{supervisionBean.selectedSupervision.numeroSupervision}" type="number" required="true" size="40" >
                                     <f:validateLength minimum="1" maximum="3" />
-                                    <p:ajax update="msgNumero" event="keyup" />
+                                    
                                 </p:inputText>
-                                <p:message for="numero" id="msgNumero" display="icon" />
-                                
+                               
                                 <p:outputLabel for="direccion" value="Dirección" />
-                                <p:inputText id="direccion" value="#{supervisionBean.selectedSupervision.direccion}" required="true" size="50" >
+                                <p:inputText id="direccion" value="#{supervisionBean.selectedSupervision.direccion}" required="true" size="40" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgDireccion" event="keyup" />
+                               
                                 </p:inputText>
-                                <p:message for="direccion" id="msgDireccion" display="icon" />
                                 
                                 <p:outputLabel for="telefono" value="Teléfono" />
-                                <p:inputMask id="telefono" value="#{supervisionBean.selectedSupervision.telefono}" mask="(9999) 999-999" required="true" size="50" >
+                                <p:inputMask id="telefono" value="#{supervisionBean.selectedSupervision.telefono}" mask="(9999) 999-999" required="true" size="40" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgTelefono" event="keyup" />
+                                 
                                 </p:inputMask>
-                                <p:message for="telefono" id="msgTelefono" display="icon" />
                                 
                                 <p:outputLabel for="email" value="Correo electrónico" />
-                                <p:inputText id="email" value="#{supervisionBean.selectedSupervision.email}" required="true" size="50" >
+                                <p:inputText id="email" value="#{supervisionBean.selectedSupervision.email}" required="true" size="40" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgEmail" event="keyup" />
+                                   
                                 </p:inputText>
-                                <p:message for="email" id="msgEmail" display="icon" />
                                 
                                 <p:outputLabel value="Distrito de la Supervisión" />
                                 <h:selectOneMenu  value="#{supervisionBean.selectedDistrict}"> 
                                     <f:selectItems value="#{supervisionBean.distritosList}" var="distritos" itemLabel="#{distritos.nombre}" itemValue="#{distritos.nombre}" />
-                               </h:selectOneMenu>
+                                </h:selectOneMenu>
                                 
                                 <p:outputLabel value="Supervisor Encargado de la Supervisión" />
                                 <h:selectOneMenu  value="#{supervisionBean.selectedServant}"> 
                                     <f:selectItems value="#{supervisionBean.funcionariosList}" var="funcionarios" itemLabel="#{funcionarios.nombreCompleto}" itemValue="#{funcionarios.nombreCompleto}" />
-                               </h:selectOneMenu>
+                                </h:selectOneMenu>
                                 
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{supervisionBean.guardarSupervision}" update="growl,display,:SupervicionesListForm:datalist" oncomplete="PF('SupervicionesNewDialog').hide();" />                              
+                                <p:commandButton value="Guardar" action="#{supervisionBean.guardarSupervision}" update="growl,display,:SupervicionesListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('SupervicionesNewDialog').hide();" />                              
                                 <p:commandButton value="Cancelar" update="display" oncomplete="PF('SupervicionesNewDialog').hide()"  />
                             </div>
                         </h:panelGroup>
                     </h:form>
                 </p:dialog>                  
 
-                <p:dialog header="Editar Supervisión" id="SupervicionesEditDlg" widgetVar="SupervicionesEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                <p:dialog header="Editar Supervisión" width="600" id="SupervicionesEditDlg" widgetVar="SupervicionesEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="SupervicionesEditForm">
                         <p:growl id="growl" showDetail="true" life="5000" /> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
+                            <p:panelGrid columns="2" layout="grid">
 
                                 <p:outputLabel for="numero" value="Número de Supervisión" />
-                                <p:inputText id="numero" value="#{supervisionBean.selectedSupervision.numeroSupervision}" type="number" required="true" size="50" >
+                                <p:inputText id="numero" value="#{supervisionBean.selectedSupervision.numeroSupervision}" type="number" required="true" size="40" >
                                     <f:validateLength minimum="1" maximum="3" />
-                                    <p:ajax update="msgNumero" event="keyup" />
+                                   
                                 </p:inputText>
-                                <p:message for="numero" id="msgNumero" display="icon" />
                                 
                                 <p:outputLabel for="direccion" value="Dirección" />
-                                <p:inputText id="direccion" value="#{supervisionBean.selectedSupervision.direccion}" required="true" size="50" >
+                                <p:inputText id="direccion" value="#{supervisionBean.selectedSupervision.direccion}" required="true" size="40" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgDireccion" event="keyup" />
+                                   
                                 </p:inputText>
-                                <p:message for="direccion" id="msgDireccion" display="icon" />
                                 
                                 <p:outputLabel for="telefono" value="Teléfono" />
-                                <p:inputMask id="telefono" value="#{supervisionBean.selectedSupervision.telefono}" mask="(9999) 999-999" required="true" size="50" >
+                                <p:inputMask id="telefono" value="#{supervisionBean.selectedSupervision.telefono}" mask="(9999) 999-999" required="true" size="40" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgTelefono" event="keyup" />
+                                   
                                 </p:inputMask>
-                                <p:message for="telefono" id="msgTelefono" display="icon" />
                                 
                                 <p:outputLabel for="email" value="Correo electrónico" />
-                                <p:inputText id="email" value="#{supervisionBean.selectedSupervision.email}" required="true" size="50" >
+                                <p:inputText id="email" value="#{supervisionBean.selectedSupervision.email}" required="true" size="40" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgEmail" event="keyup" />
+                                   
                                 </p:inputText>
-                                <p:message for="email" id="msgEmail" display="icon" />
                                 
                                 <p:outputLabel value="Distrito de la Supervisión" />
                                 <h:selectOneMenu  value="#{supervisionBean.selectedDistrict}"> 
                                     <f:selectItems value="#{supervisionBean.distritosList}" var="distritos" itemLabel="#{distritos.nombre}" itemValue="#{distritos.nombre}" />
-                               </h:selectOneMenu>
+                                </h:selectOneMenu>
                                 
                                 <p:outputLabel value="Supervisor Encargado de la Supervisión" />
                                 <h:selectOneMenu  value="#{supervisionBean.selectedServant}"> 
                                     <f:selectItems value="#{supervisionBean.funcionariosList}" var="funcionarios" itemLabel="#{funcionarios.nombreCompleto}" itemValue="#{funcionarios.nombreCompleto}" />
-                               </h:selectOneMenu>
-                                
+                                </h:selectOneMenu>
+         
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{supervisionBean.actualizarSupervision}" update="growl,display,:SupervicionesListForm:datalist" oncomplete="PF('SupervicionesEditDialog').hide();" />                              
+                                <p:commandButton value="Guardar" action="#{supervisionBean.actualizarSupervision}" update="growl,display,:SupervicionesListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('SupervicionesEditDialog').hide();" />                              
                                 <p:commandButton value="Cancelar" oncomplete="PF('SupervicionesEditDialog').hide()" update="display" />
                             </div>
                         </h:panelGroup>

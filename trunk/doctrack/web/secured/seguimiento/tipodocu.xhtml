@@ -11,8 +11,8 @@
                 
                 <!--list -->
                 <h:form id="TipodocLisFormListForm">
-                    <p:panel header="Tipos de Documentos" style="width: auto; margin: 0 auto; vertical-align: middle">
-                        <p:dataTable id="datalist" var="tipos" value="#{tipoDocBeans.tipDocList}" lazy="false" rowKey="#{tipos.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{tipoDocBeans.tipodocumento}" >
+                    <p:panel header="Tipos de Documentos" style="width: 60%; margin: 0 auto; vertical-align: middle">
+                        <p:dataTable id="datalist" var="tipos" value="#{tipoDocBeans.tipDocList}" lazy="false" rowKey="#{tipos.id}" selectionMode="single" selection="#{tipoDocBeans.tipodocumento}" >
 
                             <p:ajax event="rowSelect"   update="createButton,editButton"/>
                             <p:ajax event="rowUnselect" update="createButton,editButton"/>
@@ -31,23 +31,19 @@
                 </h:form>
                 
                 <!--dialog para crear-->
-                <p:dialog header="Registrar Tipo Doc." id="TiposNewDlg" widgetVar="TiposNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                <p:dialog header="Nuevo Tipo Documento" id="TiposNewDlg" widgetVar="TiposNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="TiposNewForm">
-                        <p:growl id="growl" showDetail="true" life="5000" /> 
+                        <p:growl id="growl" showDetail="true" life="5000" showSummary="false" /> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
-
+                            <p:panelGrid columns="2">
                                 <p:outputLabel for="nombrecompleto" value="Nombre Tipo Doc." />
                                 <p:inputText id="nombrecompleto" value="#{tipoDocBeans.tipodocumento.nombre}" required="true" size="50" >
-                                    <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNombre" event="keyup" />
-                                </p:inputText>
-                                <p:message for="nombrecompleto" id="msgNombre" display="icon"/>
-              
+                                    <f:validateLength minimum="1" maximum="50" />                                    
+                                </p:inputText>                                              
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{tipoDocBeans.guardarTipodocumento()}" update="growl,display,:TipodocLisFormListForm:datalist" oncomplete="PF('TiposNewDialog').hide();" />                              
+                                <p:commandButton value="Guardar" action="#{tipoDocBeans.guardarTipodocumento()}" update="growl,display,:TipodocLisFormListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('TiposNewDialog').hide();" />                              
                                 <p:commandButton value="Cancelar" oncomplete="PF('TiposNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:panelGroup>
@@ -55,23 +51,19 @@
                 </p:dialog> 
                 
                 <!--dialog para editar-->
-                <p:dialog header="Editar Tipo Doc." id="TiposEditNewDlg" widgetVar="TiposEditNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                <p:dialog header="Editar Tipo Documento" id="TiposEditNewDlg" widgetVar="TiposEditNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="TiposEditNewForm">
-                        <p:growl id="growl" showDetail="true" life="5000" /> 
+                        <p:growl id="growl" showDetail="true" life="5000" showSummary="false" /> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
-
+                            <p:panelGrid columns="2">
                                 <p:outputLabel for="nombrecompleto" value="Nombre Tipo Doc." />
                                 <p:inputText id="nombrecompleto" value="#{tipoDocBeans.tipodocumento.nombre}" required="true" size="50" >
-                                    <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNombre" event="keyup" />
-                                </p:inputText>
-                                <p:message for="nombrecompleto" id="msgNombre" display="icon"/>
-              
+                                    <f:validateLength minimum="1" maximum="50" />                                    
+                                </p:inputText>                                              
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{tipoDocBeans.actualizarTipodocumento()}" update="growl,display,:TipodocLisFormListForm:datalist" oncomplete="PF('TiposEditNewDialog').hide();" />                              
+                                <p:commandButton value="Guardar" action="#{tipoDocBeans.actualizarTipodocumento()}" update="growl,display,:TipodocLisFormListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('TiposEditNewDialog').hide();" />                              
                                 <p:commandButton value="Cancelar" oncomplete="PF('TiposEditNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:panelGroup>

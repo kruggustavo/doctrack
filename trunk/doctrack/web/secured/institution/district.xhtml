@@ -11,8 +11,8 @@
                 
                 <!--list -->
                 <h:form id="DistritosListForm">
-                    <p:panel header="Distritos de Superviciones" style="width: auto; margin: 0 auto; vertical-align: middle">
-                        <p:dataTable id="datalist" value="#{districtBean.districtList}" lazy="false" rowKey="#{distritos.id}" var="distritos" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{districtBean.selectedDistrict}" >
+                    <p:panel header="Distritos de Superviciones" style="width: 60%; margin: 0 auto; vertical-align: middle">
+                        <p:dataTable id="datalist" value="#{districtBean.districtList}" lazy="false" rowKey="#{distritos.id}" var="distritos" selectionMode="single" selection="#{districtBean.selectedDistrict}" >
 
                             <p:ajax event="rowSelect"   update="createButton,editButton"/>
                             <p:ajax event="rowUnselect" update="createButton,editButton"/>
@@ -33,46 +33,39 @@
                 </h:form>
 
                 <!--create and edit-->
-                <p:dialog header="Registrar Distrito" id="DistritosNewDlg" widgetVar="DistritosNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                <p:dialog header="Registrar Distrito" id="DistritosNewDlg" widgetVar="DistritosNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="DistritosNewForm">
-                        <p:growl id="growl" showDetail="true" life="5000" /> 
+                        <p:growl id="growl" showDetail="true" life="5000"  showSummary="false"/> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
-
+                            <p:panelGrid columns="3" layout="grid">
                                 <p:outputLabel for="nombre" value="Nombre del Distrito" />
                                 <p:inputText id="nombre" value="#{districtBean.selectedDistrict.nombre}" required="true" size="50" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNombre" event="keyup" />
                                 </p:inputText>
-                                <p:message for="nombre" id="msgNombre" display="icon" />
-              
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{districtBean.guardarDistrito}" update="growl,display,:DistritosListForm:datalist" oncomplete="PF('DistritosNewDialog').hide();" />                              
+                                <p:commandButton value="Guardar" action="#{districtBean.guardarDistrito}" update="growl,display,:DistritosListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('DistritosNewDialog').hide();" />                              
                                 <p:commandButton value="Cancelar" oncomplete="PF('DistritosNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:panelGroup>
                     </h:form>
                 </p:dialog>   
                 
-                <p:dialog header="Editar Distrito" id="DistritosEditDlg" widgetVar="DistritosEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                <p:dialog header="Editar Distrito" id="DistritosEditDlg" widgetVar="DistritosEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="DistritosEditForm">
-                        <p:growl id="growl" showDetail="true" life="5000" /> 
+                        <p:growl id="growl" showDetail="true" life="5000"  showSummary="false"/> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
+                            <p:panelGrid columns="3" layout="grid">
 
                                 <p:outputLabel for="nombre" value="Nombre del Distrito" />
                                 <p:inputText id="nombre" value="#{districtBean.selectedDistrict.nombre}" required="true" size="50" >
-                                    <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNombre" event="keyup" />
-                                </p:inputText>
-                                <p:message for="nombre" id="msgNombre" display="icon" />
-              
+                                    <f:validateLength minimum="1" maximum="50" />                               
+                                </p:inputText>                                              
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{districtBean.actualizarDistrito}" update="growl,display,:DistritosListForm:datalist" oncomplete="PF('DistritosEditDialog').hide();" />                              
+                                <p:commandButton value="Guardar" action="#{districtBean.actualizarDistrito}" update="growl,display,:DistritosListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('DistritosEditDialog').hide();" />                              
                                 <p:commandButton value="Cancelar" oncomplete="PF('DistritosEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:panelGroup>

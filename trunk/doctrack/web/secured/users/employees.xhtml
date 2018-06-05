@@ -43,16 +43,16 @@
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" style="width: 440px" />
 
-                            <p:panelGrid columns="2" >
+                            <p:panelGrid columns="2" layout="grid">
                                 <p:outputLabel value="Nombre Completo" />
-                                <p:inputText id="Nombre_completo" value="#{employeesBean.selectedEmployee.nombreCompleto}" required="true" size="50" maxlength="30">
+                                <p:inputText id="Nombre_completo" value="#{employeesBean.selectedEmployee.nombreCompleto}" required="true" size="30" maxlength="30">
                                     <p:ajax event="keyup" update="saveButton" />
                                     <f:validateLength minimum="2" />
                                     <f:validateRequired for="Nombre_completo"/>                                    
                                 </p:inputText>
 
                                 <p:outputLabel value="Dirección domicilio" />
-                                <p:inputText id="dire" value="#{employeesBean.selectedEmployee.direccion}" size="50" maxlength="30"/>
+                                <p:inputText id="dire" value="#{employeesBean.selectedEmployee.direccion}" size="30" maxlength="30"/>
 
                                 <p:outputLabel value="Cédula de identidad Nº" />
                                 <p:inputText id="ci" value="#{employeesBean.selectedEmployee.ci}" size="30" maxlength="30"/>
@@ -61,7 +61,7 @@
                                 <p:inputText id="tel" value="#{employeesBean.selectedEmployee.telefono}" size="30" maxlength="30"/>
 
                                 <p:outputLabel value="Correo electrónico" />
-                                <p:inputText id="email" value="#{employeesBean.selectedEmployee.email}" size="40" maxlength="30"/>
+                                <p:inputText id="email" value="#{employeesBean.selectedEmployee.email}" size="30" maxlength="30"/>
                                 
                             </p:panelGrid>
                             

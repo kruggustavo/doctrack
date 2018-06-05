@@ -39,111 +39,101 @@
                 </h:form>
                 
                 <!--dialog para crear-->
-                <p:dialog header="Registrar Documento" id="DocNewDg" widgetVar="DocNewDialog" minHeight="40" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)">
-                    <!--el modal es para que se comporte como un modal el dialog, resizable false para que no se modifiquen las dimensiones, closeOnEscape para que se pueda cerrar con el escape
-                    appendTo @body para que se visualize enfrente-->
+                <p:dialog header="Registrar Documento" id="DocNewDg" widgetVar="DocNewDialog" width="650" minHeight="40" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)" responsive="true">                    
                     <h:form id="DocNewForm">
                         <p:growl id="growl" showDetail="true" life="5000" /> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
-
+                            <p:panelGrid columns="2" layout="grid">
                                 <p:outputLabel for="numeroDoc" value="Número de Documento" />
-                                <p:inputText id="numeroDoc" type="number" value="#{documentosBean.documentos.numeroDoc}" required="true" size="50" >
+                                <p:inputText id="numeroDoc" type="number" value="#{documentosBean.documentos.numeroDoc}" required="true" size="40" >
                                     <f:validateLength minimum="1" maximum="15" />
-                                    <p:ajax update="msgNumdoc" event="keyup" />
+                                
                                 </p:inputText>
-                                <p:message for="numeroDoc" id="msgNumdoc" display="icon" />
+                                
                                 
                                 <p:outputLabel for="descripcion" value="Caratulado como" />
                                 <p:inputText id="descripcion" value="#{documentosBean.documentos.descripcion}" required="true" size="50" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgDescripcion" event="keyup" />
-                                </p:inputText>
-                                <p:message for="descripcion" id="msgDescripcion" display="icon" />
                                 
-                                <p:outputLabel value="Persona que tramita el Documento" /><!--en tamitantes quedara la opcion seleccionada, y lo que le paso es la ci-->
-                                <h:selectOneMenu  value="#{documentosBean.tramitantes}"> 
+                                </p:inputText>
+                                
+                                
+                                <p:outputLabel value="Persona que tramita el documento"></p:outputLabel>                                                                                
+                                <h:selectOneMenu  value="#{documentosBean.tramitantes}" style="width: 100%"> 
                                     <f:selectItems value="#{documentosBean.listaTram}" var="tramitantes" itemLabel="#{tramitantes.nombreCompleto}" itemValue="#{tramitantes.ci}" />
-                                </h:selectOneMenu>  
-                               
+                                </h:selectOneMenu>
+                                
+                                                                
                                 <p:outputLabel value="Supervición que Solicita el Tramite" />
-                                <h:selectOneMenu  value="#{documentosBean.superviciones}"> 
+                                <h:selectOneMenu  value="#{documentosBean.superviciones}" style="width: 100%"> 
                                     <f:selectItems value="#{documentosBean.listaSup}" var="superviciones" itemLabel="#{superviciones.idDistrito.nombre}" itemValue="#{superviciones.numeroSupervision}" />
                                 </h:selectOneMenu> 
                                 
+                                
                                 <p:outputLabel value="Tipo de Documento" />
-                                <h:selectOneMenu  value="#{documentosBean.tipodocumento}"> 
+                                <h:selectOneMenu  value="#{documentosBean.tipodocumento}" style="width: 100%"> 
                                     <f:selectItems value="#{documentosBean.listaTipodoc}" var="tipodocumento" itemLabel="#{tipodocumento.nombre}" itemValue="#{tipodocumento.nombre}" />
                                 </h:selectOneMenu> 
-                                
-                                
+                                                                
                                 <p:outputLabel for="observacion" value="Observación del Documento" />
-                                <p:inputTextarea id="observacion" rows="6" cols="33" value="#{documentosBean.documentos.observacion}" required="true" >
+                                <p:inputTextarea id="observacion" rows="6" cols="43" value="#{documentosBean.documentos.observacion}" required="true" >
                                     <f:validateLength minimum="1" maximum="200" />
-                                    <p:ajax update="msgObservacion" event="keyup" />
-                                </p:inputTextarea>
-                                <p:message for="observacion" id="msgObservacion" display="icon" />
+                                
+                                </p:inputTextarea>                                
                                 
                             </p:panelGrid>
-                            <!--botones de guardar y cancelar -->
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{documentosBean.guardarDocumento}" update="growl,display,:DocLisFormListForm:datalist" oncomplete="PF('DocNewDialog').hide();" />                              
-                                <p:commandButton value="Cancelar" update="display" oncomplete="PF('DocNewDialog').hide()"/>
+                                <p:commandButton value="Guardar" action="#{documentosBean.guardarDocumento}" update="growl,display,:DocLisFormListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('DocNewDialog').hide();" resetValues="true" />                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('DocNewDialog').hide()"/>
                             </div>
                         </h:panelGroup>
                     </h:form>
                 </p:dialog>
                 
                 <!--dialog para editar-->
-                <p:dialog header="Editar Documento" id="DocEditDg" widgetVar="DocEditDialog" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)">
+                <p:dialog header="Editar Documento" id="DocEditDg" widgetVar="DocEditDialog" width="650" responsive="true" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)">
                     <h:form id="DocEditForm">
                         <p:growl id="growl" showDetail="true" life="5000" /> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
+                            <p:panelGrid columns="2" layout="grid">
                                 
                                 <p:outputLabel for="numeroDoc" value="Número de Documento" />
-                                <p:inputText id="numeroDoc" value="#{documentosBean.documentos.numeroDoc}" disabled="true" required="true" size="50" >
+                                <p:inputText id="numeroDoc" value="#{documentosBean.documentos.numeroDoc}" disabled="true" required="true" size="40" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNumdoc" event="keyup" />
-                                </p:inputText>
-                                <p:message for="numeroDoc" id="msgNumdoc" display="icon" />
-                                
+                                 </p:inputText>
+                                 
                                 <p:outputLabel for="descripcion" value="Caratulado como" />
                                 <p:inputText id="descripcion" value="#{documentosBean.documentos.descripcion}" required="true" size="50" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgDescripcion" event="keyup" />
-                                </p:inputText>
-                                <p:message for="descripcion" id="msgDescripcion" display="icon" />
-                                
-                                <p:outputLabel value="Persona que tramita el Documento" /><!--en tamitantes quedara la opcion seleccionada, y lo que le paso es la ci-->
+                                 </p:inputText>
+                                 
+                                <p:outputLabel value="Persona que tramita el Documento" />
                                 <h:selectOneMenu  value="#{documentosBean.tramitantes}"> 
                                     <f:selectItems value="#{documentosBean.listaTram}" var="tramitantes" itemLabel="#{tramitantes.nombreCompleto}" itemValue="#{tramitantes.ci}" />
                                 </h:selectOneMenu>  
-                               
+                                 
                                 <p:outputLabel value="Supervición que Solicita el Tramite" />
                                 <h:selectOneMenu  value="#{documentosBean.superviciones}"> 
                                     <f:selectItems value="#{documentosBean.listaSup}" var="superviciones" itemLabel="#{superviciones.idDistrito.nombre}" itemValue="#{superviciones.numeroSupervision}" />
                                 </h:selectOneMenu> 
-                                
+                                 
                                 <p:outputLabel value="Tipo de Documento" />
                                 <h:selectOneMenu  value="#{documentosBean.tipodocumento}"> 
                                     <f:selectItems value="#{documentosBean.listaTipodoc}" var="tipodocumento" itemLabel="#{tipodocumento.nombre}" itemValue="#{tipodocumento.nombre}" />
                                 </h:selectOneMenu> 
-                                
+                                 
                                 <p:outputLabel for="observacion" value="Observación del Documento" />
-                                <p:inputTextarea id="observacion" rows="6" cols="33" value="#{documentosBean.documentos.observacion}" required="true">
+                                <p:inputTextarea id="observacion" rows="6" cols="43" value="#{documentosBean.documentos.observacion}" required="true">
                                     <f:validateLength minimum="1" maximum="200" />
-                                    <p:ajax update="msgObservacion" event="keyup" />
                                 </p:inputTextarea>
-                                <p:message for="observacion" id="msgObservacion" display="icon" />
                                 
                             </p:panelGrid>
                             <!--botones de guardar y cancelar -->
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{documentosBean.actualizarDocumento}" update="growl,display,:DocLisFormListForm:datalist" oncomplete="PF('DocEditDialog').hide();" disabled="#{documentosBean.documentos.numeroDoc.length() lt 1}"/>                              
-                                <p:commandButton value="Cancelar" update="display" oncomplete="PF('DocEditDialog').hide()"/>
+                                <p:commandButton value="Guardar" action="#{documentosBean.actualizarDocumento}" update="growl,display,:DocLisFormListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('DocEditDialog').hide();" disabled="#{documentosBean.documentos.numeroDoc.length() lt 1}"/>                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('DocEditDialog').hide()"/>
                             </div>
                         </h:panelGroup>
                     </h:form>

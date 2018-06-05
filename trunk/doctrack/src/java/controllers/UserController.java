@@ -84,7 +84,7 @@ public class UserController {
     }
     
     public List getEmployeesList(){
-        List l = t.getList("from Funcionarios");
+        List l = t.getList("from Funcionarios where nombreCompleto not like '(INACTIVO)%'");
         return l;
     }
     

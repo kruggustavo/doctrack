@@ -37,16 +37,13 @@ public class EmployeesBean implements Serializable{
     }
     
     public void eliminarFuncionario(){   
-        String idFuncionario = selectedEmployee.getId().toString();
         try{
-            String query = "UPDATE resolucion SET idFuncionario = '' WHERE idFuncionario = '" + idFuncionario + "'";
-
-            controller.executeSqlQuery(query);
-            controller.deleteEmployee(selectedEmployee);
+            String originalDesc = selectedEmployee.getNombreCompleto();
+            selectedEmployee.setNombreCompleto("(INACTIVO) " + originalDesc);
+            controller.saveEmployee(selectedEmployee);
             
             selectedEmployee = null;
         }catch (Exception m){ 
-            System.out.println("Errpor");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "No se puede eliminar funcionario asociado actualmente a tramite")); 
         }
     }

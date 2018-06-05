@@ -11,20 +11,18 @@
                 
                 <!--list -->
                 <h:form id="DependenciasListForm">
-                    <p:panel header="Dependencias de la Coordinación" style="width: auto; margin: 0 auto; vertical-align: middle">
-                        <p:dataTable id="datalist" value="#{dependencyBean.dependencyList}" lazy="false" rowKey="#{dependencias.id}" var="dependencias" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{dependencyBean.selectedDependency}" >
-
+                    <p:panel header="Dependencias de la Coordinación" style="width: 70%; margin: 0 auto; vertical-align: middle">
+                        <p:dataTable id="datalist" value="#{dependencyBean.dependencyList}" lazy="false" rowKey="#{dependencias.id}" var="dependencias" selectionMode="single" selection="#{dependencyBean.selectedDependency}" >
                             <p:ajax event="rowSelect"   update="createButton,editButton"/>
                             <p:ajax event="rowUnselect" update="createButton,editButton"/>
 
                             <p:column headerText="Nombre de dependencia"><h:outputText value="#{dependencias.nombre}"/></p:column>
                             <p:column headerText="Email"><h:outputText value="#{dependencias.email}"/></p:column>
-                            <p:column headerText="Interno"><h:outputText value="#{dependencias.interno}"/></p:column>
-                            
+                            <p:column headerText="Interno"><h:outputText value="#{dependencias.interno}"/></p:column>                            
                             
                             <f:facet name="footer">
                                 <div>
-                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{dependencyBean.nuevoDependencia}" update=":DependenciasNewForm" oncomplete="PF('DependenciasNewDialog').show()"/>                                    
+                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{dependencyBean.nuevoDependencia}" update=":DependenciasNewForm" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('DependenciasNewDialog').show()"/>                                    
                                     <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":DependenciasEditForm" oncomplete="PF('DependenciasEditDialog').show()" disabled="#{empty dependencyBean.selectedDependency}"/>
                                 </div>
                             </f:facet>
@@ -34,74 +32,62 @@
                 </h:form>
 
                 <!--create and edit-->
-                <p:dialog header="Registrar Dependencia" id="DependenciasNewDlg" widgetVar="DependenciasNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                <p:dialog header="Registrar Dependencia" id="DependenciasNewDlg" width="450" widgetVar="DependenciasNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="DependenciasNewForm">
-                        <p:growl id="growl" showDetail="true" life="5000" /> 
+                        <p:growl id="growl" showDetail="true" life="5000"  showSummary="false"/> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
+                            <p:panelGrid columns="2" layout="grid">
                                 
                                 <p:outputLabel for="nombre" value="Nombre de la Dependencia" />
-                                <p:inputText id="nombre" value="#{dependencyBean.selectedDependency.nombre}" required="true" size="50" >
+                                <p:inputText id="nombre" value="#{dependencyBean.selectedDependency.nombre}" required="true" size="30" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNombre" event="keyup" />
                                 </p:inputText>
-                                <p:message for="nombre" id="msgNombre" display="icon" />
                                 
                                 <p:outputLabel for="email" value="Correo eléctronico" />
-                                <p:inputText id="email" value="#{dependencyBean.selectedDependency.email}" required="true" size="50" >
+                                <p:inputText id="email" value="#{dependencyBean.selectedDependency.email}" required="true" size="30" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgEmail" event="keyup" />
                                 </p:inputText>
-                                <p:message for="email" id="msgEmail" display="icon" />
                                     
                                 <p:outputLabel for="interno" value="Interno de la Dependencia" />
-                                <p:inputText id="interno" value="#{dependencyBean.selectedDependency.interno}" type="number" required="true" size="50" >
+                                <p:inputText id="interno" value="#{dependencyBean.selectedDependency.interno}" type="number" required="true" size="30" >
                                     <f:validateLength minimum="1" maximum="5" />
-                                    <p:ajax update="msgInterno" event="keyup" />
                                 </p:inputText>
-                                <p:message for="interno" id="msgInterno" display="icon" />
                                 
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{dependencyBean.guardarDependencia}" update="growl,display,:DependenciasListForm:datalist" oncomplete="PF('DependenciasNewDialog').hide();" />                              
+                                <p:commandButton value="Guardar" action="#{dependencyBean.guardarDependencia}" update="growl,display,:DependenciasListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('DependenciasNewDialog').hide();" />                              
                                 <p:commandButton value="Cancelar" oncomplete="PF('DependenciasNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:panelGroup>
                     </h:form>
                 </p:dialog>    
                 
-                <p:dialog header="Editar Dependencia" id="DependenciasEditDlg" widgetVar="DependenciasEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                <p:dialog header="Editar Dependencia" id="DependenciasEditDlg" width="450" widgetVar="DependenciasEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="DependenciasEditForm">
-                        <p:growl id="growl" showDetail="true" life="5000" /> 
+                        <p:growl id="growl" showDetail="true" life="5000"  showSummary="false"/> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
+                            <p:panelGrid columns="2" layout="grid">
                                 
                                 <p:outputLabel for="nombre" value="Nombre de la Dependencia" />
-                                <p:inputText id="nombre" value="#{dependencyBean.selectedDependency.nombre}" required="true" size="50" >
+                                <p:inputText id="nombre" value="#{dependencyBean.selectedDependency.nombre}" required="true" size="30" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNombre" event="keyup" />
                                 </p:inputText>
-                                <p:message for="nombre" id="msgNombre" display="icon" />
                                 
                                 <p:outputLabel for="email" value="Correo eléctronico" />
-                                <p:inputText id="email" value="#{dependencyBean.selectedDependency.email}" required="true" size="50" >
+                                <p:inputText id="email" value="#{dependencyBean.selectedDependency.email}" required="true" size="30" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgEmail" event="keyup" />
                                 </p:inputText>
-                                <p:message for="email" id="msgEmail" display="icon" />
                                     
                                 <p:outputLabel for="interno" value="Interno de la Dependencia" />
-                                <p:inputText id="interno" value="#{dependencyBean.selectedDependency.interno}" type="number" required="true" size="50" >
+                                <p:inputText id="interno" value="#{dependencyBean.selectedDependency.interno}" type="number" required="true" size="30" >
                                     <f:validateLength minimum="1" maximum="5" />
-                                    <p:ajax update="msgInterno" event="keyup" />
                                 </p:inputText>
-                                <p:message for="interno" id="msgInterno" display="icon" />
                                 
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{dependencyBean.actualizarDependencia}" update="growl,display,:DependenciasListForm:datalist" oncomplete="PF('DependenciasEditDialog').hide();" />                              
+                                <p:commandButton value="Guardar" action="#{dependencyBean.actualizarDependencia}" update="growl,display,:DependenciasListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('DependenciasEditDialog').hide();" />                              
                                 <p:commandButton value="Cancelar" oncomplete="PF('DependenciasEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:panelGroup>
