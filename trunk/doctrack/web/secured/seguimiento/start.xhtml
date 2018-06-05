@@ -9,26 +9,21 @@
         <ui:composition template="../../dashboard.xhtml">
                 <ui:define name="content"> 
                 <!--list -->
-                <h:form id="ResolucionesListForm">
-                    <p:panel header="Respuesta de Documentos Concluidos" style="width: auto; margin: 0 auto; vertical-align: middle">
-                        <p:dataTable id="datalist" value="#{resolutionBean.resolutionList}" lazy="false" rowKey="#{resolucion.id}" var="resolucion" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{resolutionBean.selectedResolution}" >
+                <h:form id="RespuestasListForm">
+                    <p:panel header="Documentos Concluidos no Respondidos" style="width: auto; margin: 0 auto; vertical-align: middle">
+                        <p:dataTable id="datalist" value="#{respuestasBean.listSeguimiento}" lazy="false" rowKey="#{respuesta.id}" var="respuesta" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{respuestasBean.seguimiento}" >
 
-                            <p:ajax event="rowSelect"   update="createButton,editButton,deleteButton"/>
-                            <p:ajax event="rowUnselect" update="createButton,editButton,deleteButton"/>
+                            <p:ajax event="rowSelect"   update="createButton"/>
+                            <p:ajax event="rowUnselect" update="createButton"/>
 
-                            <p:column headerText="Fecha"><h:outputText value="#{resolucion.fecha}"/></p:column>
-                            <p:column headerText="Numero"><h:outputText value="#{resolucion.numero}"/></p:column>
-                            <p:column headerText="Resuelve"><h:outputText value="#{resolucion.resuelve}"/></p:column>
-                            <p:column headerText="Visto"><h:outputText value="#{resolucion.visto}"/></p:column>
-                            <p:column headerText="Funcionario"><h:outputText value="#{resolucion.idFuncionario.nombre_completo}"/></p:column>
-                           <p:column headerText="Seguimiento"><h:outputText value="#{resolucion.idSeguimiento.descripcion}"/></p:column>
+                            <p:column headerText="Nª Seguimiento"><h:outputText value="#{respuesta.id}"/></p:column>
+                            <p:column headerText="Nª Documento"><h:outputText value="#{respuesta.idDocumento.numeroDoc}"/></p:column>
+                            <p:column headerText="Fecha Entrada"><h:outputText value="#{respuesta.fechaentrada}"/></p:column>
+                            <p:column headerText="Fecha Concluida"><h:outputText value="#{respuesta.fechasalido}"/></p:column>
+                            <p:column headerText="Descripción"><h:outputText value="#{respuesta.descripcion}"/></p:column>
                             <f:facet name="footer">
                                 <div>
-                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo" actionListener="#{ResolutionBean.nuevaResolucion}" update=":ResolucionesEditNewForm" oncomplete="PF('ResolucionesEditNewDialog').show()"/>                                    
-                                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":ResolucionesEditNewForm" oncomplete="PF('ResolucionesEditNewDialog').show()" disabled="#{empty ResolutionBean.selectedResolution}"/>
-                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{ResolutionBean.eliminarResolucion}" update="datalist" disabled="#{empty ResolutionBean.selectedResolution}">
-                                        <p:confirm header="Confirmar acción" message="¿Eliminar resolucion del sistema? Esta acción no podrá deshacerse" icon="ui-icon-alert"/>
-                                    </p:commandButton>
+                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Responder" update=":RespuestaNewForm" oncomplete="PF('RespuestaNewDialog').show()" disabled="#{empty respuestasBean.seguimiento}" />                                    
                                 </div>
                             </f:facet>
                         </p:dataTable>
@@ -36,34 +31,56 @@
                     <ui:include src="../templates/confirmation.xhtml"/>
                 </h:form>
 
-                <!--create and edit-->
-                <p:dialog header="Editar Resolucion" id="ResolutionEditNewDlg" widgetVar="ResolucionesEditNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
-                    <h:form id="ResolucionesEditNewForm">
+                <p:dialog header="Nueva Respuesta de Documentos" id="RespuestaNewDlg" responsive="true" widgetVar="RespuestaNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                    <h:form id="RespuestaNewForm">
+                        <p:growl id="growl" showDetail="true" life="5000" showSummary="false" /> 
                         <h:panelGroup id="display" rendered="true">
-                            <p:panelGrid columns="2">
+                            <p:panelGrid columns="2" layout="grid">
 
-                                <p:outputLabel value="Fecha" />
-                                <p:inputText id="fecha" value="#{ResolutionBean.selectedResolution.fecha}" required="true" size="50" maxlength="50"/>
-
-                                <p:outputLabel value="Numero" />
-                                <p:inputText id="numero" value="#{ResolutionBean.selectedResolution.numero}" required="true" size="30" maxlength="30" />
-
-                                <p:outputLabel value="Resuelve" />
-                                <p:password id="resuelve" value="#{ResolutionBean.selectedResolution.resuelve}" required="true" size="30" maxlength="30" redisplay="true"/>
-
-                                <p:outputLabel value="Funcionario" />
-                                <h:selectOneMenu  value="#{ResolutionBean.selectedFuncionario}"> 
-                                    <f:selectItems value="#{ResolutionBean.funcionariosList}" var="funcionario" itemLabel="#{funcionario.nombre_completo}" itemValue="#{funcionario.nombre_completo}" />
-                               </h:selectOneMenu>
-              
+                                <p:outputLabel value="Número de Seguimiento" />
+                                <p:outputLabel value="#{respuestasBean.seguimiento.id}" />
+                                
+                                <p:outputLabel value="Número de Documento" />
+                                <p:outputLabel value="#{respuestasBean.seguimiento.idDocumento.numeroDoc}" />
+                                
+                                <p:outputLabel for="numero" value="Número de Respuesta" />
+                                <p:inputText id="numero" value="#{respuestasBean.numero}" required="true" size="33" >
+                                    <f:validateLength minimum="1" maximum="50" />
+                                </p:inputText>
+                                
+                                <p:outputLabel for="dirigidoa" value="Dirigido a" />
+                                <p:inputText id="dirigidoa" value="#{respuestasBean.dirigidoa}" required="true" size="33" >
+                                    <f:validateLength minimum="1" maximum="50" />
+                                </p:inputText>
+                                
+                                <p:outputLabel value="Remitente" />
+                                <h:selectOneMenu  value="#{respuestasBean.selectFuncionario}"> 
+                                    <f:selectItems value="#{respuestasBean.listFuncionarios}" var="funcionarios" itemLabel="#{funcionarios.nombreCompleto}" itemValue="#{funcionarios.ci}" />
+                                </h:selectOneMenu>  
+                                
+                                <p:outputLabel value="Tipo Documento de Respuesta" />
+                                <h:selectOneMenu  value="#{respuestasBean.selectTipodocumento}"> 
+                                    <f:selectItems value="#{respuestasBean.listTipodocumento}" var="tipodocumento" itemLabel="#{tipodocumento.nombre}" itemValue="#{tipodocumento.id}" />
+                                </h:selectOneMenu>  
+                                
+                                <p:outputLabel for="asunto" value="Asunto" />
+                                <p:inputText id="asunto" value="#{respuestasBean.asunto}" required="true" size="33" >
+                                    <f:validateLength minimum="1" maximum="50" />
+                                </p:inputText>
+                                
+                                <p:outputLabel for="redaccion" value="Redacción de Respuesta" />
+                                <p:inputTextarea id="redaccion" rows="6" cols="33" value="#{respuestasBean.redaccion}" required="true">
+                                    <f:validateLength minimum="1" maximum="200" />
+                                </p:inputTextarea>
+                                
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{ResolutionBean.guardarResolucion}" update="display,:ResolucionesListForm:datalist" oncomplete="PF('ResolucionesEditNewDialog').hide();" />                              
-                                <p:commandButton value="Cancelar" oncomplete="PF('ResolucionesEditNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                                <p:commandButton value="Guardar" action="#{respuestasBean.guardarRespuesta}" update="growl,display,:RespuestasListForm:datalist" oncomplete="PF('RespuestaNewDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('RespuestaNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:panelGroup>
                     </h:form>
-                </p:dialog>                  
+                </p:dialog> 
                 </ui:define>
          </ui:composition>
     </h:body>

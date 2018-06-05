@@ -42,21 +42,13 @@ public class GestionDocBean implements Serializable {
     private List<Areas> listaAreas;
 
     //objeto para obtener la ultima gestion del documento seleccionado
-    private Gestiondocumentos ultimaGestion;
-
-    //variable de la tabla gestiondocumentos
+     //variable de la tabla gestiondocumentos
     private String asuntoGest;
     private String obsGest;
     
     //instancio el controlador
     GestionDocController controller = new GestionDocController();
     
-    //inicializo el ultimo seguimiento para luego obtener el sector, esto solo lo utilizo en mover
-    public void inicializarUltimaGestion()
-    {
-        ultimaGestion = (Gestiondocumentos) controller.getUltimaGestionList(seguimiento.getId()).get(0);
-        //como la lista me trae de manera descendente de mayor a menor, obtengo el primero de ellos con get(0)
-    }
 
     public void procesarDocumento() //con este metodo logro cambiar el estado de seguimiento y insertar una una gesiondocumento
     {
@@ -69,7 +61,7 @@ public class GestionDocBean implements Serializable {
             }
             else
             {
-                if(areas != null || asuntoGest != null || obsGest != null)
+                if(areas != null && asuntoGest != null && obsGest != null)
                 {
                     seguimiento.setEstadogeneral("Procesado"); //solo hago esta modificacion a seguimiento
                     controller.saveSeguimiento(seguimiento);
@@ -103,22 +95,22 @@ public class GestionDocBean implements Serializable {
     
     public void moverDocumento() //con este metodo logro cambiar el estado de seguimiento y insertar una una gesiondocumento
     {
-        if(ultimaGestion != null || seguimiento != null || areas != null)
+        if(seguimiento != null && areas != null)
         {
-            if(ultimaGestion.getIdArea().getNombre().equals(areas))
+            //consulto si ya no esta procesado, ya que solo una vez se puede procesar
+            if(!seguimiento.getEstadogeneral().equals("Procesado"))
             {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "El Documento especificado ya se encuentra en el Sector de Dependencia seleccionado"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "El Documento especificado debe ser primeramente Procesado para poder luego ser movido a un nuevo Sector de Dependencias"));
             }
             else
             {
-                //consulto si ya no esta procesado, ya que solo una vez se puede procesar
-                if(!seguimiento.getEstadogeneral().equals("Procesado"))
+                Gestiondocumentos ultimaGestion = (Gestiondocumentos) controller.getUltimaGestionList(seguimiento.getId()).get(0);
+                if(ultimaGestion.getIdArea().getNombre().equals(areas))
                 {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "El Documento especificado debe ser primeramente Procesado para poder luego ser movido a un nuevo Sector de Dependencias"));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "El Documento especificado ya se encuentra en el Sector de Dependencia seleccionado"));
                 }
                 else
                 {
-
                     if(areas != null && asuntoGest != null && obsGest != null)
                     {
                         //en esta seccion no necesito cambiar el estado, ya que siempre se mantendran en procesado hasta llegar a concluirse
@@ -128,6 +120,7 @@ public class GestionDocBean implements Serializable {
                         gdoc.setAsunto(asuntoGest);
                         gdoc.setFecha(new Date());
                         gdoc.setIdArea(ar);
+                        gdoc.setEstadogestion("Procesado");
                         gdoc.setObservacion(obsGest);
                         gdoc.setIdSeguimiento(seguimiento);
                         gdoc.setIdDependencia(ar.getIdDependencia());
@@ -135,6 +128,7 @@ public class GestionDocBean implements Serializable {
                         seguimiento = null;
                         ar = null;
                         gdoc = null;
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "El Documento se ha movido a un nuevo Sector de Dependencia con éxito"));
                     }
                     else
                     {
@@ -152,8 +146,7 @@ public class GestionDocBean implements Serializable {
         
     public void concluirDocumento() 
     {
-        ultimaGestion = (Gestiondocumentos) controller.getUltimaGestionList(seguimiento.getId()).get(0);
-        if(ultimaGestion != null || seguimiento != null || areas != null)
+        if(seguimiento != null)
         {
             //consulto si ya no esta procesado, ya que solo una vez se puede procesar
             if(!seguimiento.getEstadogeneral().equals("Procesado"))
@@ -162,15 +155,24 @@ public class GestionDocBean implements Serializable {
             }
             else
             {
-                //doy por conculuido el seguimiento actualizando el estado
-                seguimiento.setEstadogeneral("Concluido");
-                controller.saveSeguimiento(seguimiento);
-                //la ultima gestion supone ser de la coordinacion, a la cual se le cambia el estado a concluido en esta parte ya no se inserta
-                ultimaGestion.setEstadogestion("Concluido");
-                controller.saveGestiondocumentos(ultimaGestion);
-                
-                seguimiento = null;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Seguimiento de Documento Concluido con éxito"));
+                Gestiondocumentos ultimaGestion = (Gestiondocumentos) controller.getUltimaGestionList(seguimiento.getId()).get(0);
+                if(ultimaGestion != null && areas != null)
+                {
+                    //doy por conculuido el seguimiento actualizando el estado
+                    seguimiento.setEstadogeneral("Concluido");
+                    seguimiento.setFechasalido(new Date());
+                    controller.saveSeguimiento(seguimiento);
+                    //la ultima gestion supone ser de la coordinacion, a la cual se le cambia el estado a concluido en esta parte ya no se inserta
+                    ultimaGestion.setEstadogestion("Concluido");
+                    controller.saveGestiondocumentos(ultimaGestion);
+
+                    seguimiento = null;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Seguimiento de Documento Concluido con éxito"));
+                }
+                else
+                {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error pongase en contacto con su proveedor"));
+                }
             }
         }
         else
@@ -259,14 +261,6 @@ public class GestionDocBean implements Serializable {
 
     public void setObsGest(String obsGest) {
         this.obsGest = obsGest;
-    }
-    
-    public Gestiondocumentos getUltimaGestion() {
-        return ultimaGestion;
-    }
-
-    public void setUltimaGestion(Gestiondocumentos ultimaGestion) {
-        this.ultimaGestion = ultimaGestion;
     }
     
 }

@@ -210,6 +210,7 @@ public class DocumentosBean implements Serializable {
                 seguimiento.setFechasalido(date);
                 seguimiento.setDescripcion(documentos.getDescripcion()); //la misma descripcion que el del documento
                 seguimiento.setEstadogeneral("Recibido");
+                seguimiento.setNuevoCampo("No");
                 seguimiento.setIdDocumento(documentos);
                 controller.saveSeguimiento(seguimiento);
                 seguimiento = null;

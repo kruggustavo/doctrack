@@ -36,7 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Respuesta.findByFecha", query = "SELECT r FROM Respuesta r WHERE r.fecha = :fecha")
     , @NamedQuery(name = "Respuesta.findByNumero", query = "SELECT r FROM Respuesta r WHERE r.numero = :numero")
     , @NamedQuery(name = "Respuesta.findByDirigidoa", query = "SELECT r FROM Respuesta r WHERE r.dirigidoa = :dirigidoa")
-    , @NamedQuery(name = "Respuesta.findByRemitente", query = "SELECT r FROM Respuesta r WHERE r.remitente = :remitente")
     , @NamedQuery(name = "Respuesta.findByAsunto", query = "SELECT r FROM Respuesta r WHERE r.asunto = :asunto")
     , @NamedQuery(name = "Respuesta.findByRedaccion", query = "SELECT r FROM Respuesta r WHERE r.redaccion = :redaccion")})
 public class Respuesta implements Serializable {
@@ -65,11 +64,6 @@ public class Respuesta implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "remitente")
-    private String remitente;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
     @Column(name = "asunto")
     private String asunto;
     @Basic(optional = false)
@@ -83,6 +77,9 @@ public class Respuesta implements Serializable {
     @JoinColumn(name = "idSeguimiento", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Seguimiento idSeguimiento;
+    @JoinColumn(name = "idTipoDoc", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Tipodocumento idTipoDoc;
 
     public Respuesta() {
     }
@@ -91,12 +88,11 @@ public class Respuesta implements Serializable {
         this.id = id;
     }
 
-    public Respuesta(Long id, Date fecha, String numero, String dirigidoa, String remitente, String asunto, String redaccion) {
+    public Respuesta(Long id, Date fecha, String numero, String dirigidoa, String asunto, String redaccion) {
         this.id = id;
         this.fecha = fecha;
         this.numero = numero;
         this.dirigidoa = dirigidoa;
-        this.remitente = remitente;
         this.asunto = asunto;
         this.redaccion = redaccion;
     }
@@ -133,14 +129,6 @@ public class Respuesta implements Serializable {
         this.dirigidoa = dirigidoa;
     }
 
-    public String getRemitente() {
-        return remitente;
-    }
-
-    public void setRemitente(String remitente) {
-        this.remitente = remitente;
-    }
-
     public String getAsunto() {
         return asunto;
     }
@@ -171,6 +159,14 @@ public class Respuesta implements Serializable {
 
     public void setIdSeguimiento(Seguimiento idSeguimiento) {
         this.idSeguimiento = idSeguimiento;
+    }
+
+    public Tipodocumento getIdTipoDoc() {
+        return idTipoDoc;
+    }
+
+    public void setIdTipoDoc(Tipodocumento idTipoDoc) {
+        this.idTipoDoc = idTipoDoc;
     }
 
     @Override

@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Tipodocumento.findByNombre", query = "SELECT t FROM Tipodocumento t WHERE t.nombre = :nombre")})
 public class Tipodocumento implements Serializable {
 
+
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +52,9 @@ public class Tipodocumento implements Serializable {
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipodoc")
     private Collection<Documentos> documentosCollection;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDoc")
+    private Collection<Respuesta> respuestaCollection;
+    
     public Tipodocumento() {
     }
 
@@ -111,6 +115,15 @@ public class Tipodocumento implements Serializable {
     @Override
     public String toString() {
         return "entities.seguimiento.Tipodocumento[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Respuesta> getRespuestaCollection() {
+        return respuestaCollection;
+    }
+
+    public void setRespuestaCollection(Collection<Respuesta> respuestaCollection) {
+        this.respuestaCollection = respuestaCollection;
     }
     
 }

@@ -25,9 +25,9 @@
                                 <f:facet name="footer">
                                     <div>
                                         <p:commandButton value="Ver" id="verButton" icon="ui-icon-plus" oncomplete="PF('SegVerDialog').show()" update=":SegVerForm" disabled="#{empty gestionDocBean.seguimiento}" />
-                                        <p:commandButton value="Procesar" id="procesarButton" icon="ui-icon-pencil" update=":DocProcesarForm" oncomplete="PF('DocProcesarDialog').show()" disabled="#{empty gestionDocBean.seguimiento}"/>
-                                        <p:commandButton value="Mover" id="moverButton" actionListener="#{gestionDocBean.inicializarUltimaGestion}" icon="ui-icon-pencil" update=":DocMoverForm" oncomplete="PF('DocMoverDialog').show()" disabled="#{empty gestionDocBean.seguimiento}"/>
-                                        <p:commandButton value="Concluir" id="concluirButton" actionListener="#{gestionDocBean.concluirDocumento()}" icon="fa-check-square-o" update="datalist growl" disabled="#{empty gestionDocBean.seguimiento}">
+                                        <p:commandButton value="Procesar" id="procesarButton" icon="ui-icon-pencil" update=":DocProcesarForm" oncomplete="PF('DocProcesarDialog').show()" disabled="#{empty gestionDocBean.seguimiento  or !loginBean.currentUser.idRol.ingresadocumentos.equals('Si')}"/>
+                                        <p:commandButton value="Mover" id="moverButton" icon="ui-icon-pencil" update=":DocMoverForm" oncomplete="PF('DocMoverDialog').show()" disabled="#{empty gestionDocBean.seguimiento}"/>
+                                        <p:commandButton value="Concluir" id="concluirButton" actionListener="#{gestionDocBean.concluirDocumento()}" icon="fa-check-square-o" update="datalist growl" disabled="#{empty gestionDocBean.seguimiento}" >
                                             <p:confirm header="Confirmar acción" message="¿Esta Seguro de cambiar a estado CONCLUIDO el Documento seleccionado?" icon="ui-icon-alert"/><!--disabled bloquea si la seleccion es vacia-->
                                         </p:commandButton>
                                     </div>
@@ -151,9 +151,6 @@
                                     
                                     <p:outputLabel value="Número de Documento" />
                                     <p:outputLabel value="#{gestionDocBean.seguimiento.idDocumento.numeroDoc}" />
-                                    
-                                    <p:outputLabel value="Sector donde se encuentra el Documento" />
-                                    <p:outputLabel value="#{gestionDocBean.ultimaGestion.idArea.nombre}" />
                                     
                                     <p:outputLabel value="Sector destinatario del Documento" />
                                     <h:selectOneMenu  value="#{gestionDocBean.areas}"> 

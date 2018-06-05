@@ -32,7 +32,6 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author Lucas Fleitas
  */
-
 @Entity
 @Table(name = "seguimiento")
 @XmlRootElement
@@ -42,7 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Seguimiento.findByFechaentrada", query = "SELECT s FROM Seguimiento s WHERE s.fechaentrada = :fechaentrada")
     , @NamedQuery(name = "Seguimiento.findByFechasalido", query = "SELECT s FROM Seguimiento s WHERE s.fechasalido = :fechasalido")
     , @NamedQuery(name = "Seguimiento.findByEstadogeneral", query = "SELECT s FROM Seguimiento s WHERE s.estadogeneral = :estadogeneral")
-    , @NamedQuery(name = "Seguimiento.findByDescripcion", query = "SELECT s FROM Seguimiento s WHERE s.descripcion = :descripcion")})
+    , @NamedQuery(name = "Seguimiento.findByDescripcion", query = "SELECT s FROM Seguimiento s WHERE s.descripcion = :descripcion")
+    , @NamedQuery(name = "Seguimiento.findByNuevoCampo", query = "SELECT s FROM Seguimiento s WHERE s.nuevoCampo = :nuevoCampo")})
 public class Seguimiento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,8 +71,11 @@ public class Seguimiento implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSeguimiento")
-    private Collection<Gestiondocumentos> gestiondocumentosCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 3)
+    @Column(name = "NuevoCampo")
+    private String nuevoCampo;
     @JoinColumn(name = "idDocumento", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Documentos idDocumento;
@@ -86,12 +89,13 @@ public class Seguimiento implements Serializable {
         this.id = id;
     }
 
-    public Seguimiento(Long id, Date fechaentrada, Date fechasalido, String estadogeneral, String descripcion) {
+    public Seguimiento(Long id, Date fechaentrada, Date fechasalido, String estadogeneral, String descripcion, String nuevoCampo) {
         this.id = id;
         this.fechaentrada = fechaentrada;
         this.fechasalido = fechasalido;
         this.estadogeneral = estadogeneral;
         this.descripcion = descripcion;
+        this.nuevoCampo = nuevoCampo;
     }
 
     public Long getId() {
@@ -134,13 +138,12 @@ public class Seguimiento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    @XmlTransient
-    public Collection<Gestiondocumentos> getGestiondocumentosCollection() {
-        return gestiondocumentosCollection;
+    public String getNuevoCampo() {
+        return nuevoCampo;
     }
 
-    public void setGestiondocumentosCollection(Collection<Gestiondocumentos> gestiondocumentosCollection) {
-        this.gestiondocumentosCollection = gestiondocumentosCollection;
+    public void setNuevoCampo(String nuevoCampo) {
+        this.nuevoCampo = nuevoCampo;
     }
 
     public Documentos getIdDocumento() {
