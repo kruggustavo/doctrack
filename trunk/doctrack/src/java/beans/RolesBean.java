@@ -36,7 +36,12 @@ public class RolesBean implements Serializable{
             
             //Solo eliminamos roles si administradores > 1 y si actual no es administrador
             if (cantidadAdministradores > 1 || selectedRol.getAdministraconfiguraciones().equals("No")){
-                if (selectedRol != null) controller.deleteRol(selectedRol);
+                if (selectedRol != null){
+                    String desc = selectedRol.getDescripcion();
+                    selectedRol.setDescripcion("(INACTIVO) " + desc);
+                    
+                    controller.saveRol(selectedRol);
+                }
                 selectedRol = null;                            
             }else{
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aviso", "No se puede eliminar único rol de administrador"));    

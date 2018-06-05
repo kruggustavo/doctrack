@@ -31,7 +31,7 @@
                     <ui:include src="../templates/confirmation.xhtml"/>
                 </h:form>
 
-                <p:dialog header="Nueva Respuesta de Documentos" id="RespuestaNewDlg" responsive="true" widgetVar="RespuestaNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+                <p:dialog header="Nueva Respuesta de Documentos" id="RespuestaNewDlg" responsive="true" widgetVar="RespuestaNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" >
                     <h:form id="RespuestaNewForm">
                         <p:growl id="growl" showDetail="true" life="5000" showSummary="false" /> 
                         <h:panelGroup id="display" rendered="true">
@@ -75,8 +75,8 @@
                                 
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{respuestasBean.guardarRespuesta}" update="growl,display,:RespuestasListForm:datalist" oncomplete="PF('RespuestaNewDialog').hide();" />                              
-                                <p:commandButton value="Cancelar" oncomplete="PF('RespuestaNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                                <p:commandButton value="Guardar" action="#{respuestasBean.guardarRespuesta}" update="growl,display,:RespuestasListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('RespuestaNewDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('RespuestaNewDialog').hide()" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:panelGroup>
                     </h:form>

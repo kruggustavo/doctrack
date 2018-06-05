@@ -25,9 +25,9 @@
                            
                             <f:facet name="footer">
                                 <div>
-                                    <p:commandButton value="Nuevo" id="createButton" actionListener="#{documentosBean.nuevoDocumento}" icon="ui-icon-plus" oncomplete="PF('DocNewDialog').show()" update=":DocNewForm" />
-                                    <p:commandButton value="Editar" id="editButton" actionListener="#{documentosBean.editarDocumento}" icon="ui-icon-pencil" update=":DocEditForm" oncomplete="PF('DocEditDialog').show()" disabled="#{empty documentosBean.documentos}"/>
-                                    <p:commandButton value="Anular" id="anularButton" icon="ui-icon-trash" actionListener="#{documentosBean.anularDocumento()}" update="datalist growl" disabled="#{empty documentosBean.documentos}">
+                                    <p:commandButton value="Nuevo" id="createButton" actionListener="#{documentosBean.nuevoDocumento}" icon="ui-icon-plus" oncomplete="PF('DocNewDialog').show()" update=":DocNewForm"  disabled="#{!loginBean.currentUser.idRol.ingresadocumentos.equals('Si')}" />
+                                    <p:commandButton value="Editar" id="editButton" actionListener="#{documentosBean.editarDocumento}" icon="ui-icon-pencil" update=":DocEditForm" oncomplete="PF('DocEditDialog').show()" disabled="#{empty documentosBean.documentos or !loginBean.currentUser.idRol.ingresadocumentos.equals('Si')}"/>
+                                    <p:commandButton value="Anular" id="anularButton" icon="ui-icon-trash" actionListener="#{documentosBean.anularDocumento()}" update="datalist growl" disabled="#{empty documentosBean.documentos or !loginBean.currentUser.idRol.ingresadocumentos.equals('Si')}">
                                         <p:confirm header="Confirmar acción" message="¿Esta Seguro de Anular el Documento seleccionado?" icon="ui-icon-alert"/><!--disabled bloquea si la seleccion es vacia-->
                                     </p:commandButton>
                                 </div>

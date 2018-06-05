@@ -39,113 +39,99 @@
                 </h:form>
                 
                 <!--dialog para crear-->
-                <p:dialog header="Registrar Tramitante" id="TramitanteNewDg" widgetVar="TramitanteNewDialog" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)">
+                <p:dialog header="Registrar Tramitante" id="TramitanteNewDg" width="640" widgetVar="TramitanteNewDialog" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)" responsive="true">
                     <!--el modal es para que se comporte como un modal el dialog, resizable false para que no se modifiquen las dimensiones, closeOnEscape para que se pueda cerrar con el escape
                     appendTo @body para que se visualize enfrente-->
                     <h:form id="TramitanteNewForm">
-                        <p:growl id="growl" showDetail="true" life="5000" /> 
+                        <p:growl id="growl" showDetail="true" life="5000" showSummary="false"/> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
+                            <p:panelGrid columns="2" layout="grid">
 
-                                <p:outputLabel for="nombrecompleto" value="Nombre Completo" /><!--size el tamaño de los datos-->
+                                <p:outputLabel for="nombrecompleto" value="Nombre Completo" />
                                 <p:inputText id="nombrecompleto" value="#{tramitantesBean.tramitantes.nombreCompleto}" required="true" size="50" >
-                                    <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNombre" event="keyup" />
+                                    <f:validateLength minimum="1" maximum="50" />                                    
                                 </p:inputText>
-                                <p:message for="nombrecompleto" id="msgNombre" display="icon" />
+                                
                                 
                                 <p:outputLabel for="ci" value="Cédula de identidad Nª" />
                                 <p:inputMask id="ci" value="#{tramitantesBean.tramitantes.ci}" mask="9999999-9" required="true" size="50" >
-                                    <f:validateLength minimum="9" maximum="9" />
-                                    <p:ajax update="msgci" event="keyup" />
+                                    <f:validateLength minimum="9" maximum="9" />                                
                                 </p:inputMask>
-                                <p:message for="ci" id="msgci" display="icon" />
+                                
                                 
                                 <p:outputLabel for="direccion" value="Dirección de domicilio" />
                                 <p:inputText id="direccion" value="#{tramitantesBean.tramitantes.direccion}" required="true" size="50" >
-                                    <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgdireccion" event="keyup" />  
+                                    <f:validateLength minimum="1" maximum="50" />                                
                                 </p:inputText>
-                                <p:message for="direccion" id="msgdireccion" display="icon" />
+                                
                                 
                                 <p:outputLabel for="telefono" value="Teléfono particular" />
                                 <p:inputMask id="telefono" value="#{tramitantesBean.tramitantes.telefono}" mask="(9999) 999-999" required="true" size="50" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgtelefono" event="keyup" />   
+                                
                                 </p:inputMask>
-                                <p:message for="telefono" id="msgtelefono" display="icon" />
+                                
                                 
                                 <p:outputLabel for="email" value="Correo electrónico" />
                                 <p:inputText id="email" value="#{tramitantesBean.tramitantes.email}" required="true" size="50" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgemail" event="keyup" /> 
-                                </p:inputText>
-                                <p:message for="email" id="msgemail" display="icon" />
                                 
+                                </p:inputText>                                                                
                                 <!--anteriormente cree el objeto y aqui le asigno los valores como un set -->
                             </p:panelGrid>
                             <!--botones de guardar y cancelar -->
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{tramitantesBean.guardarTramitante}" update="growl,display,:TramitantesLisForm:datalist" oncomplete="PF('TramitanteNewDialog').hide();" />                              
-                                <p:commandButton value="Cancelar" update="display" oncomplete="PF('TramitanteNewDialog').hide()"/>
-                                <!--hide() dice que el dialog se esconda y con update me redirijo a la direccion especificada-->
+                                <p:commandButton value="Guardar" action="#{tramitantesBean.guardarTramitante}" update="growl,display,:TramitantesLisForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('TramitanteNewDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('TramitanteNewDialog').hide()" resetValues="true"/>                                
                             </div>
                         </h:panelGroup>
                     </h:form>
                 </p:dialog>
                 
                <!--dialog para editar/actualizar-->
-                <p:dialog header="Editar Tramitante" id="TramitanteEditNewDg"  widgetVar="TramitanteEditNewDialog" modal="true" resizable="false"  appendTo="@(body)" closeOnEscape="true">
-                    <!--el modal es para que se comporte como un modal el dialog, resizable false para que no se modifiquen las dimensiones, closeOnEscape para que se pueda cerrar con el escape
-                    appendTo @body para que se visualize enfrente-->
+               <p:dialog header="Editar Tramitante" id="TramitanteEditNewDg" width="640" widgetVar="TramitanteEditNewDialog" modal="true" resizable="false"  appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="TramitanteEditNewForm">
-                        <p:growl id="growl" showDetail="true" life="5000" /> 
+                        <p:growl id="growl" showDetail="true" life="5000" showSummary="false" /> 
                         <h:panelGroup id="display" rendered="true" >
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3" >
+                            <p:panelGrid columns="2" layout="grid">
                                 
-                                <p:outputLabel for="nombrecompleto" value="Nombre Completo" /><!--size el tamaño de los datos-->
+                                <p:outputLabel for="nombrecompleto" value="Nombre Completo" />
                                 <p:inputText id="nombrecompleto" value="#{tramitantesBean.tramitantes.nombreCompleto}" required="true" size="50" >
-                                    <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNombre" event="keyup" />
+                                    <f:validateLength minimum="1" maximum="50" />                                
                                 </p:inputText>
-                                <p:message for="nombrecompleto" id="msgNombre" display="icon" />
+                                
                                 
                                 <p:outputLabel for="ci" value="Cédula de identidad Nª" />
                                 <p:inputMask id="ci" value="#{tramitantesBean.tramitantes.ci}" mask="9999999-9" required="true" size="50" >
-                                    <f:validateLength minimum="9" maximum="9" />
-                                    <p:ajax update="msgci" event="keyup" />
+                                    <f:validateLength minimum="9" maximum="9" />                                
                                 </p:inputMask>
-                                <p:message for="ci" id="msgci" display="icon" />
+                                
                                 
                                 <p:outputLabel for="direccion" value="Dirección de domicilio" />
                                 <p:inputText id="direccion" value="#{tramitantesBean.tramitantes.direccion}" required="true" size="50" >
-                                    <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgdireccion" event="keyup" />  
+                                    <f:validateLength minimum="1" maximum="50" />                                
                                 </p:inputText>
-                                <p:message for="direccion" id="msgdireccion" display="icon" />
+                                
                                 
                                 <p:outputLabel for="telefono" value="Teléfono particular" />
                                 <p:inputMask id="telefono" value="#{tramitantesBean.tramitantes.telefono}" mask="(9999) 999-999" required="true" size="50" >
-                                    <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgtelefono" event="keyup" />   
+                                    <f:validateLength minimum="1" maximum="50" />                                
                                 </p:inputMask>
-                                <p:message for="telefono" id="msgtelefono" display="icon" />
+                                
                                 
                                 <p:outputLabel for="email" value="Correo electrónico" />
                                 <p:inputText id="email" value="#{tramitantesBean.tramitantes.email}" required="true" size="50" >
-                                    <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgemail" event="keyup" /> 
+                                    <f:validateLength minimum="1" maximum="50" />                                
                                 </p:inputText>
-                                <p:message for="email" id="msgemail" display="icon" />
-                                <!--anteriormente cree el objeto y aqui le asigno los valores como un set -->
+                                                                
                             </p:panelGrid>
-                            <!--botones de guardar y cancelar -->
+                            
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar"  action="#{tramitantesBean.actualizarTramitante()}" update="growl,display,:TramitantesLisForm:datalist" oncomplete="PF('TramitanteEditNewDialog').hide();" />                              
-                                <p:commandButton value="Cancelar" update="display" oncomplete="PF('TramitanteEditNewDialog').hide()"/>
-                                <!--hide() dice que el dialog se esconda y con update me redirijo a la direccion especificada-->
+                                <p:commandButton value="Guardar"  action="#{tramitantesBean.actualizarTramitante()}" update="growl,display,:TramitantesLisForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('TramitanteEditNewDialog').hide();" />                              
+                                <p:commandButton value="Cancelar" oncomplete="PF('TramitanteEditNewDialog').hide()" resetValues="true"/>
+                            
                             </div>
                         </h:panelGroup>
                     </h:form>

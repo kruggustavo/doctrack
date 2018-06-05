@@ -40,7 +40,7 @@ public class UserController {
     }
     
     public List getRolesList(){
-        List l = t.getList("from Roles");
+        List l = t.getList("from Roles where descripcion not like '(INACTIVO)%'");
         return l;
     }
     

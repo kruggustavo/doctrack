@@ -147,10 +147,11 @@ CREATE TABLE `seguimiento` (
   `estadogeneral` varchar(50) NOT NULL DEFAULT '',
   `descripcion` varchar(255) NOT NULL DEFAULT '',
   `idDocumento` bigint(20) NOT NULL,
+  `NuevoCampo` enum('Si','No') NOT NULL DEFAULT 'No',
   PRIMARY KEY (`id`),
   KEY `idDocumento` (`idDocumento`),
   CONSTRAINT `seguimiento_ibfk_1` FOREIGN KEY (`idDocumento`) REFERENCES `documentos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `respuesta`;
 CREATE TABLE `respuesta` (
@@ -208,6 +209,7 @@ CREATE TABLE `resolucion` (
   CONSTRAINT `resolucion_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionarios` (`id`),
   CONSTRAINT `resolucion_ibfk_2` FOREIGN KEY (`idSeguimiento`) REFERENCES `seguimiento` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 INSERT INTO roles (descripcion, administra_configuraciones)
 SELECT * FROM (SELECT 'Administrador', 'Si') AS tmp
