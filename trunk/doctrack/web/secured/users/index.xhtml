@@ -47,22 +47,22 @@
                             
                             <p:panelGrid columns="2" rendered="#{!empty usersBean.rolesList}">
                                 <p:outputLabel value="Nombre completo" />
-                                <p:inputText id="Nombre_completo" value="#{usersBean.selectedUser.nombrecompleto}" required="true" size="50" maxlength="50">
+                                <p:inputText id="Nombre_completo" value="#{usersBean.selectedUser.nombrecompleto}" required="true" size="40" maxlength="50">
                                     <p:ajax event="keyup" update="saveButton" />
                                     <f:validateLength minimum="2" />
                                     <f:validateRequired for="Nombre_completo"/>
                                 </p:inputText>
 
                                 <p:outputLabel value="Alias" />
-                                <p:inputText id="alias" value="#{usersBean.selectedUser.alias}" required="true" size="30" maxlength="30" >
+                                <p:inputText id="alias" value="#{usersBean.selectedUser.alias}" required="true" size="40" maxlength="30" >
                                     <p:ajax event="keyup" update="saveButton" />
                                 </p:inputText>
 
                                 <p:outputLabel value="Clave" />
-                                <p:password id="clave" value="#{usersBean.selectedUser.clave}" required="true" size="30" maxlength="30" redisplay="true"/>
+                                <p:password id="clave" value="#{usersBean.selectedUser.clave}" required="true" size="40" maxlength="30" redisplay="true"/>
                               
                                 <p:outputLabel value="Rol" />
-                                <h:selectOneMenu  value="#{usersBean.selectedRole}"> 
+                                <h:selectOneMenu  value="#{usersBean.selectedRole}" style="width: 100% !important"> 
                                     <f:selectItems value="#{usersBean.rolesList}" var="roles" itemLabel="#{roles.descripcion}" itemValue="#{roles.descripcion}" />
                                </h:selectOneMenu>              
                             </p:panelGrid>
@@ -72,8 +72,8 @@
                             </p:panelGrid>
                             
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" id="saveButton" action="#{usersBean.guardarUsuario}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('UsuariosEditNewDialog').hide()" update="display,:UsuariosListForm:datalist" disabled="#{usersBean.selectedUser.alias.length() lt 1}" />                              
-                                <p:commandButton value="Cerrar" oncomplete="PF('UsuariosEditNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                                <p:commandButton value="Guardar" id="saveButton" icon="ui-icon-disk" action="#{usersBean.guardarUsuario}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('UsuariosEditNewDialog').hide()" update="display,:UsuariosListForm:datalist" disabled="#{usersBean.selectedUser.alias.length() lt 1}" />                              
+                                <p:commandButton value="Cerrar" icon="ui-icon-close" oncomplete="PF('UsuariosEditNewDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                             </div>
                         </h:form>
                     </h:panelGroup>

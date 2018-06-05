@@ -1,3 +1,13 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24-may-2018, 09:32:40
+    Author     : Carlina Servián
+*/
+
 ajus{
     background: url(background.jpg) no-repeat fixed center; 
 	-webkit-background-size: cover;
@@ -7,13 +17,13 @@ ajus{
 }
 
 body {
-background-color:lightblue;
-font-family: verdana;
+font-family: Verdana, sans-serif;
 margin: 5px auto;
 font-size: 13px;
 
 
 }
+
 header {
 background-color: white;
 display:block;
@@ -34,14 +44,14 @@ h2 {
 font-size: 24px;
 margin: 0px;
 text-align:center;
-color: #F47D31;
-color: mediumblue;
+color: #3377AA;
 
 }
 h3 {
 font-size: 20px;
 margin: 0px;
 text-align:center;
+color: lightblue;
 }
 h4 {
 color: #F47D31;
@@ -71,7 +81,7 @@ margin: 5px;
 }
 nav a:hover {
 color: white;
-background-color: #F47D31;
+background-color: #3377AA;
 
 }
 nav h3 {
@@ -128,8 +138,9 @@ padding: 5px;
 article footer {
 -webkit-border-radius: 10px;
 -moz-border-radius: 10px;
-border-radius: 10px;
+border-radius: 5px;
 padding: 5px;
+
 }
 article h1 {
 font-size: 18px;
@@ -149,14 +160,10 @@ margin: 15px;
 color: black;
 }
 footer {
-clear: both;
-float: left;
-margin-top: 50px;
-box-sizing: border-box;
-width: 100%;
-padding: 10px;
-color: #fff;
-background: gray;
+background-color: lightblue;
+display:block;
+text-align:center;
+border: solid;
 
 }
 footer h2 {
@@ -172,23 +179,6 @@ a:hover {
 text-decoration: underline;
 }
 
-table{
-   
-   border-color: wheat;
-   background-repeat: no-repeat;
-   background-size: 100%;
-   background-position-x:100%;
-   background-position-y: 20%;
-   width: 1000px;
-
-}
-
-td{
-    border:none;
-    font-family: verdana;
-    font-size: 13px;
-    
-}
 .menu{
 list-style:none;
 margin-left: -39px;

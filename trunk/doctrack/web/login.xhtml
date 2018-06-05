@@ -6,8 +6,9 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
 	<title>Iniciar - Tracking de documentos</title>
-        <h:outputStylesheet name="style/override.css" />
+        <h:outputStylesheet name="style/override.css" />     
 </h:head>
+    
 <h:body>
     #{loginBean.init}
     <p:layout fullPage="true">
@@ -15,18 +16,18 @@
             <p:growl id="growl" showDetail="true" sticky="false" ></p:growl>
             <div style="width: 100%; height: 80%; position: relative; top: 20%">
                 <div style="border: 1px solid lightgray; width: 30%; background: #eee; margin: 0 auto; text-align: center; padding-bottom: 15px; padding-top: 10px">
-                    <h:form id="Formulario">
-                        <h:outputText value="Inicie sesión" />
+                    <h:form>
+                        <h:outputText value="Inicie sesión" style="font-family: Verdana, sans-serif;"/>
                         <p:focus for="username" />
-                        <p:panelGrid columns="2" style="margin: 0 auto; padding: 30px; text-align: right" layout="grid" class="panelWithoutBorder">
-                            <p:outputLabel value="Usuario" style="padding-right: 15px; width: 100%"/>
-                            <p:inputText id="username" value="#{loginBean.user}" style="width: 96%" placeholder="Ingrese alias usuario">                                
+                        <h:panelGrid columns="2" style="margin: 0 auto; padding: 30px; text-align: right">
+                            <p:outputLabel value="Usuario" style="padding-right: 15px; width: 100%;font-family: Verdana, sans-serif;"/>
+                            <p:inputText id="username" value="#{loginBean.user}" style="width: 96%; font-family: Verdana, sans-serif;" placeholder="Ingrese alias usuario">
                             </p:inputText>
                             
-                            <p:outputLabel value="Clave" style="padding-right: 15px;"/>
-                            <p:password id="password" value="#{loginBean.pwd}" style="width: 96%" placeholder="Ingrese contraseña"/>                                     
-                        </p:panelGrid>
-                        <p:commandButton action="#{loginBean.login}" id="loginButton" value="Iniciar sesión" style="text-shadow: none !important; width: 70%; background: #2965A8; color: white;" update="growl,output">
+                            <p:outputLabel value="Clave" style="padding-right: 15px; font-family: Verdana, sans-serif;"/>
+                            <p:password id="password" value="#{loginBean.pwd}" style="width: 96%; font-family: Verdana, sans-serif;" placeholder="Ingrese contraseña"/>                                     
+                        </h:panelGrid>
+                        <p:commandButton action="#{loginBean.login}" id="loginButton" value="Iniciar sesión" style="text-shadow: none !important; font-family: Verdana, sans-serif; width: 70%; background: #2965A8; color: white;" update="growl,output">
                             <f:ajax render=":output-wrapper" listener="#{loginBean.loginListener}" />
                         </p:commandButton>
                     </h:form>        
@@ -45,7 +46,7 @@
                         <p:outputLabel>Universidad Católica NSA Quinto curso 2018</p:outputLabel>
                     </p:panelGrid> 
                 </div>  
-            </div>  
+            </div>
         </p:layoutUnit>
     </p:layout>
     

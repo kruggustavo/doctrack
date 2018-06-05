@@ -225,8 +225,29 @@ CREATE TABLE `respuesta` (
   PRIMARY KEY (`id`),
   KEY `idFuncionario` (`idFuncionario`),
   KEY `idSeguimiento` (`idSeguimiento`),
+  KEY `idTipoDoc` (`idTipoDoc`),
   CONSTRAINT `respuesta_ibfk_1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionarios` (`id`),
-  CONSTRAINT `respuesta_ibfk_2` FOREIGN KEY (`idSeguimiento`) REFERENCES `seguimiento` (`id`)
+  CONSTRAINT `respuesta_ibfk_2` FOREIGN KEY (`idSeguimiento`) REFERENCES `seguimiento` (`id`),
+  CONSTRAINT `respuesta_ibfk_3` FOREIGN KEY (`idTipoDoc`) REFERENCES `tipodocumento` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `documentos`;
+CREATE TABLE `documentos` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(50) NOT NULL DEFAULT '',
+  `fechaentrada` datetime NOT NULL,
+  `observacion` varchar(255) NOT NULL DEFAULT '',
+  `idSupervicion` bigint(20) NOT NULL,
+  `idTramitante` bigint(20) NOT NULL,
+  `idTipodoc` bigint(20) NOT NULL,
+  `numero_doc` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `fk_idSupervicion` (`idSupervicion`),
+  KEY `fk_idTramitante` (`idTramitante`),
+  KEY `fk_idTipodoc` (`idTipodoc`),
+  CONSTRAINT `fk_idSupervicion` FOREIGN KEY (`idSupervicion`) REFERENCES `superviciones` (`id`),
+  CONSTRAINT `fk_idTipodoc` FOREIGN KEY (`idTipodoc`) REFERENCES `tipodocumento` (`id`),
+  CONSTRAINT `fk_idTramitante` FOREIGN KEY (`idTramitante`) REFERENCES `tramitantes` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO roles (descripcion, administra_configuraciones)
