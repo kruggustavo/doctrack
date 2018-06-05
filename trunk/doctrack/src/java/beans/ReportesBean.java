@@ -33,8 +33,14 @@ public class ReportesBean {
     private String supervision = "";
     private Date fechaInicio = new Date();
     private Date fechaFin = new Date();
+    private String cedula_funcionario = "";
+    private String ci_tramitante_doc = "";
+    private String estado_seguimiento = "";
     
     private HashMap parameters = new HashMap();
+    
+    
+            
     
     public void documentoPorFecha() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
         parameters.clear();
@@ -47,7 +53,32 @@ public class ReportesBean {
         }
         
         buildReportAsResponse("/reports/Documentos_fecha.jasper", parameters);
-    }        
+    }
+    
+    public void funcionariosPorCI() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
+        parameters.clear();
+        parameters.put("usuario", Authorization.currentUser.getAlias());
+        parameters.put("cedula_funcionario",cedula_funcionario); 
+        
+        buildReportAsResponse("/reports/Funcionarios_nombre.jasper", parameters);
+    }
+    
+    public void documentoPorTramitante() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
+        parameters.clear();
+       // parametros.put("usuario", Authorization.currentUser.getAlias()); el reporte no tiene el campo de usuario en la cabecera 
+        parameters.put("ci_tramitante_doc",ci_tramitante_doc); 
+        buildReportAsResponse("/reports/Documentos_tramitante.jasper", parameters);
+    }
+    
+    public void seguimientosPorEstado() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
+        parameters.clear();
+        //parametros.put("usuario", Authorization.currentUser.getAlias()); el reporte no tiene el campo de usuario en la cabecera 
+        parameters.put("estado_seguimiento",estado_seguimiento);
+        buildReportAsResponse("/reports/seguimientos_estado.jasper", parameters);
+    }
+    
+   
+    
     
     //Construye el reporte rellenando con datos y devuelve un response
     private void buildReportAsResponse(String reportPath, HashMap param) throws IOException, SQLException, JRException{        
@@ -75,7 +106,7 @@ public class ReportesBean {
         s.getTransaction().commit();
         return connection;
     }
-    
+
     public String getSupervision() {
         return supervision;
     }
@@ -99,5 +130,33 @@ public class ReportesBean {
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
-  
+
+    public String getCedula_funcionario() {
+        return cedula_funcionario;
+    }
+
+    public void setCedula_funcionario(String cedula_funcionario) {
+        this.cedula_funcionario = cedula_funcionario;  
+    }
+
+    public String getCi_tramitante_doc() {
+        return ci_tramitante_doc;
+    }
+
+    public void setCi_tramitante_doc(String ci_tramitante_doc) {
+        this.ci_tramitante_doc = ci_tramitante_doc;
+    }
+
+    public String getEstado_seguimiento() {
+        return estado_seguimiento;
+    }
+
+    public void setEstado_seguimiento(String estado_seguimiento) {
+        this.estado_seguimiento = estado_seguimiento;
+    }
+    
+    
+
+    
+    
 }
