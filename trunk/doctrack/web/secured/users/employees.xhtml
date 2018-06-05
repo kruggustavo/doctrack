@@ -44,7 +44,7 @@
                             <p:messages id="msgs" style="width: 440px" />
 
                             <p:panelGrid columns="2" layout="grid">
-                                <p:outputLabel value="Nombre Completo" />
+                                <p:outputLabel value="Nombre Completo *" />
                                 <p:inputText id="Nombre_completo" value="#{employeesBean.selectedEmployee.nombreCompleto}" required="true" size="30" maxlength="30">
                                     <p:ajax event="keyup" update="saveButton" />
                                     <f:validateLength minimum="2" />

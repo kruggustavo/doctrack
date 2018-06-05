@@ -50,7 +50,7 @@
                             <p:messages id="msgs" style="width: 100%" />
 
                             <p:panelGrid columns="2" layout="grid">
-                                <p:outputLabel value="Descripcion del rol" />
+                                <p:outputLabel value="Descripcion del rol *" />
                                 <p:inputText id="Rol" value="#{rolesBean.selectedRol.descripcion}" required="true" size="30" maxlength="50">
                                     <p:ajax event="keyup" update="saveButton" />
                                     <f:validateLength minimum="2" />
