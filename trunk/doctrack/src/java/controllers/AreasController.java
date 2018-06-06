@@ -8,6 +8,7 @@ package controllers;
 import entities.institucion.Areas;
 import entities.institucion.Dependencias;
 import java.util.List;
+import util.LoggerUtil;
 import util.Transactions;
 
 /**
@@ -21,6 +22,7 @@ public class AreasController {
     
     public void saveAreas(Areas a){
         t.saveEntity(a);
+        LoggerUtil.logInfo("Creacion de Sector `" + a.getNombre()+ "`");
     }
     
     public List getAreasList(){

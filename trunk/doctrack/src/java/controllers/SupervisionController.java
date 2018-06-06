@@ -9,6 +9,7 @@ import entities.institucion.Distritos;
 import entities.users.Funcionarios;
 import entities.institucion.Superviciones;
 import java.util.List;
+import util.LoggerUtil;
 import util.Transactions;
 
 /**
@@ -21,6 +22,7 @@ public class SupervisionController {
     
     public void saveSupervision(Superviciones s){
         t.saveEntity(s);
+        LoggerUtil.logInfo("Creacion de Supervision Nº`" + s.getNumeroSupervision()+ "`");
     }
     
     public List getSupervisionList(){

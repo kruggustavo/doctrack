@@ -7,6 +7,7 @@ package controllers;
 
 import entities.institucion.Distritos;
 import java.util.List;
+import util.LoggerUtil;
 import util.Transactions;
 
 /**
@@ -19,6 +20,7 @@ public class DistrictController {
     
     public void saveDistrict(Distritos d){
         t.saveEntity(d);
+        LoggerUtil.logInfo("Creacion de Distrito `" + d.getNombre()+ "`");
     }
     
     public List getDistrictList(){

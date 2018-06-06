@@ -7,6 +7,7 @@ package controllers;
 
 import entities.institucion.Dependencias;
 import java.util.List;
+import util.LoggerUtil;
 import util.Transactions;
 
 /**
@@ -19,6 +20,7 @@ public class DependencyController {
     
     public void saveDependency(Dependencias u){
         t.saveEntity(u);
+        LoggerUtil.logInfo("Creacion de Dependencia `" + u.getNombre()+ "`");
     }
     
     public List getDependencyList(){
