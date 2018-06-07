@@ -65,14 +65,14 @@ public class ReportesBean {
     
     public void documentoPorTramitante() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
         parameters.clear();
-       // parametros.put("usuario", Authorization.currentUser.getAlias()); el reporte no tiene el campo de usuario en la cabecera 
+        parameters.put("usuario", Authorization.currentUser.getAlias());  
         parameters.put("ci_tramitante_doc",ci_tramitante_doc); 
         buildReportAsResponse("/reports/Documentos_tramitante.jasper", parameters);
     }
     
     public void seguimientosPorEstado() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
         parameters.clear();
-        //parametros.put("usuario", Authorization.currentUser.getAlias()); el reporte no tiene el campo de usuario en la cabecera 
+        parameters.put("usuario", Authorization.currentUser.getAlias());
         parameters.put("estado_seguimiento",estado_seguimiento);
         buildReportAsResponse("/reports/seguimientos_estado.jasper", parameters);
     }
