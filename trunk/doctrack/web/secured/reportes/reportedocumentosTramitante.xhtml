@@ -13,9 +13,10 @@
                     <p:panel header="Reporte de Documentos por tramitante" style="width: 65%; margin: 0 auto; vertical-align: middle">                                                   
                         
                             <p:outputLabel value="Ingrese la Cedula de identidad del tramitante: " />                        
-                            <p:inputText id="ci" value="#{reportesBean.ci_tramitante_doc}" size="30" maxlength="30"/>                                                        
+                            <p:inputText id="ci" value="#{reportesBean.ci_tramitante_doc}" size="30" maxlength="10" required="true">   
+                                <f:validateLength minimum="3" maximum="10" />
+                            </p:inputText>
                             <p:panel style="border: 0px"></p:panel> 
-                        
                         <p:panelGrid columns="1" style="width: 100%; text-align: center">
                             <h:commandLink type="button" target="_blank" style="margin-right:20px; text-align: center; width: 100%" value="Ver reporte" action="#{reportesBean.documentoPorTramitante}" title="Display Report on New window/tab" />       
                         </p:panelGrid>                                                                     
