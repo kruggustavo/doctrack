@@ -48,7 +48,6 @@ public class RespuestasBean implements Serializable {
     public void guardarRespuesta()
     {
         System.out.println("el valor id seg "+seguimiento.getId()+"numero "+numero+" dirigido "+dirigidoa+" asunto "+asunto+" redaccion "+redaccion+" funcionario ci "+selectFuncionario+" tipodoc id "+selectTipodocumento);
-        
         if(seguimiento.getId() != null && numero != null && dirigidoa != null && asunto != null && redaccion!= null && selectFuncionario != null && selectTipodocumento != null)
         {
             //verifico que el numero de documento con el mismo tipo de documento ya no exista
@@ -64,22 +63,21 @@ public class RespuestasBean implements Serializable {
                 seguimiento.setNuevoCampo("Si");
                 controller.saveSeguimiento(seguimiento);
                 //traigo ese objeto guardado
-                Seguimiento sg = null;
-                sg = controller.getSeguimientoEntity(seguimiento.getId());
+                Date date = new Date();
                 Respuesta respuesta = new Respuesta();
-                respuesta.setFecha(new Date());
+                respuesta.setFecha(date);
                 respuesta.setNumero(numero);
                 respuesta.setDirigidoa(dirigidoa);
                 respuesta.setAsunto(asunto);
                 respuesta.setRedaccion(redaccion);
+                respuesta.setIdTipodoc(td);
                 respuesta.setIdFuncionario(f);
-                respuesta.setIdTipoDoc(td);
-                respuesta.setIdSeguimiento(sg);
+                respuesta.setIdSeguimiento(seguimiento);
+                //ya esta funcionando terminar de ordenar el codigo, el problema era que no se tenia el autoincremento
                 controller.saveRespuesta(respuesta);
-
                 respuesta = null;
                 seguimiento = null;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Respuesta de Documentos Conluidos, concluiodo con éxito"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Respuesta de Documentos Conluidos, concluido con éxito"));
             }
             else
             {

@@ -13,6 +13,7 @@
                         <p:menuitem value="Documentos" icon="ui-icon-folder-collapsed" outcome="/secured/seguimiento/documentos.xhtml" />
                         <p:menuitem value="Seguimientos" icon="ui-icon-arrowthick-1-e" outcome="/secured/seguimiento/gestiondoc.xhtml" />
                         <p:menuitem value="Respuestas" icon="ui-icon-arrowreturn-1-w" outcome="/secured/seguimiento/start.xhtml"/>
+                        <p:menuitem value="Respuestas" icon="ui-icon-arrowreturn-1-w" outcome="/secured/seguimiento/start.xhtml" rendered="false" />
                         <p:menuitem value="Tipo de Documentos" icon="ui-icon-document" outcome="/secured/seguimiento/tipodocu.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}" />
                         <p:menuitem value="Tramitantes" icon="ui-icon-copy" outcome="/secured/seguimiento/tramitantes.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>
@@ -25,12 +26,15 @@
                     <p:submenu label="Institución" expanded="true">
                         <p:menuitem value="Supervisiones" icon="ui-icon-clipboard" outcome="/secured/institution/supervision.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                         <p:menuitem value="Dependencias" icon="ui-icon-caret-1-w" outcome="/secured/institution/dependency.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
+                        <p:menuitem value="Sectores" icon="ui-icon-caret-1-w" outcome="/secured/institution/dependency.xhtml" />
                         <p:menuitem value="Distritos" icon="ui-icon-home" outcome="/secured/institution/district.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>
                     <p:submenu label="Informes" expanded="true" rendered="#{loginBean.currentUser.idRol.visualizarinformes.equals('Si')}">
                         <p:menuitem value="Documentos" icon="ui-icon-document" outcome="/secured/reportes/reportedocumentos.xhtml"/>
                         <p:menuitem value="Resoluciones" icon="ui-icon-pencil" outcome="/secured/reportes/reporteseguimientosestado.xhtml"/>
                         <p:menuitem value="Funcionarios" icon="ui-icon-person" outcome="/secured/reportes/reportefuncionarios.xhtml"/>
+                        <p:menuitem value="Respuestas" icon="ui-icon-pencil" />
+                        <p:menuitem value="Funcionarios" icon="ui-icon-person" />
                     </p:submenu>   
                     <p:submenu label="Ayuda" expanded="true">                 
                         <p:menuitem value="Manual del usuario" icon="ui-icon-help" />

@@ -31,14 +31,14 @@
                 </h:form>
                 
                 <!--dialog para crear-->
-                <p:dialog header="Nuevo Tipo Documento" id="TiposNewDlg" widgetVar="TiposNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
+                <p:dialog header="Nuevo Tipo Documento" id="TiposNewDlg" widgetVar="TiposNewDialog" width="530"  modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="TiposNewForm">
                         <p:growl id="growl" showDetail="true" life="5000" showSummary="false" /> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
                             <p:panelGrid columns="2" layout="grid">
                                 <p:outputLabel for="nombrecompleto" value="Nombre Tipo Doc." />
-                                <p:inputText id="nombrecompleto" value="#{tipoDocBeans.tipodocumento.nombre}" required="true" size="50" >
+                                <p:inputText id="nombrecompleto" value="#{tipoDocBeans.tipodocumento.nombre}" required="true" size="35" >
                                     <f:validateLength minimum="1" maximum="50" />                                    
                                 </p:inputText>                                              
                             </p:panelGrid>
@@ -51,14 +51,14 @@
                 </p:dialog> 
                 
                 <!--dialog para editar-->
-                <p:dialog header="Editar Tipo Documento" id="TiposEditNewDlg" widgetVar="TiposEditNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
+                <p:dialog header="Editar Tipo Documento" id="TiposEditNewDlg" widgetVar="TiposEditNewDialog" width="530" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="TiposEditNewForm">
                         <p:growl id="growl" showDetail="true" life="5000" showSummary="false" /> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
                             <p:panelGrid columns="2" layout="grid">
                                 <p:outputLabel for="nombrecompleto" value="Nombre Tipo Doc." />
-                                <p:inputText id="nombrecompleto" value="#{tipoDocBeans.tipodocumento.nombre}" required="true" size="50" >
+                                <p:inputText id="nombrecompleto" value="#{tipoDocBeans.tipodocumento.nombre}" required="true" size="35" >
                                     <f:validateLength minimum="1" maximum="50" />                                    
                                 </p:inputText>                                              
                             </p:panelGrid>

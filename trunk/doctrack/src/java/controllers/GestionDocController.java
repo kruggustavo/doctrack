@@ -4,6 +4,7 @@ import entities.institucion.Areas;
 import entities.seguimiento.Gestiondocumentos;
 import entities.seguimiento.Seguimiento;
 import java.util.List;
+import util.LoggerUtil;
 import util.Transactions;
 
 /**
@@ -17,12 +18,14 @@ public class GestionDocController {
     //metodo para insertar y actualizar
     public void saveGestiondocumentos(Gestiondocumentos gdoc){
         t.saveEntity(gdoc);
+        LoggerUtil.logInfo("Nuevo Movimiento de Seguimiento Nª  `" + gdoc.getIdSeguimiento().getId() + "`");
     }
     
     //tambien creo un metodo saveSeguimiento aquie para que actualice el estado general
     public void saveSeguimiento(Seguimiento segDoc)
     {
         t.saveEntity(segDoc);
+        LoggerUtil.logInfo("Cambio de Estado de Seguimiento de Documento Nª  `" + segDoc.getId() + "`");
     }
     
     public List getSeguimientoList(){

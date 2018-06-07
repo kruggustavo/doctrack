@@ -7,6 +7,7 @@ package controllers;
 import util.Transactions;
 import entities.seguimiento.Tipodocumento;
 import java.util.List;
+import util.LoggerUtil;
 
 /**
  *
@@ -19,6 +20,7 @@ public class TipoDocController {
     //metodo para insertar y actualizar
     public void SaveTipoDoc(Tipodocumento tp){
         t.saveEntity(tp);
+        LoggerUtil.logInfo("Registro de Tipo de Documeto  `" + tp.getNombre() + "`");
     }
     
     public List getTipoDocList(){

@@ -31,7 +31,7 @@
                     <ui:include src="../templates/confirmation.xhtml"/>
                 </h:form>
 
-                <p:dialog header="Nueva Respuesta de Documentos" id="RespuestaNewDlg" responsive="true" widgetVar="RespuestaNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" >
+                <p:dialog header="Nueva Respuesta de Documentos" id="RespuestaNewDlg" width="650" minHeight="40" responsive="true" widgetVar="RespuestaNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" >
                     <h:form id="RespuestaNewForm">
                         <p:growl id="growl" showDetail="true" life="5000" showSummary="false" /> 
                         <h:panelGroup id="display" rendered="true">
@@ -44,32 +44,32 @@
                                 <p:outputLabel value="#{respuestasBean.seguimiento.idDocumento.numeroDoc}" />
                                 
                                 <p:outputLabel for="numero" value="Número de Respuesta" />
-                                <p:inputText id="numero" value="#{respuestasBean.numero}" required="true" size="33" >
+                                <p:inputText id="numero" value="#{respuestasBean.numero}" required="true" size="30" >
                                     <f:validateLength minimum="1" maximum="50" />
                                 </p:inputText>
                                 
                                 <p:outputLabel for="dirigidoa" value="Dirigido a" />
-                                <p:inputText id="dirigidoa" value="#{respuestasBean.dirigidoa}" required="true" size="33" >
+                                <p:inputText id="dirigidoa" value="#{respuestasBean.dirigidoa}" required="true" size="45" >
                                     <f:validateLength minimum="1" maximum="50" />
                                 </p:inputText>
                                 
                                 <p:outputLabel value="Remitente" />
-                                <h:selectOneMenu  value="#{respuestasBean.selectFuncionario}"> 
+                                <h:selectOneMenu  value="#{respuestasBean.selectFuncionario}" style="width: 100%"> 
                                     <f:selectItems value="#{respuestasBean.listFuncionarios}" var="funcionarios" itemLabel="#{funcionarios.nombreCompleto}" itemValue="#{funcionarios.ci}" />
                                 </h:selectOneMenu>  
                                 
                                 <p:outputLabel value="Tipo Documento de Respuesta" />
-                                <h:selectOneMenu  value="#{respuestasBean.selectTipodocumento}"> 
+                                <h:selectOneMenu  value="#{respuestasBean.selectTipodocumento}" style="width: 100%"> 
                                     <f:selectItems value="#{respuestasBean.listTipodocumento}" var="tipodocumento" itemLabel="#{tipodocumento.nombre}" itemValue="#{tipodocumento.id}" />
                                 </h:selectOneMenu>  
                                 
                                 <p:outputLabel for="asunto" value="Asunto" />
-                                <p:inputText id="asunto" value="#{respuestasBean.asunto}" required="true" size="33" >
+                                <p:inputText id="asunto" value="#{respuestasBean.asunto}" required="true" size="45" >
                                     <f:validateLength minimum="1" maximum="50" />
                                 </p:inputText>
                                 
                                 <p:outputLabel for="redaccion" value="Redacción de Respuesta" />
-                                <p:inputTextarea id="redaccion" rows="6" cols="33" value="#{respuestasBean.redaccion}" required="true">
+                                <p:inputTextarea id="redaccion" rows="6" cols="47" value="#{respuestasBean.redaccion}" required="true">
                                     <f:validateLength minimum="1" maximum="200" />
                                 </p:inputTextarea>
                                 

@@ -62,13 +62,13 @@
                                     <p:outputLabel value="#{gestionDocBean.seguimiento.idDocumento.numeroDoc}" />
                                     
                                     <p:outputLabel value="Caratulado como" />
-                                    <p:inputTextarea value="#{gestionDocBean.seguimiento.descripcion}" cols="50"/>
+                                    <p:inputTextarea value="#{gestionDocBean.seguimiento.descripcion}" cols="47"/>
                                     
                                     <p:outputLabel value="Tipo de Documento" />
                                     <p:outputLabel value="#{gestionDocBean.seguimiento.idDocumento.idTipodoc.nombre}" />
                                     
                                     <p:outputLabel value="Observación del Documento" />
-                                    <p:inputTextarea value="#{gestionDocBean.seguimiento.idDocumento.observacion}" cols="50"/>
+                                    <p:inputTextarea value="#{gestionDocBean.seguimiento.idDocumento.observacion}" cols="47"/>
                                     
                                     <p:outputLabel value="Supervisión quien solicita" />
                                     <p:outputLabel value="#{gestionDocBean.seguimiento.idDocumento.idSupervicion.idDistrito.nombre}"/>
@@ -116,14 +116,14 @@
                                     </h:selectOneMenu>  
 
                                     <p:outputLabel for="asunto" value="Asunto a Tratar" />
-                                    <p:inputTextarea id="asunto" rows="6" cols="33" value="#{gestionDocBean.asuntoGest}" required="true">
+                                    <p:inputTextarea id="asunto" rows="6" cols="37" value="#{gestionDocBean.asuntoGest}" required="true">
                                         <f:validateLength minimum="1" maximum="50" />
                                        
                                     </p:inputTextarea>
                                     
                                     
                                     <p:outputLabel for="observacion" value="Observación" />
-                                    <p:inputTextarea id="observacion" rows="6" cols="33" value="#{gestionDocBean.obsGest}" required="true">
+                                    <p:inputTextarea id="observacion" rows="6" cols="37" value="#{gestionDocBean.obsGest}" required="true">
                                         <f:validateLength minimum="1" maximum="200" />
                                     
                                     </p:inputTextarea>

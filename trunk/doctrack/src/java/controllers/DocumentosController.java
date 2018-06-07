@@ -11,6 +11,7 @@ import entities.seguimiento.Seguimiento;
 import entities.seguimiento.Tipodocumento;
 import entities.seguimiento.Tramitantes;
 import java.util.List;
+import util.LoggerUtil;
 import util.Transactions;
 
 /**
@@ -24,12 +25,14 @@ public class DocumentosController {
     //metodo para insertar y actualizar
     public void saveDocumentos(Documentos dc){
         t.saveEntity(dc);
+        LoggerUtil.logInfo("Registro de Documento Nª  `" + dc.getNumeroDoc() + "`");
     }
     
     //metodo para insertar y actualizar de seguimiento
     public void saveSeguimiento(Seguimiento sg)
     {
         t.saveEntity(sg);
+        LoggerUtil.logInfo("Registro de Seguimiento de Documento Nª  `" + sg.getId() + "`");
     }
     
     public List getDocumentosList(){

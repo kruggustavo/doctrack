@@ -52,7 +52,7 @@ public class Tipodocumento implements Serializable {
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipodoc")
     private Collection<Documentos> documentosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoDoc")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipodoc")
     private Collection<Respuesta> respuestaCollection;
     
     public Tipodocumento() {

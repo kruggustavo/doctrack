@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,8 +44,8 @@ public class Respuesta implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
@@ -77,9 +79,9 @@ public class Respuesta implements Serializable {
     @JoinColumn(name = "idSeguimiento", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Seguimiento idSeguimiento;
-    @JoinColumn(name = "idTipoDoc", referencedColumnName = "id")
+    @JoinColumn(name = "idTipodoc", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Tipodocumento idTipoDoc;
+    private Tipodocumento idTipodoc;
 
     public Respuesta() {
     }
@@ -161,12 +163,12 @@ public class Respuesta implements Serializable {
         this.idSeguimiento = idSeguimiento;
     }
 
-    public Tipodocumento getIdTipoDoc() {
-        return idTipoDoc;
+    public Tipodocumento getIdTipodoc() {
+        return idTipodoc;
     }
 
-    public void setIdTipoDoc(Tipodocumento idTipoDoc) {
-        this.idTipoDoc = idTipoDoc;
+    public void setIdTipodoc(Tipodocumento idTipodoc) {
+        this.idTipodoc = idTipodoc;
     }
 
     @Override

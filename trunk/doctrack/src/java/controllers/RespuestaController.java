@@ -10,6 +10,7 @@ import entities.seguimiento.Seguimiento;
 import entities.seguimiento.Tipodocumento;
 import entities.users.Funcionarios;
 import java.util.List;
+import util.LoggerUtil;
 import util.Transactions;
 
 /**
@@ -21,6 +22,7 @@ public class RespuestaController {
     
     public void saveRespuesta(Respuesta rp){
         t.saveEntity(rp);
+        LoggerUtil.logInfo("Registro Respuesta de Documentos Concluido Nª  `" + rp.getNumero() + "`");
     }
     
     public void saveSeguimiento(Seguimiento sg)
@@ -66,7 +68,7 @@ public class RespuestaController {
     }
 
     public Seguimiento getSeguimientoEntity(Long id) {
-        Seguimiento sg = (Seguimiento) t.getEntity("from Seguimiento where id ='" + id + "'");
+        Seguimiento sg = (Seguimiento) t.getEntity("from Seguimiento where id = '" + id + "'");
         return sg;
     }
     

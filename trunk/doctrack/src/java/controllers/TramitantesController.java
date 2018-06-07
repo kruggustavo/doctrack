@@ -7,6 +7,7 @@ package controllers;
 
 import entities.seguimiento.Tramitantes;
 import java.util.List;
+import util.LoggerUtil;
 import util.Transactions;
 
 /**
@@ -20,6 +21,7 @@ public class TramitantesController {
     //metodo para insertar y actualizar
     public void saveTramitantes(Tramitantes tr){
         t.saveEntity(tr);
+        LoggerUtil.logInfo("Registro de Tramitante  `" + tr.getNombreCompleto() + "`");
     }
     
     public List getTramitantesList(){
