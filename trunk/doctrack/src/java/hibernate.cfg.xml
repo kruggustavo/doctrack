@@ -45,7 +45,7 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/doctrack?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password"></property>
+    <property name="hibernate.connection.password">2017fleitas100</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <mapping class="entities.institucion.Superviciones"/>
     <mapping class="entities.institucion.Dependencias"/>

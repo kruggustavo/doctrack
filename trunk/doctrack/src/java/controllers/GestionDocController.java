@@ -49,4 +49,10 @@ public class GestionDocController {
         List l = t.getList("from Gestiondocumentos gd where gd.idSeguimiento = '"+ idSeguimiento +"' order by gd.id desc");
         return l;
     }
+    
+    public List getListaSeguimientos()
+    {
+        List l = t.getList("from Seguimiento");
+        return l;
+    }
 }

@@ -12,16 +12,19 @@
                 
                 <h:form id="DocLisFormListForm">
                     <p:panel header="Documentos" style="width: auto; margin: 0 auto; vertical-align: middle">
-                        <p:dataTable id="datalist" var="doc" value="#{documentosBean.listaDoc}" lazy="false" rowKey="#{doc.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{documentosBean.documentos}" >
+                        
+                        
+                        <p:dataTable id="datalist" var="doc" value="#{documentosBean.listaDoc}" lazy="false" rowKey="#{doc.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" 
+                        emptyMessage="No se encuentra el Documento especificado" selection="#{documentosBean.documentos}" >
                             <p:ajax event="rowSelect"   update="createButton,editButton,anularButton"/>
                             <p:ajax event="rowUnselect" update="createButton,editButton,anularButton"/>
                             
-                            <p:column headerText="Nª Doc."><h:outputText value="#{doc.numeroDoc}"/></p:column>
-                            <p:column headerText="Caratula"><h:outputText value="#{doc.descripcion}"/></p:column>
+                            <p:column headerText="Nª Doc." filterBy="#{doc.numeroDoc}" sortBy="#{doc.numeroDoc}" filterMatchMode="startsWith"><h:outputText value="#{doc.numeroDoc}"/></p:column>
+                            <p:column headerText="Caratula" filterBy="#{doc.descripcion}" sortBy="#{doc.descripcion}" filterMatchMode="contains"><h:outputText value="#{doc.descripcion}"/></p:column>
                             <p:column headerText="Fecha de Entrada"><h:outputText value="#{doc.fechaentrada}"/></p:column>
-                            <p:column headerText="Supervisión"><h:outputText value="#{doc.idSupervicion.idDistrito.nombre}"/></p:column>
-                            <p:column headerText="Tramitante"><h:outputText value="#{doc.idTramitante.nombreCompleto}"/></p:column>
-                            <p:column headerText="C.I."><h:outputText value="#{doc.idTramitante.ci}"/></p:column>
+                            <p:column headerText="Supervisión" filterBy="#{doc.idSupervicion.idDistrito.nombre}" sortBy="#{doc.idSupervicion.idDistrito.nombre}" filterMatchMode="contains"><h:outputText value="#{doc.idSupervicion.idDistrito.nombre}"/></p:column>
+                            <p:column headerText="Tramitante" filterBy="#{doc.idTramitante.nombreCompleto}" sortBy="#{doc.idTramitante.nombreCompleto}" filterMatchMode="contains"><h:outputText value="#{doc.idTramitante.nombreCompleto}"/></p:column>
+                            <p:column headerText="C.I." filterBy="#{doc.idTramitante.ci}" sortBy="#{doc.idTramitante.ci}" filterMatchMode="startsWith"><h:outputText value="#{doc.idTramitante.ci}"/></p:column>
                            
                             <f:facet name="footer">
                                 <div>

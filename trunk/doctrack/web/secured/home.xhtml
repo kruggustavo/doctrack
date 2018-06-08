@@ -1,18 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
 	<ui:composition template="../dashboard.xhtml">
             <ui:define name="content">  
                 <div style="width: 100%; height: 80%">
                     <h:panelGroup style="height: 100%; display:block; text-align:let; background-repeat: no-repeat; background-position: right bottom;">
                         <h2>Sistema de Tracking de Documentos</h2>
-                    
-                        <h3>Bienvenido al sistema de Tracking de Documentos</h3>                    
+                        <h3>Bienvenido al sistema de Tracking de Documentos</h3>       
+                        
+                        <h:form id="DocLisFormListForm">
+                            <p:panel header="Seguimiento" style="width: auto; margin: 0 auto; vertical-align: middle">
+
+                                <p:dataTable id="datalist" var="seguimiento" value="#{verSeguimientoBean.listaSeguimiento}" lazy="false" rowKey="#{seguimiento.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" 
+                                             emptyMessage="No se encuentra el Documento especificado" selection="#{verSeguimientoBean.seguimiento}" >
+                                    
+                                    <p:column headerText="Nª Seg." filterBy="#{seguimiento.id}" sortBy="#{seguimiento.id}" filterMatchMode="startsWith"><h:outputText value="#{seguimiento.id}"/></p:column>
+                                    <p:column headerText="Nª Doc." filterBy="#{seguimiento.idDocumento.numeroDoc}" sortBy="#{seguimiento.idDocumento.numeroDoc}" filterMatchMode="startsWith"><h:outputText value="#{seguimiento.idDocumento.numeroDoc}"/></p:column>
+                                    <p:column headerText="Caratula" filterBy="#{seguimiento.descripcion}" sortBy="#{seguimiento.descripcion}" filterMatchMode="contains"><h:outputText value="#{seguimiento.descripcion}"/></p:column>
+                                    <p:column headerText="Supervisión" filterBy="#{seguimiento.idDocumento.idSupervicion.idDistrito.nombre}" sortBy="#{seguimiento.idDocumento.idSupervicion.idDistrito.nombre}" filterMatchMode="contains"><h:outputText value="#{seguimiento.idDocumento.idSupervicion.idDistrito.nombre}"/></p:column>
+                                    <p:column headerText="Tramitante" filterBy="#{seguimiento.idDocumento.idTramitante.nombreCompleto}" sortBy="#{seguimiento.idDocumento.idTramitante.nombreCompleto}" filterMatchMode="contains"><h:outputText value="#{seguimiento.idDocumento.idTramitante.nombreCompleto}"/></p:column>
+                                    <p:column headerText="C.I." filterBy="#{seguimiento.idDocumento.idTramitante.ci}" sortBy="#{seguimiento.idDocumento.idTramitante.ci}" filterMatchMode="contains"><h:outputText value="#{seguimiento.idDocumento.idTramitante.ci}"/></p:column>
+                                    <p:column headerText="Estado" filterBy="#{seguimiento.estadogeneral}" sortBy="#{seguimiento.estadogeneral}" filterMatchMode="startsWith"><h:outputText value="#{seguimiento.estadogeneral}"/></p:column>
+
+                                    <p:column style="width:32px;text-align: center">
+                                        <p:commandButton update=":detalleForm" oncomplete="PF('detalleDialog').show()" icon="ui-icon-search" title="Ver Seguimiento">
+                                            <f:setPropertyActionListener value="#{seguimiento}" target="#{verSeguimientoBean.seguimiento}" />
+                                       </p:commandButton>
+                                   </p:column>
+                                    
+                                </p:dataTable>
+                            </p:panel>
+                            
+                        </h:form>
+                        
+                        <p:dialog header="Detalle del Documento" id="detalleDg" widgetVar="detalleDialog" minHeight="40" width="650" height="520" modal="true" resizable="false" closeOnEscape="true" appendTo="@(body)" responsive="true">
+                        <h:form id="detalleForm">
+                            <h:panelGroup id="display" rendered="true">
+                                <p:panelGrid columns="2" style="width: 100%" layout="grid">
+                                    <h3 style="margin-top:0">Seguimiento</h3>
+                                    <p:separator />
+                                    <p:outputLabel value="Número de Seguimiento"  />
+                                    <p:outputLabel  value="#{verSeguimientoBean.seguimiento.id}" />
+                                    
+                                    <p:outputLabel value="Fecha de Entrada" />
+                                    <p:outputLabel value="#{verSeguimientoBean.seguimiento.fechaentrada}"/>
+
+                                    <p:outputLabel value="Estado General" />
+                                    <p:outputLabel id="estadoGeneral" value="#{verSeguimientoBean.seguimiento.estadogeneral}"/>
+                                    
+                                    <p:outputLabel value="Respondido por la Coordinación" />
+                                    <p:outputLabel id="respondido" value="#{verSeguimientoBean.seguimiento.nuevoCampo}"/>
+                                    
+                                    <h3 style="margin-top:0">Ultimo Seguimiento</h3>
+                                    <p:separator />
+                                    <p:outputLabel value="Sector"  />
+                                    <p:outputLabel  value="#{verSeguimientoBean.gestionDocumentos.idArea.nombre}" />
+                                    
+                                    <p:outputLabel value="Fecha de Entrada en el Sector"  />
+                                    <p:outputLabel  value="#{verSeguimientoBean.gestionDocumentos.fecha}" />
+                                    
+                                    <p:outputLabel value="Asunto a Tratar"  />
+                                    <p:outputLabel  value="#{verSeguimientoBean.gestionDocumentos.asunto}" />
+                                    
+                                    <p:outputLabel value="Observación"  />
+                                    <p:outputLabel  value="#{verSeguimientoBean.gestionDocumentos.observacion}" />
+                                    
+                                    <h3 style="margin-top:0">Documento</h3>
+                                    <p:separator />
+                                    <p:outputLabel value="Número de Documento" />
+                                    <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.numeroDoc}" />
+                                    
+                                    <p:outputLabel value="Caratulado como" />
+                                    <p:inputTextarea value="#{verSeguimientoBean.seguimiento.idDocumento.descripcion}" cols="47"/>
+                                    
+                                    <p:outputLabel value="Tipo de Documento" />
+                                    <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.idTipodoc.nombre}" />
+                                    
+                                    <p:outputLabel value="Observación del Documento" />
+                                    <p:inputTextarea value="#{verSeguimientoBean.seguimiento.idDocumento.observacion}" cols="47"/>
+                                    
+                                    <p:outputLabel value="Supervisión quien solicita" />
+                                    <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.idSupervicion.idDistrito.nombre}"/>
+                                    
+                                    <h3 style="margin-top:0">Tramitante</h3>
+                                    <p:separator />
+                                    <p:outputLabel value="Nombre Completo" />
+                                    <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.idTramitante.nombreCompleto}"/>
+                                    <p:outputLabel value="Cedula de Identidad" />
+                                    <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.idTramitante.ci}"/>
+                                    <p:outputLabel value="Teléfono" />
+                                    <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.idTramitante.telefono}"/>
+                                    <p:outputLabel value="Dirección" />
+                                    <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.idTramitante.direccion}"/>
+                                    <p:outputLabel value="Correo Electronico" />
+                                    <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.idTramitante.email}"/>
+                                    
+                                </p:panelGrid>
+             
+                            </h:panelGroup>
+                        </h:form>
+                    </p:dialog>
+                        
                     </h:panelGroup>
                 </div>           
             </ui:define>

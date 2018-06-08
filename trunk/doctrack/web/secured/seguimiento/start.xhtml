@@ -11,13 +11,14 @@
                 <!--list -->
                 <h:form id="RespuestasListForm">
                     <p:panel header="Documentos Concluidos no Respondidos" style="width: auto; margin: 0 auto; vertical-align: middle">
-                        <p:dataTable id="datalist" value="#{respuestasBean.listSeguimiento}" lazy="false" rowKey="#{respuesta.id}" var="respuesta" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{respuestasBean.seguimiento}" >
+                        <p:dataTable id="datalist" value="#{respuestasBean.listSeguimiento}" lazy="false" rowKey="#{respuesta.id}" var="respuesta" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" 
+                        emptyMessage="No se encuentra el Documento especificado" selectionMode="single" selection="#{respuestasBean.seguimiento}" >
 
                             <p:ajax event="rowSelect"   update="createButton"/>
                             <p:ajax event="rowUnselect" update="createButton"/>
 
-                            <p:column headerText="Nª Seguimiento"><h:outputText value="#{respuesta.id}"/></p:column>
-                            <p:column headerText="Nª Documento"><h:outputText value="#{respuesta.idDocumento.numeroDoc}"/></p:column>
+                            <p:column headerText="Nª Seguimiento" filterBy="#{respuesta.id}" sortBy="#{respuesta.id}" filterMatchMode="startsWith"><h:outputText value="#{respuesta.id}"/></p:column>
+                            <p:column headerText="Nª Documento" filterBy="#{respuesta.idDocumento.numeroDoc}" sortBy="#{respuesta.idDocumento.numeroDoc}" filterMatchMode="startsWith"><h:outputText value="#{respuesta.idDocumento.numeroDoc}"/></p:column>
                             <p:column headerText="Fecha Entrada"><h:outputText value="#{respuesta.fechaentrada}"/></p:column>
                             <p:column headerText="Fecha Concluida"><h:outputText value="#{respuesta.fechasalido}"/></p:column>
                             <p:column headerText="Descripción"><h:outputText value="#{respuesta.descripcion}"/></p:column>

@@ -12,15 +12,16 @@
                     <!--list -->
                     <h:form id="SegLisFormListForm">
                         <p:panel header="Seguimientos - Documentos sin concluir" style="width: 80%; margin: 0 auto">
-                            <p:dataTable id="datalist" var="seguimientos" value="#{gestionDocBean.listaSeguimiento}" lazy="false" rowKey="#{seguimientos.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{gestionDocBean.seguimiento}" >
+                            <p:dataTable id="datalist" var="seguimientos" value="#{gestionDocBean.listaSeguimiento}" lazy="false" rowKey="#{seguimientos.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50"
+                            emptyMessage="No se encuentra el Seguimiento especificado" selectionMode="single" selection="#{gestionDocBean.seguimiento}" >
                                 <p:ajax event="rowSelect"   update="verButton,moverButton,procesarButton,concluirButton"/>
                                 <p:ajax event="rowUnselect" update="verButton,moverButton,procesarButton,concluirButton"/>
 
-                                <p:column headerText="Nª Seg."><h:outputText value="#{seguimientos.id}"/></p:column>
-                                <p:column headerText="Nª Doc."><h:outputText value="#{seguimientos.idDocumento.numeroDoc}"/></p:column>
+                                <p:column headerText="Nª Seg." filterBy="#{seguimientos.id}" sortBy="#{seguimientos.id}" filterMatchMode="startsWith"><h:outputText value="#{seguimientos.id}"/></p:column>
+                                <p:column headerText="Nª Doc." filterBy="#{seguimientos.idDocumento.numeroDoc}" sortBy="#{seguimientos.idDocumento.numeroDoc}" filterMatchMode="startsWith"><h:outputText value="#{seguimientos.idDocumento.numeroDoc}"/></p:column>
                                 <p:column headerText="Fecha de Entrada"><h:outputText value="#{seguimientos.fechaentrada}"/></p:column>
                                 <p:column headerText="Caratula"><h:outputText value="#{seguimientos.idDocumento.descripcion}"/></p:column>
-                                <p:column headerText="Estado General"><h:outputText value="#{seguimientos.estadogeneral}"/></p:column>
+                                <p:column headerText="Estado General" filterBy="#{seguimientos.estadogeneral}" sortBy="#{seguimientos.estadogeneral}" filterMatchMode="startsWith"><h:outputText value="#{seguimientos.estadogeneral}"/></p:column>
                                 
                                 <f:facet name="footer">
                                     <div>
