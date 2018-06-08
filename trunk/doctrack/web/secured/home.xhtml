@@ -9,14 +9,15 @@
 	<ui:composition template="../dashboard.xhtml">
             <ui:define name="content">  
                 <div style="width: 100%; height: 80%">
-                    <h:panelGroup style="height: 100%; display:block; text-align:let; background-repeat: no-repeat; background-position: right bottom;">
-                        <h2>Sistema de Tracking de Documentos</h2>
-                        <h3>Bienvenido al sistema de Tracking de Documentos</h3>       
-                        
+                    <h:panelGroup style="height: 100%; display:block; text-align:let; background-repeat: no-repeat; background-position: right bottom;" layout="grid">
+                        <div style="padding-bottom: 3%">
+                            <h2>Sistema de Tracking de Documentos</h2>
+                            <h3>Bienvenido al sistema de Tracking de Documentos</h3>       
+                        </div>
                         <h:form id="DocLisFormListForm">
-                            <p:panel header="Seguimiento" style="width: auto; margin: 0 auto; vertical-align: middle">
+                            <p:panel header="Herramienta de búsqueda y seguimiento de documentos" style="width: 85%; margin: 0 auto; vertical-align: middle">
 
-                                <p:dataTable id="datalist" var="seguimiento" value="#{verSeguimientoBean.listaSeguimiento}" lazy="false" rowKey="#{seguimiento.id}" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" 
+                                <p:dataTable id="datalist" var="seguimiento" value="#{verSeguimientoBean.listaSeguimiento}" lazy="false" rowKey="#{seguimiento.id}" paginator="true" rows="10" selectionMode="single" 
                                              emptyMessage="No se encuentra el Documento especificado" selection="#{verSeguimientoBean.seguimiento}" >
                                     
                                     <p:column headerText="Nª Seg." filterBy="#{seguimiento.id}" sortBy="#{seguimiento.id}" filterMatchMode="startsWith"><h:outputText value="#{seguimiento.id}"/></p:column>
