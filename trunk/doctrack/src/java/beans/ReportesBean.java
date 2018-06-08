@@ -36,11 +36,36 @@ public class ReportesBean {
     private String cedula_funcionario = "";
     private String ci_tramitante_doc = "";
     private String estado_seguimiento = "";
+    private String nroSegPar = "";
+    private String tipoDocPar = "";
     
     private HashMap parameters = new HashMap();
     
     
-            
+     public void listadoRespuestas() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
+        parameters.clear();
+        parameters.put("usuario", Authorization.currentUser.getAlias());
+        
+        buildReportAsResponse("/reports/listarespuestas.jasper", parameters);
+    }
+     
+      public void listadoRespuestasSeguimiento() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
+        parameters.clear();
+        parameters.put("usuario", Authorization.currentUser.getAlias());
+        parameters.put("nroSegPar",nroSegPar); 
+        
+        buildReportAsResponse("/reports/listarespuestasseguimientos.jasper", parameters);
+    }
+    
+      public void listadoRespuestasTipoDoc() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
+        parameters.clear();
+        parameters.put("usuario", Authorization.currentUser.getAlias());
+        parameters.put("tipoDocPar", tipoDocPar); 
+        
+        buildReportAsResponse("/reports/listarespuestastipodoc.jasper", parameters);
+    }
+    
+         
     
     public void documentoPorFecha() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
         parameters.clear();
@@ -58,7 +83,6 @@ public class ReportesBean {
     public void funcionariosPorCI() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
         parameters.clear();
         parameters.put("usuario", Authorization.currentUser.getAlias());
-        parameters.put("cedula_funcionario",cedula_funcionario); 
         
         buildReportAsResponse("/reports/Funcionarios_nombre.jasper", parameters);
     }
@@ -154,6 +178,24 @@ public class ReportesBean {
     public void setEstado_seguimiento(String estado_seguimiento) {
         this.estado_seguimiento = estado_seguimiento;
     }
+
+    public String getNroSegPar() {
+        return nroSegPar;
+    }
+
+    public void setNroSegPar(String nroSegPar) {
+        this.nroSegPar = nroSegPar;
+    }
+
+    public String getTipoDocPar() {
+        return tipoDocPar;
+    }
+
+    public void setTipoDocPar(String tipoDocPar) {
+        this.tipoDocPar = tipoDocPar;
+    }
+    
+    
     
     
 

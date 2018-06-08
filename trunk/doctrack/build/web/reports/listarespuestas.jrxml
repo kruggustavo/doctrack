@@ -20,35 +20,42 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="estado_seguimiento" class="java.lang.String"/>
 	<parameter name="usuario" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT  seguimiento.fechaentrada, seguimiento.id, seguimiento.descripcion,  seguimiento.estadogeneral, documentos.numero_doc
-                FROM seguimiento, documentos
-				WHERE seguimiento.idDocumento = documentos.id
-				AND seguimiento.estadogeneral =  $P{estado_seguimiento}]]>
+		<![CDATA[SELECT  respuesta.id,respuesta.fecha,respuesta.numero, respuesta.dirigidoa, respuesta.asunto, funcionarios.nombre_completo, tipodocumento.nombre
+FROM respuesta, funcionarios, seguimiento, tipodocumento
+WHERE respuesta.idFuncionario = funcionarios.id
+AND respuesta.idSeguimiento = seguimiento.id
+AND respuesta.idTipodoc = tipodocumento.id
+ORDER BY respuesta.fecha]]>
 	</queryString>
-	<field name="fechaentrada" class="java.sql.Timestamp">
-		<property name="com.jaspersoft.studio.field.label" value="fechaentrada"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="seguimiento"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="id" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="seguimiento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="respuesta"/>
 	</field>
-	<field name="descripcion" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="seguimiento"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="fecha" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="respuesta"/>
 	</field>
-	<field name="estadogeneral" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="estadogeneral"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="seguimiento"/>
+	<field name="numero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="respuesta"/>
 	</field>
-	<field name="numero_doc" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="numero_doc"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="documentos"/>
+	<field name="dirigidoa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="dirigidoa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="respuesta"/>
+	</field>
+	<field name="asunto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="asunto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="respuesta"/>
+	</field>
+	<field name="nombre_completo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre_completo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="funcionarios"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tipodocumento"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -58,18 +65,11 @@
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="49" forecolor="#1E60C9" backcolor="#0B7DD4" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a"/>
 				<staticText>
-					<reportElement style="SubTitle" x="106" y="25" width="170" height="19" uuid="8978eac3-c578-41c9-837e-48d2b0184642"/>
-					<textElement>
-						<font fontName="Calibri" size="12" isBold="false"/>
-					</textElement>
-					<text><![CDATA[por estado de documento]]></text>
-				</staticText>
-				<staticText>
 					<reportElement x="5" y="5" width="251" height="39" forecolor="#FFFFFF" uuid="bb896be4-3bd9-4eb4-a8a1-3e7d58ec2450"/>
 					<textElement>
 						<font size="18"/>
 					</textElement>
-					<text><![CDATA[Reporte de seguimiento	]]></text>
+					<text><![CDATA[Reporte de Respuestas]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="370" y="0" width="182" height="15" forecolor="#FFFFFF" uuid="add27d16-ab69-475d-b58a-62edb3b3309e"/>
@@ -112,31 +112,38 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Descripción]]></text>
+				<text><![CDATA[Dirigido a]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="382" y="8" width="78" height="12" uuid="31297918-c5a4-409a-8ee7-2e882f4b1540"/>
+				<reportElement x="307" y="8" width="78" height="12" uuid="31297918-c5a4-409a-8ee7-2e882f4b1540"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Estado]]></text>
+				<text><![CDATA[Asunto]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="19" width="555" height="1" forecolor="#666666" uuid="a3dcb504-262e-4996-ac1d-2f48704b6e48"/>
 			</line>
 			<staticText>
-				<reportElement x="475" y="8" width="73" height="12" uuid="5791f1de-80ae-4a05-a3a8-411c8f05ea8f"/>
+				<reportElement x="389" y="8" width="73" height="12" uuid="5791f1de-80ae-4a05-a3a8-411c8f05ea8f"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Nro documento]]></text>
+				<text><![CDATA[Funcionario]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="105" y="8" width="79" height="12" uuid="d3cd9fda-4001-4287-9bc9-d051328a2030"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[ID seguimiento]]></text>
+				<text><![CDATA[Nro respuesta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="474" y="8" width="73" height="12" uuid="7889c145-5c10-4fbe-82b5-764ea7d132f5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo de documento]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -147,30 +154,30 @@
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{fechaentrada}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="205" y="0" width="155" height="12" uuid="9d992ab0-4bfa-4f4f-b8eb-1fd18f0ece5e"/>
+				<reportElement x="205" y="0" width="100" height="12" uuid="9d992ab0-4bfa-4f4f-b8eb-1fd18f0ece5e"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dirigidoa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="FixRelativeToBottom" x="475" y="0" width="73" height="12" uuid="e6eb8d11-99ee-43f9-83d4-deb147489865"/>
+				<reportElement positionType="FixRelativeToBottom" x="391" y="0" width="73" height="12" uuid="e6eb8d11-99ee-43f9-83d4-deb147489865"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{numero_doc}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre_completo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="382" y="0" width="58" height="11" uuid="40443028-7b27-40a8-8856-5a26ff8d4cac">
+				<reportElement x="307" y="0" width="58" height="11" uuid="40443028-7b27-40a8-8856-5a26ff8d4cac">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ff7dd8fb-7a21-4a0b-aade-6335778815fc"/>
 				</reportElement>
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{estadogeneral}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{asunto}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="105" y="0" width="80" height="12" uuid="cd3e10f8-00e6-415d-b79c-a859a9ccf505">
@@ -179,7 +186,14 @@
 				<textElement textAlignment="Left">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="FixRelativeToBottom" x="474" y="0" width="73" height="12" uuid="d0ec78f4-5f76-4add-a7df-42f640158694"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

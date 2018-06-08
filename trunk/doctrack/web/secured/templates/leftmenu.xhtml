@@ -12,7 +12,7 @@
                     <p:submenu label="Seguimientos" expanded="true">
                         <p:menuitem value="Documentos" icon="ui-icon-folder-collapsed" outcome="/secured/seguimiento/documentos.xhtml" />
                         <p:menuitem value="Seguimientos" icon="ui-icon-arrowthick-1-e" outcome="/secured/seguimiento/gestiondoc.xhtml" />
-                        <p:menuitem value="Respuestas" icon="ui-icon-arrowreturn-1-w" />
+                        <p:menuitem value="Respuestas" icon="ui-icon-arrowreturn-1-w"  outcome="/secured/seguimiento/start.xhtml"/>
                         <p:menuitem value="Tipo de Documentos" icon="ui-icon-document" outcome="/secured/seguimiento/tipodocu.xhtml" />
                         <p:menuitem value="Tramitantes" icon="ui-icon-copy" outcome="/secured/seguimiento/tramitantes.xhtml" />
                     </p:submenu>
@@ -23,17 +23,23 @@
                         <p:menuitem value="Auditoría" icon="ui-icon-note" outcome="/secured/logs.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>   
                     <p:submenu label="Institución" expanded="true">
+                        <p:menuitem value="Areas" icon="ui-icon-clipboard" outcome="/secured/institution/areas.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                         <p:menuitem value="Supervisiones" icon="ui-icon-clipboard" outcome="/secured/institution/supervision.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                         <p:menuitem value="Dependencias" icon="ui-icon-caret-1-w" outcome="/secured/institution/dependency.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                         <p:menuitem value="Distritos" icon="ui-icon-home" outcome="/secured/institution/district.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>
                     <p:submenu label="Informes" expanded="true">
                         <p:submenu label="Documentos" expanded="true">
-                            <p:menuitem value="Por fecha" icon="ui-icon-document" outcome="/secured/reportes/reportedocumentos.xhtml"/>
-                            <p:menuitem value="Por tramitante" icon="ui-icon-document" outcome="/secured/reportes/reportedocumentosTramitante.xhtml"/>
+                            <p:menuitem value="Por fecha" icon="ui-icon-calendar" outcome="/secured/reportes/reportedocumentos.xhtml"/>
+                            <p:menuitem value="Por tramitante" icon="ui-icon-copy" outcome="/secured/reportes/reportedocumentosTramitante.xhtml"/>
                         </p:submenu>
-                            <p:menuitem value="Resoluciones" icon="ui-icon-pencil" outcome="/secured/reportes/reporteseguimientosestado.xhtml"/>
+                            <p:menuitem value="Seguimientos" icon="ui-icon-pencil" outcome="/secured/reportes/reporteseguimientosestado.xhtml"/>
                         <p:menuitem value="Funcionarios" icon="ui-icon-person" outcome="/secured/reportes/reportefuncionarios.xhtml"/>
+                        <p:submenu label="Respuestas" expanded="true" >
+                            <p:menuitem value="Lista completa" icon="ui-icon-arrowreturn-1-w" outcome="/secured/reportes/reporterespuestas.xhtml"/>
+                            <p:menuitem value="Por numero de seguimiento" icon="ui-icon-arrowthick-1-e" outcome="/secured/reportes/reporterespuestasseguimientos.xhtml"/>
+                            <p:menuitem value="Por tipo de documento" icon="ui-icon-document" outcome="/secured/reportes/reporteseguimientostipodoc.xhtml"/>
+                        </p:submenu>
                     </p:submenu>   
                     <p:submenu label="Ayuda" expanded="true">                 
                         <p:menuitem value="Manual del usuario" icon="ui-icon-help" />

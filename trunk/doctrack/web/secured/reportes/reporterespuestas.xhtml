@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"  
+      >
+    <h:body>
+        <ui:composition template="../../dashboard.xhtml">
+            <ui:define name="content">  
+                <h:form>
+                    <p:panel header="Reporte de Respuestas " style="width: 40%; margin: 0 auto; vertical-align: middle">                                                   
+                        <p:panelGrid columns="1" style="width: 100%; text-align: center">
+                            <h:commandLink type="btton" target="_blank" id="enviar" style="margin-right:20px; text-align: center; width: 100%" value="Ver reporte" action="#{reportesBean.listadoRespuestas}" title="Display Report on New window/tab" />       
+                        </p:panelGrid>                                                                     
+                    </p:panel>
+                </h:form>                
+            </ui:define>
+	</ui:composition>
+    </h:body>
+</html>
