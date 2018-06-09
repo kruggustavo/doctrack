@@ -33,14 +33,14 @@
                 </h:form>
 
                 <!--create and edit-->
-                <p:dialog header="Registrar Distrito" id="DistritosNewDlg" widgetVar="DistritosNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
+                <p:dialog header="Registrar Distrito" id="DistritosNewDlg" width="450" widgetVar="DistritosNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="DistritosNewForm">
                         <p:growl id="growl" showDetail="true" life="5000"  showSummary="false"/> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3" layout="grid">
+                            <p:panelGrid columns="2" layout="grid">
                                 <p:outputLabel for="nombre" value="Nombre del Distrito" />
-                                <p:inputText id="nombre" value="#{districtBean.selectedDistrict.nombre}" required="true" size="50" >
+                                <p:inputText id="nombre" value="#{districtBean.selectedDistrict.nombre}" required="true" size="28" >
                                     <f:validateLength minimum="1" maximum="50" />
                                 </p:inputText>
                             </p:panelGrid>
@@ -52,15 +52,15 @@
                     </h:form>
                 </p:dialog>   
                 
-                <p:dialog header="Editar Distrito" id="DistritosEditDlg" widgetVar="DistritosEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
+                <p:dialog header="Editar Distrito" id="DistritosEditDlg" width="450" widgetVar="DistritosEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="DistritosEditForm">
                         <p:growl id="growl" showDetail="true" life="5000"  showSummary="false"/> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3" layout="grid">
+                            <p:panelGrid columns="2" layout="grid">
 
                                 <p:outputLabel for="nombre" value="Nombre del Distrito" />
-                                <p:inputText id="nombre" value="#{districtBean.selectedDistrict.nombre}" required="true" size="50" >
+                                <p:inputText id="nombre" value="#{districtBean.selectedDistrict.nombre}" required="true" size="28" >
                                     <f:validateLength minimum="1" maximum="50" />                               
                                 </p:inputText>                                              
                             </p:panelGrid>

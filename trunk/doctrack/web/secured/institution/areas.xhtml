@@ -34,56 +34,52 @@
                 </h:form>
 
                 <!--create and edit-->
-                <p:dialog header="Registrar Sector de Dependencia" id="AreasNewDlg" widgetVar="AreasNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
+                <p:dialog header="Registrar Sector de Dependencia" id="AreasNewDlg" width="640" widgetVar="AreasNewDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="AreasNewForm">
                         <p:growl id="growl" showDetail="true" life="5000" /> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
+                            <p:panelGrid columns="2" layout="grid">
 
                                 <p:outputLabel for="nombre" value="Nombre del Sector" />
-                                <p:inputText id="nombre" value="#{areasBean.areas.nombre}" required="true" size="50" >
+                                <p:inputText id="nombre" value="#{areasBean.areas.nombre}" required="true" size="45" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNombre" event="keyup" />
                                 </p:inputText>
-                                <p:message for="nombre" id="msgNombre" display="icon" />
                                 
                                 <p:outputLabel value="Dependencia de la Coordinación" />
-                                <h:selectOneMenu  value="#{areasBean.dependencias}"> 
+                                <h:selectOneMenu  value="#{areasBean.dependencias}" style="width: 100%"> 
                                     <f:selectItems value="#{areasBean.dependenciasList}" var="dependencias" itemLabel="#{dependencias.nombre}" itemValue="#{dependencias.nombre}" />
                                </h:selectOneMenu>
               
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{areasBean.guardarAreas()}" update="growl,display,:AreasListForm:datalist" oncomplete="PF('AreasNewDialog').hide();" />                              
+                                <p:commandButton value="Guardar" action="#{areasBean.guardarAreas()}" update="growl,display,:AreasListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('AreasNewDialog').hide();" />                              
                                 <p:commandButton value="Cancelar" oncomplete="PF('AreasNewDialog').hide()" update="display" />
                             </div>
                         </h:panelGroup>
                     </h:form>
                 </p:dialog>   
                 
-                <p:dialog header="Editar Sector de Dependencia" id="AreasEditDlg" widgetVar="AreasEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
+                <p:dialog header="Editar Sector de Dependencia" id="AreasEditDlg" width="640" widgetVar="AreasEditDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true" responsive="true">
                     <h:form id="AreasEditForm">
                         <p:growl id="growl" showDetail="true" life="5000" /> 
                         <h:panelGroup id="display" rendered="true">
                             <p:messages id="msgs" />
-                            <p:panelGrid columns="3">
+                            <p:panelGrid columns="2" layout="grid">
 
                                 <p:outputLabel for="nombre" value="Nombre del Sector" />
-                                <p:inputText id="nombre" value="#{areasBean.areas.nombre}" required="true" size="50" >
+                                <p:inputText id="nombre" value="#{areasBean.areas.nombre}" required="true" size="45" >
                                     <f:validateLength minimum="1" maximum="50" />
-                                    <p:ajax update="msgNombre" event="keyup" />
                                 </p:inputText>
-                                <p:message for="nombre" id="msgNombre" display="icon" />
-                                
+                                 
                                 <p:outputLabel value="Dependencia de la Coordinación" />
-                                <h:selectOneMenu  value="#{areasBean.dependencias}"> 
+                                <h:selectOneMenu  value="#{areasBean.dependencias}" style="width: 100%"> 
                                     <f:selectItems value="#{areasBean.dependenciasList}" var="dependencias" itemLabel="#{dependencias.nombre}" itemValue="#{dependencias.nombre}" />
                                </h:selectOneMenu>
               
                             </p:panelGrid>
                             <div style="padding-top: 10px; width: 99%; display: block-inline; text-align: right">
-                                <p:commandButton value="Guardar" action="#{areasBean.actualizarAreas()}" update="growl,display,:AreasListForm:datalist" oncomplete="PF('AreasEditDialog').hide();" />                              
+                                <p:commandButton value="Guardar" action="#{areasBean.actualizarAreas()}" update="growl,display,:AreasListForm:datalist" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('AreasEditDialog').hide();" />                              
                                 <p:commandButton value="Cancelar" oncomplete="PF('AreasEditDialog').hide()" update="display" />
                             </div>
                         </h:panelGroup>
