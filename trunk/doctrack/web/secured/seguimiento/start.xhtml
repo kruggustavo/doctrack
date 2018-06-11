@@ -24,7 +24,7 @@
                             <p:column headerText="Descripción"><h:outputText value="#{respuesta.descripcion}"/></p:column>
                             <f:facet name="footer">
                                 <div>
-                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Responder" update=":RespuestaNewForm" oncomplete="PF('RespuestaNewDialog').show()" disabled="#{empty respuestasBean.seguimiento}" />                                    
+                                    <p:commandButton id="createButton" icon="ui-icon-script"   value="Responder" update=":RespuestaNewForm" oncomplete="PF('RespuestaNewDialog').show()" disabled="#{empty respuestasBean.seguimiento}" />                                    
                                 </div>
                             </f:facet>
                         </p:dataTable>

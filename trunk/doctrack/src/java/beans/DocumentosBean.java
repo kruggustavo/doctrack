@@ -69,7 +69,7 @@ public class DocumentosBean implements Serializable {
     
     public void anularDocumento()
     {
-        int resultadoEnc = controller.getSegEstadoList(documentos.getNumeroDoc()).size();
+        int resultadoEnc = controller.getSegEstadoList(documentos.getId()).size();
         System.out.println("tamaño lista "+resultadoEnc);
         if(resultadoEnc <= 0)
         {
@@ -96,7 +96,7 @@ public class DocumentosBean implements Serializable {
         }
         else
         {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "El Documento especificado ya se encuentra Anulado"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención!", "El Documento especificado ya se encuentra Anulado o bien ya se ha procesado"));
         }
     }
     

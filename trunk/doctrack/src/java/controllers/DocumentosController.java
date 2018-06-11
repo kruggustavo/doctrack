@@ -90,8 +90,8 @@ public class DocumentosController {
         return l;
     }
 
-    public List getSegEstadoList(String numeroDoc) {
-        List l = t.getList("FROM Seguimiento WHERE idDocumento = '"+ numeroDoc +"' and estadogeneral = '"+ "Anulado" +"' ");
+    public List getSegEstadoList(Long idDocumento) {
+        List l = t.getList("FROM Seguimiento WHERE idDocumento = '"+ idDocumento +"' and estadogeneral != '"+ "Recibido" +"' ");
         return l;
     }
     

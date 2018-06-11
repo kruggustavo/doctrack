@@ -40,7 +40,7 @@ public class RespuestaController {
     //verifico que el numero de respuesta con el mismo tipo de documento ya no exista
     public List getNumRespuestaList(String numero, String idTipoDoc)
     {
-        List l = t.getList("FROM Respuesta WHERE numero = '"+ numero +"' and idTipoDoc != '"+ idTipoDoc +"' ");
+        List l = t.getList("FROM Respuesta WHERE numero = '"+ numero +"' and idTipoDoc = '"+ idTipoDoc +"' ");
         return l;
     }
     

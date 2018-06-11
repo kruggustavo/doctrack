@@ -25,10 +25,10 @@
                                 
                                 <f:facet name="footer">
                                     <div>
-                                        <p:commandButton value="Ver" id="verButton" icon="ui-icon-plus" oncomplete="PF('SegVerDialog').show()" update=":SegVerForm" disabled="#{empty gestionDocBean.seguimiento}" />
-                                        <p:commandButton value="Procesar" id="procesarButton" icon="ui-icon-pencil" update=":DocProcesarForm" oncomplete="PF('DocProcesarDialog').show()" disabled="#{empty gestionDocBean.seguimiento or !loginBean.currentUser.idRol.ingresadocumentos.equals('Si')}"/>
-                                        <p:commandButton value="Mover" id="moverButton" icon="ui-icon-pencil" update=":DocMoverForm" oncomplete="PF('DocMoverDialog').show()" disabled="#{empty gestionDocBean.seguimiento or !loginBean.currentUser.idRol.transferirdocumentos.equals('Si')}"/>
-                                        <p:commandButton value="Concluir" id="concluirButton" actionListener="#{gestionDocBean.concluirDocumento()}" icon="fa-check-square-o" update="datalist growl" disabled="#{empty gestionDocBean.seguimiento or !loginBean.currentUser.idRol.cerrarestado.equals('Si')}" >
+                                        <p:commandButton value="Ver" id="verButton" icon="ui-icon-search" oncomplete="PF('SegVerDialog').show()" update=":SegVerForm" disabled="#{empty gestionDocBean.seguimiento}" />
+                                        <p:commandButton value="Procesar" id="procesarButton" icon="ui-icon-refresh" update=":DocProcesarForm" oncomplete="PF('DocProcesarDialog').show()" disabled="#{empty gestionDocBean.seguimiento or !loginBean.currentUser.idRol.cambiarestado.equals('Si')}"/>
+                                        <p:commandButton value="Mover" id="moverButton" icon="ui-icon-transfer-e-w" update=":DocMoverForm" oncomplete="PF('DocMoverDialog').show()" disabled="#{empty gestionDocBean.seguimiento or !loginBean.currentUser.idRol.transferirdocumentos.equals('Si')}"/>
+                                        <p:commandButton value="Concluir" id="concluirButton" actionListener="#{gestionDocBean.concluirDocumento()}" icon="ui-icon-check" update="datalist growl" disabled="#{empty gestionDocBean.seguimiento or !loginBean.currentUser.idRol.cerrarestado.equals('Si')}" >
                                             <p:confirm header="Confirmar acción" message="¿Esta Seguro de cambiar a estado CONCLUIDO el Documento seleccionado?" icon="ui-icon-alert"/><!--disabled bloquea si la seleccion es vacia-->
                                         </p:commandButton>
                                     </div>
@@ -106,10 +106,10 @@
                                 <p:panelGrid columns="2" layout="grid">
                                     
                                     <p:outputLabel value="Número de Seguimiento" />
-                                    <p:inputText id="numSeg" value="#{gestionDocBean.seguimiento.id}" disabled="true" required="true" size="30" maxlength="50" />
+                                    <p:outputLabel value="#{gestionDocBean.seguimiento.id}" />
                                     
                                     <p:outputLabel value="Número de Documento" />
-                                    <p:inputText id="numDoc" value="#{gestionDocBean.seguimiento.idDocumento.numeroDoc}" disabled="true" required="true" size="30" maxlength="50" />
+                                    <p:outputLabel value="#{gestionDocBean.seguimiento.idDocumento.numeroDoc}" />
                                     
                                     <p:outputLabel value="Sector destinatario del Documento" />
                                     <h:selectOneMenu  value="#{gestionDocBean.areas}" style="width: 100%"> 
