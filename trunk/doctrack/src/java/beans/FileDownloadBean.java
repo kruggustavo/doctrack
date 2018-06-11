@@ -16,11 +16,11 @@ import org.primefaces.model.StreamedContent;
  * @author user
  */
 @ManagedBean
-public class FileDownloadView {
+public class FileDownloadBean {
     private StreamedContent file;
      
-    public FileDownloadView() {        
-        InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/manual/manualUsuario.pdf");
+    public FileDownloadBean() {        
+        InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/pdf/manualUsuario.pdf");
         file = new DefaultStreamedContent(stream, "file/pdf", "manualDeUsuario.pdf");
     }
  

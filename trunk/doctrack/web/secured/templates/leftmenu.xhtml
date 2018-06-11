@@ -42,7 +42,9 @@
                         </p:submenu>
                     </p:submenu>   
                     <p:submenu label="Ayuda" expanded="true">                 
-                        <p:menuitem value="Manual del usuario" icon="ui-icon-help" outcome="/secured/manual/manualUser.xhtml" />
+                        <p:menuitem value="Manual del usuario" icon="ui-icon-help" ajax="false">
+                            <p:fileDownload value="#{fileDownloadBean.file}" />
+                        </p:menuitem>    
                         <p:menuitem value="Cerrar sesion" icon="ui-icon-cancel"  action="#{loginBean.logout}" />
                     </p:submenu>
                 </p:panelMenu>
