@@ -13,9 +13,8 @@
                     <p:panel header="Reporte de Respuestas por número de seguimiento" style="width: 65%; margin: 0 auto; vertical-align: middle">                                                   
                         
                             <p:outputLabel value="Ingrese el número de seguimiento: " />                        
-                            <p:inputText id="ci" value="#{reportesBean.nroSegPar}" size="30" maxlength="10" required="true">   
-                                <f:validateLength minimum="3" maximum="10" />
-                            </p:inputText>
+                            <p:inputText id="ci" value="#{reportesBean.nroSegPar}" size="30" maxlength="10" required="true"/>
+                            
                             <p:panel style="border: 0px"></p:panel> 
                         <p:panelGrid columns="1" style="width: 100%; text-align: center">
                             <h:commandLink type="button" target="_blank" style="margin-right:20px; text-align: center; width: 100%" value="Ver reporte" action="#{reportesBean.listadoRespuestasSeguimiento}" title="Display Report on New window/tab" />       

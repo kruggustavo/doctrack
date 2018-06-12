@@ -6,6 +6,7 @@
 package beans;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
@@ -29,7 +30,7 @@ import util.HibernateUtil;
 
 @ManagedBean
 @SessionScoped
-public class ReportesBean {
+public class ReportesBean implements Serializable {
     private String supervision = "";
     private Date fechaInicio = new Date();
     private Date fechaFin = new Date();
@@ -90,7 +91,8 @@ public class ReportesBean {
     public void documentoPorTramitante() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException, JRException {
         parameters.clear();
         parameters.put("usuario", Authorization.currentUser.getAlias());  
-        parameters.put("ci_tramitante_doc",ci_tramitante_doc); 
+        parameters.put("ci_tramitante_doc", (ci_tramitante_doc.length() > 0? ci_tramitante_doc : "123")); 
+
         buildReportAsResponse("/reports/Documentos_tramitante.jasper", parameters);
     }
     

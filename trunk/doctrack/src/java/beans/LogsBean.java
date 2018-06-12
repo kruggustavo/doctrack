@@ -6,6 +6,7 @@
 package beans;
 
 import controllers.LogsController;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -18,7 +19,7 @@ import javax.faces.bean.SessionScoped;
 
 @ManagedBean
 @SessionScoped
-public class LogsBean {
+public class LogsBean implements Serializable{
     private List logsList;
     private LogsController controller = new LogsController();
     

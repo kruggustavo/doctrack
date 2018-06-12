@@ -19,13 +19,13 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="ci_tramitante_doc" class="java.lang.String"/>
 	<parameter name="usuario" class="java.lang.String"/>
+	<parameter name="ci_tramitante_doc" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT descripcion, fechaentrada, numero_doc, nombre, numero_supervision, nombre_completo FROM documentos, tramitantes, superviciones, distritos
 				WHERE documentos.idSupervicion = superviciones.id
 				AND documentos.idTramitante = tramitantes.id
-				AND tramitantes.ci = $P{ci_tramitante_doc}
+				AND tramitantes.ci LIKE $P{ci_tramitante_doc}
 				ORDER BY documentos.fechaentrada]]>
 	</queryString>
 	<field name="descripcion" class="java.lang.String">
@@ -58,7 +58,7 @@
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="49" forecolor="#1E60C9" backcolor="#0B7DD4" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a"/>
 				<staticText>
-					<reportElement style="SubTitle" x="106" y="25" width="170" height="19" uuid="8978eac3-c578-41c9-837e-48d2b0184642"/>
+					<reportElement style="SubTitle" x="106" y="25" width="150" height="19" uuid="8978eac3-c578-41c9-837e-48d2b0184642"/>
 					<textElement>
 						<font fontName="Calibri" size="12" isBold="false"/>
 					</textElement>
@@ -95,12 +95,12 @@
 					</textElement>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="0" y="0" width="159" height="18" forecolor="#FFFFFF" uuid="bc17e437-f1c7-427b-a7d4-1f1824aa0ec5"/>
+				<textField isBlankWhenNull="true">
+					<reportElement x="5" y="0" width="154" height="18" forecolor="#FFFFFF" uuid="bc17e437-f1c7-427b-a7d4-1f1824aa0ec5"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Tramitante: " + $F{nombre_completo}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{nombre_completo}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
