@@ -9,43 +9,42 @@
         <ui:composition>
             <h:form>
                 <p:panelMenu style="width:100%">
-                    <p:submenu label="Seguimientos" expanded="true">
-                        <p:menuitem value="Documentos" icon="ui-icon-folder-collapsed" outcome="/secured/seguimiento/documentos.xhtml" />
-                        <p:menuitem value="Seguimientos" icon="ui-icon-arrowthick-1-e" outcome="/secured/seguimiento/gestiondoc.xhtml" />
-                        <p:menuitem value="Respuestas" icon="ui-icon-arrowreturn-1-w"  outcome="/secured/seguimiento/start.xhtml" disabled="#{!loginBean.currentUser.idRol.generarresoluciones.equals('Si')}" />
-                        <p:menuitem value="Tipo de Documentos" icon="ui-icon-document" outcome="/secured/seguimiento/tipodocu.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}" />
-                        <p:menuitem value="Tramitantes" icon="ui-icon-copy" outcome="/secured/seguimiento/tramitantes.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}" />
+                    <p:submenu label="Trámites" expanded="true">
+                        <p:menuitem value="Documentos" icon="ui-icon-folder-collapsed" outcome="/secured/seguimiento/documentos.xhtml" rendered="#{loginBean.currentUser.idRol.transferirdocumentos.equals('Si') or loginBean.currentUser.idRol.ingresadocumentos.equals('Si')}" />
+                        <p:menuitem value="Seguimientos" icon="ui-icon-arrowthick-1-e" outcome="/secured/seguimiento/gestiondoc.xhtml" rendered="#{loginBean.currentUser.idRol.transferirdocumentos.equals('Si') or loginBean.currentUser.idRol.ingresadocumentos.equals('Si')}"/>
+                        <p:menuitem value="Respuestas" icon="ui-icon-arrowreturn-1-w"  outcome="/secured/seguimiento/start.xhtml" rendered="#{loginBean.currentUser.idRol.generarresoluciones.equals('Si')}" />
+                        <p:menuitem value="Tipo de Documentos" icon="ui-icon-document" outcome="/secured/seguimiento/tipodocu.xhtml" rendered="#{loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}" />
+                        <p:menuitem value="Tramitantes" icon="ui-icon-copy" outcome="/secured/seguimiento/tramitantes.xhtml" rendered="#{loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}" />
                     </p:submenu>
                     <p:submenu label="Personas" expanded="true">
-                        <p:menuitem value="Usuarios del sistema" icon="ui-icon-person" outcome="/secured/users/index.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}" />                      
-                        <p:menuitem value="Roles de usuarios" icon="ui-icon-contact" outcome="/secured/users/roles.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>                      
-                        <p:menuitem value="Funcionarios" icon="ui-icon-suitcase" outcome="/secured/users/employees.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
-                        <p:menuitem value="Auditoría" icon="ui-icon-note" outcome="/secured/logs.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
+                        <p:menuitem value="Usuarios del sistema" icon="ui-icon-person" outcome="/secured/users/index.xhtml" rendered="#{loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}" />                      
+                        <p:menuitem value="Roles de usuarios" icon="ui-icon-contact" outcome="/secured/users/roles.xhtml" rendered="#{loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>                      
+                        <p:menuitem value="Funcionarios" icon="ui-icon-suitcase" outcome="/secured/users/employees.xhtml" rendered="#{loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>   
                     <p:submenu label="Institución" expanded="true">
-                        <p:menuitem value="Sectores" icon="ui-icon-clipboard" outcome="/secured/institution/areas.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
-                        <p:menuitem value="Supervisiones" icon="ui-icon-clipboard" outcome="/secured/institution/supervision.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
-                        <p:menuitem value="Dependencias" icon="ui-icon-caret-1-w" outcome="/secured/institution/dependency.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
-                        <p:menuitem value="Distritos" icon="ui-icon-home" outcome="/secured/institution/district.xhtml" disabled="#{!loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
+                        <p:menuitem value="Sectores" icon="ui-icon-clipboard" outcome="/secured/institution/areas.xhtml" rendered="#{loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
+                        <p:menuitem value="Supervisiones" icon="ui-icon-clipboard" outcome="/secured/institution/supervision.xhtml" rendered="#{loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
+                        <p:menuitem value="Dependencias" icon="ui-icon-caret-1-w" outcome="/secured/institution/dependency.xhtml" rendered="#{loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
+                        <p:menuitem value="Distritos" icon="ui-icon-home" outcome="/secured/institution/district.xhtml" rendered="#{loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>
                     <p:submenu label="Informes" expanded="true">
                         <p:submenu label="Documentos" expanded="true">
-                            <p:menuitem value="Por fecha" icon="ui-icon-calendar" outcome="/secured/reportes/reportedocumentos.xhtml" disabled="#{!loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
-                            <p:menuitem value="Por tramitante" icon="ui-icon-copy" outcome="/secured/reportes/reportedocumentosTramitante.xhtml" disabled="#{!loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
+                            <p:menuitem value="Por fecha" icon="ui-icon-calendar" outcome="/secured/reportes/reportedocumentos.xhtml" rendered="#{loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
+                            <p:menuitem value="Por tramitante" icon="ui-icon-copy" outcome="/secured/reportes/reportedocumentosTramitante.xhtml" rendered="#{loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
                         </p:submenu>
-                            <p:menuitem value="Seguimientos" icon="ui-icon-pencil" outcome="/secured/reportes/reporteseguimientosestado.xhtml" disabled="#{!loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
-                        <p:menuitem value="Funcionarios" icon="ui-icon-person" outcome="/secured/reportes/reportefuncionarios.xhtml" disabled="#{!loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
+                            <p:menuitem value="Seguimientos" icon="ui-icon-pencil" outcome="/secured/reportes/reporteseguimientosestado.xhtml" rendered="#{loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
+                        <p:menuitem value="Funcionarios" icon="ui-icon-person" outcome="/secured/reportes/reportefuncionarios.xhtml" rendered="#{loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
                         <p:submenu label="Respuestas" expanded="true" >
-                            <p:menuitem value="Lista completa" icon="ui-icon-arrowreturn-1-w" outcome="/secured/reportes/reporterespuestas.xhtml" disabled="#{!loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
-                            <p:menuitem value="Por numero de seguimiento" icon="ui-icon-arrowthick-1-e" outcome="/secured/reportes/reporterespuestasseguimientos.xhtml" disabled="#{!loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
-                            <p:menuitem value="Por tipo de documento" icon="ui-icon-document" outcome="/secured/reportes/reporteseguimientostipodoc.xhtml" disabled="#{!loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
+                            <p:menuitem value="Lista completa" icon="ui-icon-arrowreturn-1-w" outcome="/secured/reportes/reporterespuestas.xhtml" rendered="#{loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
+                            <p:menuitem value="Por número de seguimiento" icon="ui-icon-arrowthick-1-e" outcome="/secured/reportes/reporterespuestasseguimientos.xhtml" rendered="#{loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
+                            <p:menuitem value="Por tipo de documento" icon="ui-icon-document" outcome="/secured/reportes/reporteseguimientostipodoc.xhtml" rendered="#{loginBean.currentUser.idRol.visualizarinformes.equals('Si')}"/>
                         </p:submenu>
+                        <p:menuitem value="Auditoría" icon="ui-icon-note" outcome="/secured/logs.xhtml" rendered="#{loginBean.currentUser.idRol.administraconfiguraciones.equals('Si')}"/>
                     </p:submenu>   
                     <p:submenu label="Ayuda" expanded="true">                 
                         <p:menuitem value="Manual del usuario" icon="ui-icon-help" ajax="false">
                             <p:fileDownload value="#{fileDownloadBean.file}" />
-                        </p:menuitem>    
-                        <p:menuitem value="Cerrar sesion" icon="ui-icon-cancel"  action="#{loginBean.logout}" />
+                        </p:menuitem>                            
                     </p:submenu>
                 </p:panelMenu>
             </h:form>

@@ -10,9 +10,9 @@
             <ui:define name="content">  
                 <div style="width: 100%; height: 80%">
                     <h:panelGroup style="height: 100%; display:block; text-align:let; background-repeat: no-repeat; background-position: right bottom;" layout="grid">
-                        <div style="padding-bottom: 3%">
-                            <h2>Sistema de Tracking de Documentos</h2>
-                            <h3>Bienvenido al sistema de Tracking de Documentos</h3>       
+                        <div style="padding-bottom: 3%">                                                   
+                            <h2>Sistema de Seguimiento de Documentos</h2>
+                            <h3>Bienvenido al sistema de Seguimiento de Documentos</h3>       
                         </div>
                         <h:form id="DocLisFormListForm">
                             <p:panel header="Herramienta de búsqueda y seguimiento de documentos" style="width: 85%; margin: 0 auto; vertical-align: middle">
@@ -43,7 +43,7 @@
                         <h:form id="detalleForm">
                             <h:panelGroup id="display" rendered="true">
                                 <p:panelGrid columns="2" style="width: 100%" layout="grid">
-                                    <h3 style="margin-top:0">Seguimiento</h3>
+                                    <h3 style="margin-top:0; text-align: left !important">Seguimiento</h3>
                                     <p:separator />
                                     <p:outputLabel value="Número de Seguimiento"  />
                                     <p:outputLabel  value="#{verSeguimientoBean.seguimiento.id}" />
@@ -57,7 +57,7 @@
                                     <p:outputLabel value="Respondido por la Coordinación" />
                                     <p:outputLabel id="respondido" value="#{verSeguimientoBean.seguimiento.nuevoCampo}"/>
                                     
-                                    <h3 style="margin-top:0">Ultimo Seguimiento</h3>
+                                    <h3 style="margin-top:0; text-align: left !important">Último Seguimiento</h3>
                                     <p:separator />
                                     <p:outputLabel value="Sector"  />
                                     <p:outputLabel  value="#{verSeguimientoBean.gestionDocumentos.idArea.nombre}" />
@@ -71,7 +71,7 @@
                                     <p:outputLabel value="Observación"  />
                                     <p:outputLabel  value="#{verSeguimientoBean.gestionDocumentos.observacion}" />
                                     
-                                    <h3 style="margin-top:0">Documento</h3>
+                                    <h3 style="margin-top:0; text-align: left !important">Documento</h3>
                                     <p:separator />
                                     <p:outputLabel value="Número de Documento" />
                                     <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.numeroDoc}" />
@@ -85,10 +85,10 @@
                                     <p:outputLabel value="Observación del Documento" />
                                     <p:inputTextarea value="#{verSeguimientoBean.seguimiento.idDocumento.observacion}" cols="47"/>
                                     
-                                    <p:outputLabel value="Supervisión quien solicita" />
+                                    <p:outputLabel value="Supervisión quen solicita" />
                                     <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.idSupervicion.idDistrito.nombre}"/>
                                     
-                                    <h3 style="margin-top:0">Tramitante</h3>
+                                    <h3 style="margin-top:0; text-align: left !important">Tramitante</h3>
                                     <p:separator />
                                     <p:outputLabel value="Nombre Completo" />
                                     <p:outputLabel value="#{verSeguimientoBean.seguimiento.idDocumento.idTramitante.nombreCompleto}"/>

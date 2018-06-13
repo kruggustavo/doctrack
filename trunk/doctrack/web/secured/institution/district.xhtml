@@ -11,7 +11,7 @@
                 
                 <!--list -->
                 <h:form id="DistritosListForm">
-                    <p:panel header="Distritos de Superviciones" style="width: 60%; margin: 0 auto; vertical-align: middle">
+                    <p:panel header="Distritos de Supervisiones" style="width: 60%; margin: 0 auto; vertical-align: middle">
                         <p:dataTable id="datalist" value="#{districtBean.districtList}" lazy="false" rowKey="#{distritos.id}" var="distritos" selectionMode="single" selection="#{districtBean.selectedDistrict}" >
 
                             <p:ajax event="rowSelect"   update="createButton,editButton"/>

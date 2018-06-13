@@ -15,9 +15,14 @@
     <h:body>
         <p:layout fullPage="true">
             <p:layoutUnit position="north">
-                <div style="width: 98%; background: #3377AA; color: white; height: 50px; text-align: right; padding: 1.7% 1.8% 0 0 ">
-                    Seguimiento de documentos
-                    <br><a style="font-size: .7em; color: white; font-family: Arial">Sesión iniciada como #{loginBean.currentUser.alias}</a></br>
+                <div style="width: 98%; background: #3377AA; height: 80px; ">
+                    <div style="display: inline-block; float: left">
+                        <p:graphicImage value="/resources/images/mec-logo.png" style="width: 196px"/>                       
+                    </div>
+                    <div style="color: white; text-align: right; padding: 1.7% 1.8% 0 0 ">
+                        Seguimiento de documentos
+                        <br><a style="font-size: .7em; color: white; font-family: Arial">Sesión iniciada como #{loginBean.currentUser.alias}</a></br>
+                    </div>
                 </div>
             </p:layoutUnit>
  
@@ -36,13 +41,14 @@
             <p:layoutUnit position="south">
                 <f:facet name="footer">
                     <div style="width: 98%; background: #3377AA; font-size: 8px; color: white;text-align: center; padding: 0.2% 1.3% 0 0">
-                     &#169; 2018 Todos los Derechos Reservados
-                     <br>5to curso - Ing. Informática.</br>
-                                            UC - Itapúa.
+                        5to curso - Ingeniería en Informática.
+                        <br>UC - Itapúa.</br>
+                        &#169; 2018 Todos los Derechos Reservados
                     </div>
                     <h:form>
-                        <p:stack icon="/resources/images/stack.png" expanded="true">
-                            <p:menuitem value="Inicio" icon="/resources/images/home.png" outcome="/secured/home.xhtml"/>                        
+                        <p:stack icon="/resources/images/stack.png" expanded="false">
+                            <p:menuitem value="Salir" icon="/resources/images/door_exit.png" action="#{loginBean.logout}"/> 
+                            <p:menuitem value="Inicio" icon="/resources/images/home.png" outcome="/secured/home.xhtml"/>                               
                         </p:stack>
                     </h:form>
                 </f:facet>

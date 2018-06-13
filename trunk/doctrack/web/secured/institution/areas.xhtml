@@ -11,7 +11,7 @@
                 
                 <!--list -->
                 <h:form id="AreasListForm">
-                    <p:panel header="Sectores de Dependencias" style="width: auto; margin: 0 auto; vertical-align: middle">
+                    <p:panel header="Sectores de Dependencias" style="width: 60%; margin: 0 auto; vertical-align: middle">
                         <p:dataTable id="datalist" value="#{areasBean.areasList}" lazy="false" rowKey="#{areas.id}" var="areas" paginator="true" rows="10" rowsPerPageTemplate="10,20,30,40,50" selectionMode="single" selection="#{areasBean.areas}" >
 
                             <p:ajax event="rowSelect"   update="createButton,editButton"/>
