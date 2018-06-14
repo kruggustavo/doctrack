@@ -46,7 +46,7 @@
                         <h:form id="SegVerForm">
                             <h:panelGroup id="display" rendered="true">
                                 <p:panelGrid columns="2" style="width: 100%" layout="grid">
-                                    <h3 style="margin-top:0">Seguimiento</h3>
+                                    <h3 style="margin-top:0; text-align: left !important">Seguimiento</h3>
                                     <p:separator />
                                     <p:outputLabel value="Número de Seguimiento"  />
                                     <p:outputLabel  value="#{gestionDocBean.seguimiento.id}" />
@@ -57,7 +57,7 @@
                                     <p:outputLabel value="Estado General" />
                                     <p:outputLabel id="estadoGeneral" value="#{gestionDocBean.seguimiento.estadogeneral}"/>
                                     
-                                    <h3 style="margin-top:0">Documento</h3>
+                                    <h3 style="margin-top:0; text-align: left !important">Documento</h3>
                                     <p:separator />
                                     <p:outputLabel value="Número de Documento" />
                                     <p:outputLabel value="#{gestionDocBean.seguimiento.idDocumento.numeroDoc}" />
@@ -71,10 +71,10 @@
                                     <p:outputLabel value="Observación del Documento" />
                                     <p:inputTextarea value="#{gestionDocBean.seguimiento.idDocumento.observacion}" cols="47"/>
                                     
-                                    <p:outputLabel value="Supervisión quien solicita" />
+                                    <p:outputLabel value="Supervisión quen solicita" />
                                     <p:outputLabel value="#{gestionDocBean.seguimiento.idDocumento.idSupervicion.idDistrito.nombre}"/>
                                     
-                                    <h3 style="margin-top:0">Tramitante</h3>
+                                    <h3 style="margin-top:0; text-align: left !important">Tramitante</h3>
                                     <p:separator />
                                     <p:outputLabel value="Nombre Completo" />
                                     <p:outputLabel value="#{gestionDocBean.seguimiento.idDocumento.idTramitante.nombreCompleto}"/>
