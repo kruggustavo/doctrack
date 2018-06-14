@@ -27,3 +27,23 @@
 .panelWithoutBorder .ui-widget-content{
     background: none !important;
 }
+
+.homemenubutton
+{
+    background:url('/doctrack/resources/images/icons8-home-50.png') no-repeat !important;
+    width:14px;
+    height:14px;
+    background-size: 100% 100% !important;
+}
+
+.exitmenubutton
+{
+    background:url('/doctrack/resources/images/icons8-door-50.png') no-repeat !important;
+    width:14px;
+    height:14px;
+    background-size: 100% 100% !important;
+}
+
+.menuWithoutBorder {
+    padding: 0 !important;
+}
