@@ -21,7 +21,7 @@
                             
                             <p:column headerText="Nª Doc." filterBy="#{doc.numeroDoc}" sortBy="#{doc.numeroDoc}" filterMatchMode="startsWith"><h:outputText value="#{doc.numeroDoc}"/></p:column>
                             <p:column headerText="Caratula" filterBy="#{doc.descripcion}" sortBy="#{doc.descripcion}" filterMatchMode="contains"><h:outputText value="#{doc.descripcion}"/></p:column>
-                            <p:column headerText="Fecha de Entrada"><h:outputText value="#{doc.fechaentrada}"/></p:column>
+                            <p:column headerText="Fecha de Entrada"><h:outputText value="#{doc.fechaentrada}"><f:convertDateTime pattern="dd/MM/yyyy HH:mm"/></h:outputText></p:column>
                             <p:column headerText="Supervisión" filterBy="#{doc.idSupervicion.idDistrito.nombre}" sortBy="#{doc.idSupervicion.idDistrito.nombre}" filterMatchMode="contains"><h:outputText value="#{doc.idSupervicion.idDistrito.nombre}"/></p:column>
                             <p:column headerText="Tramitante" filterBy="#{doc.idTramitante.nombreCompleto}" sortBy="#{doc.idTramitante.nombreCompleto}" filterMatchMode="contains"><h:outputText value="#{doc.idTramitante.nombreCompleto}"/></p:column>
                             <p:column headerText="C.I." filterBy="#{doc.idTramitante.ci}" sortBy="#{doc.idTramitante.ci}" filterMatchMode="startsWith"><h:outputText value="#{doc.idTramitante.ci}"/></p:column>
@@ -38,7 +38,7 @@
                             
                         </p:dataTable>
                     </p:panel>
-                    <ui:include src="../templates/confirmation.xhtml"/>
+                    <ui:include src="../confirmation.xhtml"/>
                 </h:form>
                 
                 <!--dialog para crear-->

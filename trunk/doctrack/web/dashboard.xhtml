@@ -20,24 +20,27 @@
                         <p:graphicImage value="/resources/images/mec-logo.png" style="width: 196px"/>                       
                     </div>
                     <div style="display: block; float: right">
-                        <div style="color: white; text-align: right; padding: 1.7% 10% 0 0 ">
-                                Seguimiento de documentos
+                        <div style="text-align: right; padding: 1.7% 5% 0 0 "><a style="color: white">Seguimiento de documentos</a>
                             <br><a style="font-size: .7em; color: white; font-family: Arial">Sesión iniciada como #{loginBean.currentUser.alias}</a></br>
                         </div>
-                        <div style="color: white; text-align: right; display: block; float: right; padding: 1.7% 1.8% 0 0 ">
-                            <h:form>                            
-                                <p:megaMenu orientation="horizontal" class="menuWithoutBorder" style="margin: 0 auto !important; background: none !important; border: none !important; color: white !important; box-shadow: none !important;">
-                                    <p:menuitem value="Salir" icon="exitmenubutton" action="#{loginBean.logout}" style="margin: 0 20px 0 5px; color: white !important;"/> 
-                                    <p:menuitem value="Inicio" icon="homemenubutton" outcome="/secured/home.xhtml" style="margin: 0 15px 0 5px; color: white !important;"/> 
-                                </p:megaMenu>                                                                                    
+                        <div style="color: white; text-align: right; display: block; float: right; margin: 4.5% 1.8% 0 0 ">
+                            <h:form>
+                                <p:link outcome="/secured/home.xhtml" style="text-decoration: none;">
+                                    <p:graphicImage value = "/resources/images/icons8-home-50.png" style="width:15px;"/>
+                                    <h:outputText value="Inicio" style="padding: 10px; color: white; text-decoration: none;" />
+                                </p:link>                            
+                                <p:commandLink action="#{loginBean.logout}" style="text-decoration: none;">
+                                    <p:graphicImage value = "/resources/images/icons8-door-50.png" style="width:15px;"/>
+                                    <h:outputText value="Salir" style="padding: 10px; color: white; text-decoration: none;" />
+                                </p:commandLink>
                             </h:form>
                         </div>
                     </div>                      
                 </div>
             </p:layoutUnit>
  
-            <p:layoutUnit position="west" size="250" header="Menú" resizable="true" collapsible="true">
-                <ui:include src="/secured/templates/leftmenu.xhtml" />
+            <p:layoutUnit position="west" size="250" header="Menú" resizable="true" collapsible="true" rendered="#{!loginBean.externalUser}">
+                <ui:include src="/secured/leftmenu.xhtml" />
             </p:layoutUnit>
  
             <p:layoutUnit position="center">

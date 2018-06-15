@@ -19,7 +19,7 @@
 
                                 <p:column headerText="Nª Seg." filterBy="#{seguimientos.id}" sortBy="#{seguimientos.id}" filterMatchMode="startsWith"><h:outputText value="#{seguimientos.id}"/></p:column>
                                 <p:column headerText="Nª Doc." filterBy="#{seguimientos.idDocumento.numeroDoc}" sortBy="#{seguimientos.idDocumento.numeroDoc}" filterMatchMode="startsWith"><h:outputText value="#{seguimientos.idDocumento.numeroDoc}"/></p:column>
-                                <p:column headerText="Fecha de Entrada"><h:outputText value="#{seguimientos.fechaentrada}"/></p:column>
+                                <p:column headerText="Fecha de Entrada"><h:outputText value="#{seguimientos.fechaentrada}"><f:convertDateTime pattern="dd/MM/yyyy HH:mm"/></h:outputText></p:column>
                                 <p:column headerText="Caratula"><h:outputText value="#{seguimientos.idDocumento.descripcion}"/></p:column>
                                 <p:column headerText="Estado General" filterBy="#{seguimientos.estadogeneral}" sortBy="#{seguimientos.estadogeneral}" filterMatchMode="startsWith"><h:outputText value="#{seguimientos.estadogeneral}"/></p:column>
                                 
@@ -36,7 +36,7 @@
                                 
                             </p:dataTable>
                         </p:panel>
-                        <ui:include src="../templates/confirmation.xhtml"/>
+                        <ui:include src="../confirmation.xhtml"/>
                     </h:form>
                     
                     <!--dialog para ver el seguimiento-->

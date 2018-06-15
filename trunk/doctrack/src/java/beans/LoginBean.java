@@ -119,4 +119,17 @@ public class LoginBean implements Serializable {
         this.isLogin = isLogin;
     }
     
+    
+    public boolean isExternalUser(){
+        //Usuario con ningun privilegio, es usuario externo
+        boolean r = (currentUser.getIdRol().getAdministraconfiguraciones().equals("No")
+                        && currentUser.getIdRol().getCambiarestado().equals("No")
+                        && currentUser.getIdRol().getCerrarestado().equals("No")
+                        && currentUser.getIdRol().getGenerarresoluciones().equals("No")
+                        && currentUser.getIdRol().getIngresadocumentos().equals("No")
+                        && currentUser.getIdRol().getTransferirdocumentos().equals("No")
+                        && currentUser.getIdRol().getVisualizarinformes().equals("No")
+                    );        
+        return r;
+    }
 }

@@ -21,6 +21,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class LogsBean implements Serializable{
     private List logsList;
+    private List filteredLogs;
     private LogsController controller = new LogsController();
     
     public List getLogsList() throws ParseException {
@@ -30,6 +31,14 @@ public class LogsBean implements Serializable{
 
     public void setLogsList(List getLogsList) {
         this.logsList = getLogsList;
+    }
+
+    public List getFilteredLogs() {
+        return filteredLogs;
+    }
+
+    public void setFilteredLogs(List filteredLogs) {
+        this.filteredLogs = filteredLogs;
     }
     
     
